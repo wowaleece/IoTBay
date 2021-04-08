@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
+        <%session.invalidate();%>
         <title>Home</title>
     </head>
     <body>
@@ -24,7 +25,11 @@
         </div>
         <br  />
         <div>
-            <a class="button" href="register.jsp">Log In</a>
+            <a class="button" href="login.jsp">Log In</a>
+        </div>        
+        <br  />
+        <div>
+            <a class="button" href="mainGuest.jsp">Guest Enter</a>
         </div>
         
         <%--

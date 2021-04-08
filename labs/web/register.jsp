@@ -20,59 +20,56 @@
              <table>
                  <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
                  <tr><td>First Name:</td><td><input type="text" id="fname" name="fname" required></td></tr>
+                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lname" required></td></tr>
                  <tr><td>Password</td><td><input type="password" id="password" name="password" required></td></tr>
                  <tr><td>Gender</td><td><input type="text" id="gender" name="gender" required></td></tr>
                  <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td></tr>
                  <tr><td>Agree to TOS?</td>
-                     <td> <input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the Terms of Service.</td>
+                 <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the Terms of Service.</td>
                  </tr>
              </table>
              <br  />
-                 <%--
-                 <p>Agree to TOS?</p>
-        <input type="radio" id="yes" name="inputGroup" value="yes">
-        <label for="yes">Yes</label>
-        <input type="radio" id="no" name="inputGroup" value="no">
-        <label for="no">No</label>
-         
-<br  />
-<br  />
-                 <a href="index.jsp">Cancel</a>
-                <a href="welcome.jsp">Sign Up</a> 
-              --%>
 
              <div>
                  <a class="button" href="index.jsp">Cancel</a>
-                 <input class="button" type="submit" value="Sign up"
+                 <input class="button" type="submit" value="Sign up">
              </div>
                  
              
  </form>
   
-             
-             
-  <%--
-  <form action="welcome.jsp" method="POST">                       
-  <label for="email"></label><br>
-  <input type="text" id="email" name="email"><br>
-  <label for="name">First Name:</label><br>
-  <input type="text" id="fname" name="fname">
-  <br />
-  <label for="password">Password:</label><br>
-  <input type="password" id="password" name="password"><br>
-  <label for="gender">Gender:</label><br>
-  <input type="text" id="gender" name="gender">
-  <br />
-  <label for="favcol">Favourite Colour:</label><br>
-  <input type="text" id="favcol" name="favcol"><br>
-  <label for="tos">Agree to TOS:</label><br>
-  <input type="text" id="tos" name="tos">
-  <br />
-  <br />
-  <input type="submit" value="Register">
-  <div
-        </form>
-        --%>
+<%--
+<p>Agree to TOS?</p>
+<input type="radio" id="yes" name="inputGroup" value="yes">
+<label for="yes">Yes</label>
+<input type="radio" id="no" name="inputGroup" value="no">
+<label for="no">No</label>
+         
+<br  />
+<br  />
+<a href="index.jsp">Cancel</a>
+<a href="welcome.jsp">Sign Up</a> 
+
+<form action="welcome.jsp" method="POST">                       
+<label for="email"></label><br>
+<input type="text" id="email" name="email"><br>
+<label for="name">First Name:</label><br>
+<input type="text" id="fname" name="fname">
+<br />
+<label for="password">Password:</label><br>
+<input type="password" id="password" name="password"><br>
+<label for="gender">Gender:</label><br>
+<input type="text" id="gender" name="gender">
+<br />
+<label for="favcol">Favourite Colour:</label><br>
+<input type="text" id="favcol" name="favcol"><br>
+<label for="tos">Agree to TOS:</label><br>
+<input type="text" id="tos" name="tos">
+<br />
+<br />
+<input type="submit" value="Register">
+<div
+</form> --%>
         
     </body>
 </html>
