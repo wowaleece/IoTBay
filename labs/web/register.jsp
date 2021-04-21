@@ -19,13 +19,13 @@
 
              <table>
                  <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
+                 <tr><td>Password</td><td><input type="password" id="password" name="password" required></td></tr>
                  <tr><td>First Name:</td><td><input type="text" id="fname" name="fname" required></td></tr>
                  <tr><td>Last Name:</td><td><input type="text" id="lname" name="lname" required></td></tr>
-                 <tr><td>Password</td><td><input type="password" id="password" name="password" required></td></tr>
                  <tr><td>Gender</td><td><input type="text" id="gender" name="gender" required></td></tr>
                  <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td></tr>
                  <tr><td>Agree to TOS?</td>
-                 <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the Terms of Service.</td>
+                     <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
                  </tr>
              </table>
              <br  />
