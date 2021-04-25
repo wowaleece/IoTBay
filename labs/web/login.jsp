@@ -13,18 +13,19 @@
         <title>Login Page</title>
     </head>
     <body>
-        
-            <form action="main.jsp" method="POST">
-                <table>
-                 <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
-                 <tr><td>Password</td><td><input type="password" id="password" name="password" required></td></tr>
-                 </table>
-             <br/>
-             <div>
-                 <a class="button" href="index.jsp">Cancel</a>
-                 <input class="button" type="submit" value="Login">
-             </div>              
-            </form>
+
+        <form action="login" method="post"><!--<form action="main.jsp" method="POST"> -->
+            <table>
+             <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true" placeholder="soandso@gmail.com"></td></tr>
+             <tr><td>Password</td><td><input type="password" id="password" name="password" required size="30" ></td></tr>
+             </table>
+         <br/>
+         <div>
+             <a class="button" href="index.jsp">Cancel</a>
+             <input class="button" type="submit" value="Login">
+             <br> ${message}
+         </div>              
+        </form>
 
     </body>
 </html>

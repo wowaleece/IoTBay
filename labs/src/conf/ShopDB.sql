@@ -7,8 +7,8 @@ CREATE TABLE "ADDRESSES" (
 );
 
 CREATE TABLE "USERS" (
-	 "userIK" INT NOT NULL PRIMARY KEY --AUTO_INCREMENT
-	,"userID" VARCHAR(30) UNIQUE NOT NULL
+	 "userID" INT NOT NULL PRIMARY KEY --AUTO_INCREMENT
+	,"email" VARCHAR(30) UNIQUE NOT NULL
 	,"uType" VARCHAR(30) -- type of user
 	,"phoneNo" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
 	,"addressID" INT 

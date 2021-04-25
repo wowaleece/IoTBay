@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author marinasantanelli
  */
 public class User implements Serializable {
+    private int userID;
     private String email;
     private String fname;
     private String lname; 
@@ -28,6 +29,11 @@ public class User implements Serializable {
         this.dob = dob;
  
     }
+    
+    public User(int userID){
+        // get email and shit from the apps database
+    }
+    
 
     public String getEmail() {
         return email;
