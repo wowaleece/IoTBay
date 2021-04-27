@@ -14,7 +14,7 @@
     </head>
     <body>
 
-        <form action="login" method="post"><!--<form action="main.jsp" method="POST"> -->
+        <form action="login.jsp" method="post"><!--<form action="main.jsp" method="POST"> -->
             <table>
              <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true" placeholder="soandso@gmail.com"></td></tr>
              <tr><td>Password</td><td><input type="password" id="password" name="password" required size="30" ></td></tr>
