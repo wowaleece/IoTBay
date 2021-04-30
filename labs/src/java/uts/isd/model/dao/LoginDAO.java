@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uts.isd.model;
+package uts.isd.model.dao;
 
 import java.sql.*;
+import uts.isd.model.User;
 
 /**
  *
  * @author James Smith 25/04/2021
  */
-public class UserAO {
+public class LoginDAO {
  
     public User checkLogin(String email, String hash) throws SQLException,
             ClassNotFoundException {
