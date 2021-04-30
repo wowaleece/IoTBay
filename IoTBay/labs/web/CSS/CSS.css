@@ -1,0 +1,129 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 4 Apr 2021, 12:06:14 am
+    Author     : marinasantanelli
+*/
+
+
+body {
+    background-image: url("IOT-back.jpg");
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    font-family: Arial, Helvetica, sans-serif; 
+}
+
+
+h1{
+    color: white;
+    font-weight: bold;
+}
+
+.p {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+
+.link {
+    color: #0066cc;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+div{
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 5px;
+}
+
+input {
+    color: black;
+    width: 140%;
+    height: 30px;
+    display: inline-block;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    background: #f1f1f1;
+
+}
+
+
+.button {
+    display: inline-block;
+    padding: 6px 10px;
+    font-size: 15px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+    color: white;
+    background-color: lightblue;
+    border: none;
+    border-radius: 10px;
+    width: 80px; 
+}
+
+.button:hover {
+    background-color: darkblue;
+}
+
+.button:active {
+    background-color: white;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #255;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+  }
+
+.sidenav a {
+      padding: 8px 8px 8px 32px;
+      text-decoration: none;
+      font-size: 25px;
+      color: #818181;
+      display: block;
+      transition: 0.3s;
+    }
+
+.sidenav a:hover {
+  color: #ffffff;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
