@@ -27,7 +27,7 @@ public class LoginDAO {
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, email);
         statement.setString(2, hash);
- 
+       
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
  
         User user = null;

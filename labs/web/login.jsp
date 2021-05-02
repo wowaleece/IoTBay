@@ -13,7 +13,7 @@
         <title>Login Page</title>
         
         <!-- 2 jQuery libraries (core and validation) from CDN websites for validating form data -->
-        <!-- -->
+        <!-- 
         <script
             src="https://code.jquery.com/jquery-3.4.1.min.js"
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -21,11 +21,11 @@
         <script type="text/javascript"
             src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.0/dist/jquery.validate.min.js"></script>
         
-        <!-- -->
+         -->
     </head>
     <body>
 
-        <form action="LoginController" method="post"><!--<form action="main.jsp" method="POST"> -->
+        <form action="LoginServlet" method="post"><!--<form action="main.jsp" method="POST"> -->
             <table>
              <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true" placeholder="soandso@gmail.com"></td></tr>
              <tr><td>Password</td><td><input type="password" id="password" name="password" required size="30" ></td></tr>
@@ -34,14 +34,16 @@
          <div>
              <a class="button" href="index.jsp">Cancel</a>
              <input class="button" type="submit" value="Login">
-             <br> ${message}
+             <%= session.getAttribute("existErr")%>
+             <%= session.getAttribute("emailErr")%>
+             <%= session.getAttribute("passErr")%>
          </div>              
         </form>
 
     </body>
     
     <!-- js to validate login form before submission -->
-    <!-- -->
+    <!-- 
     <script type="text/javascript">
         $(document).ready(function() {
             $("#loginForm").validate({
@@ -66,5 +68,5 @@
 
         });
     </script>
-    <!-- -->
+     -->
 </html>

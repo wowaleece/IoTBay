@@ -25,20 +25,15 @@ import uts.isd.model.dao.*;
  */
 public class ConnServlet extends HttpServlet {
 
- 
-
     private DBConnector db;
-
     private DBManager manager;
-
     private Connection conn;
 
         
-
     @Override //Create and instance of DBConnector for the deployment session
     public void init() {
         try {
-
+            
             db = new DBConnector();
 
         } catch (ClassNotFoundException | SQLException ex) {
@@ -54,8 +49,8 @@ public class ConnServlet extends HttpServlet {
     @Override //Add the DBConnector, DBManager, Connection instances to the session
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");       
-
+        response.setContentType("text/html;charset=UTF-8");
+        
         HttpSession session = request.getSession();
 
         conn = db.openConnection();       
@@ -79,11 +74,9 @@ public class ConnServlet extends HttpServlet {
     public void destroy() {
 
         try {
-
             db.closeConnection();
 
         } catch (SQLException ex) {
-
             Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
 
         }

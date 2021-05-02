@@ -42,7 +42,10 @@ public class DBManager {
         //code for delete-operation   
 
     }
-
+    
+    public void log(String s) {
+        st.executeUpdate("Insert into users (userid,email) values (1,'jack')");
+    }
    
 
 }
