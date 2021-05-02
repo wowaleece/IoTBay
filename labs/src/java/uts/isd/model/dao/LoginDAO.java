@@ -16,12 +16,13 @@ public class LoginDAO {
  
     public User checkLogin(String email, String hash) throws SQLException,
             ClassNotFoundException {
-        String jdbcURL = "jdbc:derby://localhost:1527/Auth";
+        //need to think about where to store this connection string.
+        String authURL = "jdbc:derby://localhost:1527/Auth";
         String dbUser = "Auth";
         String dbPassword = "Auth";
  
-        Class.forName("org.apache.derby.jbdc.ClientDriver");
-        Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
+        Class.forName("org.apache.derby.jdbc.ClientDriver");
+        Connection connection = DriverManager.getConnection(authURL, dbUser, dbPassword);
         String sql = "SELECT * FROM users WHERE email = ? and hash = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, email);

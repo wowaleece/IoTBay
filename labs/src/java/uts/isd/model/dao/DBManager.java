@@ -26,8 +26,8 @@ public class DBManager {
     }
 
     //Add a user-data into the database   
-    public void addUser(String email, String name, String password, String gender, String favcol) throws SQLException {                   //code for add-operation       
-        st.executeUpdate("sql query");   
+    public void addUser(String email, String name, String gender, String favcol) throws SQLException {                   //code for add-operation       
+        st.executeUpdate("Insert into users (userid,email) values (1,'jack')");   
 
     }
 
@@ -42,5 +42,7 @@ public class DBManager {
         //code for delete-operation   
 
     }
+
+   
 
 }
