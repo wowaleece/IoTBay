@@ -16,22 +16,30 @@ public class User implements Serializable {
     private String email;
     private String fname;
     private String lname; 
-    private String password;
+//    private String password;
     private String gender;
     private String dob; 
 
-    public User(String email, String fname, String lname, String password, String gender, String dob) {
+    public User(String email, String fname, String lname,  String gender, String dob) { //String password,
         this.email = email;
         this.fname = fname;
         this.lname = lname;
-        this.password = password;
+        //this.password = password;
         this.gender = gender;
         this.dob = dob;
  
     }
     
+    public User(String email, String utype, String phoneno, int addressID ){
+        //do something
+    }
+    
     public User(int userID){
-        // get email and shit from the apps database
+        this.userID = userID;
+    }
+    
+    public int getUserID(){
+        return userID;
     }
     
 
@@ -59,6 +67,7 @@ public class User implements Serializable {
         this.lname = lname;
     }
 
+    /*
     public String getPassword() {
         return password;
     }
@@ -66,7 +75,8 @@ public class User implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    */
+    
     public String getGender() {
         return gender;
     }

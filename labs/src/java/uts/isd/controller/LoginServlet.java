@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBManager;
-import uts.isd.model.dao.LoginDAO;
+import uts.isd.model.dao.UserDAO;
 
  
 
@@ -41,7 +41,7 @@ public class LoginServlet extends HttpServlet {
         String email = request.getParameter("email");
         String hash = request.getParameter("password");
         //5- retrieve the manager instance from session      
-        LoginDAO loginDAO = new LoginDAO();
+        UserDAO loginDAO = new UserDAO();
         DBManager manager = (DBManager) session.getAttribute("manager");
         User user = null;  
         

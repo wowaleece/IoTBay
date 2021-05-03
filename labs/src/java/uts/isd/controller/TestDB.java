@@ -50,7 +50,7 @@ public class TestDB {
 
             System.out.println("Product has been added to the database.");
             
-            db.addUser("abc", "edf", "geh", "abc");
+            //db.addUser("abc", "edf", "geh", "abc");
             
             connector.closeConnection();
 
