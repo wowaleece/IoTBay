@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author marinasantanelli
  */
 public class User implements Serializable {
-    private int userID;
+    private int userID; // don't know that this is secure enough? 
     private String email;
     private String fname;
     private String lname; 
@@ -36,12 +36,12 @@ public class User implements Serializable {
     
     public User(int userID){
         this.userID = userID;
+        
     }
     
     public int getUserID(){
         return userID;
     }
-    
 
     public String getEmail() {
         return email;

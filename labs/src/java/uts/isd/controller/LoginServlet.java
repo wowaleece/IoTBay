@@ -19,7 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBManager;
-import uts.isd.model.dao.UserDAO;
+import uts.isd.model.dao.LoginDAO;
 
  
 
@@ -40,9 +40,10 @@ public class LoginServlet extends HttpServlet {
         //3- capture the posted credentials     
         String email = request.getParameter("email");
         String hash = request.getParameter("password");
-        //5- retrieve the manager instance from session      
-        UserDAO loginDAO = new UserDAO();
-        DBManager manager = (DBManager) session.getAttribute("manager");
+        //5- retrieve the manager instance from session    // now doing this step during LoginDAO after step 12   
+        DBManager manager = (DBManager) request.getAttribute("manager");
+        LoginDAO loginDAO = new LoginDAO();
+        
         User user = null;  
         
         session.setAttribute("emailErr", "Enter email");
@@ -65,7 +66,8 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").include(request,response);
         } else {
             try {
-                user = loginDAO.checkLogin(email, hash);
+                //user = loginDAO.checkLogin(email, hash);
+                user = manager.findUser(loginDAO.checkLogin(email, hash));
                 //logg a login attempt
                 if (user != null) {
                     session.setAttribute("user", user);

@@ -23,13 +23,15 @@ public class DBManager {
     }
 
     //Find user by email and password in the database   
-    public User findUser(int userID) throws SQLException {       
+    public User findUser(int userID) throws SQLException {  
         String sql = "SELECT email, utype, phoneno, addressid FROM users WHERE userID = ?"; //and isValid = true // validTo < sysdate
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, userID);
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
         User user = null;
-        if (result.next()) {user = new User(result.getString("email"),result.getString("utype"),result.getString("phoneno"),result.getInt("addressID"));} // if the result is not null, get userID
+        if (result.next()) {
+            user = new User(result.getString("email"),result.getString("utype"),result.getString("phoneno"),result.getInt("addressID"));
+        } // if the result is not null, get userID
         
         return user;   
     }

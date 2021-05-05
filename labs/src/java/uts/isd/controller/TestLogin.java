@@ -11,7 +11,7 @@ import java.sql.*;
 import uts.isd.model.User;
 
 
-import uts.isd.model.dao.UserDAO;
+import uts.isd.model.dao.LoginDAO;
 
 
 /**
@@ -26,7 +26,7 @@ public class TestLogin {
     public static void main(String[] args) {
         try {
             //start login
-            UserDAO loginDAO = new UserDAO();
+            LoginDAO loginDAO = new LoginDAO();
             
             //test input
             System.out.print("User email: ");
