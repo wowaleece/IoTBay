@@ -10,6 +10,7 @@ CREATE TABLE "ADDRESSES" (
 CREATE TABLE "USERS" (
 	 "USERID" INT NOT NULL PRIMARY KEY --AUTO_INCREMENT
 	,"EMAIL" VARCHAR(30) UNIQUE NOT NULL
+	,"HAHS" VARCHAR(30) unique NOT NULL
 	,"UTYPE" VARCHAR(30) -- type of user
 	,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
 	,"ADDRESSID" INT 
@@ -38,14 +39,12 @@ CREATE TABLE "LOGS" (
 )
 
 
-
-
-
-INSERT INTO USERS (userID, email, uType)
-VALUES (10,'james','smith')
-      ,(4,'smith','smith')
-      ,(6,'bobby','smith')
-      ,(8,'Bobby','smith')
+INSERT INTO USERS (userID, email, password, uType)
+VALUES (10,'james', 'smith', 'Customer')
+      ,(4, 'smith', 'smith', 'Customer')
+      ,(6, 'bobby', 'smith', 'Customer')
+      ,(8, 'Bobby', 'smith', 'Customer')
+	  ,(7, 'Jack', 'Graham', 'Admin')
 ;
 INSERT INTO REGD_USERS (userID, fname, lname)
 VALUES (10,'james','smith')
