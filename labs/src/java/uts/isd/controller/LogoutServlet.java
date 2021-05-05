@@ -45,7 +45,7 @@ public class LogoutServlet {
             }
             
             //send user back to the main page
-            request.getRequestDispatcher("main.jsp").include(request, response);
+            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
 }

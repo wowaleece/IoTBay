@@ -13,19 +13,7 @@
         <title>Welcome Page</title>
     </head>
     <body>
-        <% 
-            String fname = request.getParameter("fname");
-            String lname = request.getParameter("lname");
-            String email = request.getParameter("email");
-            String password = request.getParameter("password"); 
-            String gender = request.getParameter("gender");
-            String dob = request.getParameter("dob");
-        %>
         
-        <%
-            User user = new User(email, fname, lname, password, gender, dob);
-            session.setAttribute("user", user);
-        %>
         <h1>Welcome!</h1>
         
         <table border="1">

@@ -15,15 +15,32 @@
     <body>
         <h1>Sign Up</h1>
 
-         <form action="welcome.jsp" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
+         <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
 
              <table>
                  <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
-                 <tr><td>Password</td><td><input type="password" id="password" name="password" required></td></tr>
+                 <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td></tr>
                  <tr><td>First Name:</td><td><input type="text" id="fname" name="fname" required></td></tr>
                  <tr><td>Last Name:</td><td><input type="text" id="lname" name="lname" required></td></tr>
-                 <tr><td>Gender</td><td><input type="text" id="gender" name="gender" required></td></tr>
+                 <tr>
+                     <td>Sex:</td>
+                     <td>
+                         <table>
+                             <tr>
+                                 <td><input type="radio" id="other" name="sex" value="other"></td>
+                                 <td><input type="radio" id="female" name="sex" value="female"></td>
+                                 <td><input type="radio" id="male" name="sex" value="male"></td>
+                             </tr>
+                             <tr>
+                                 <td><label class="radioLabel" for="other">Other</label></td>
+                                 <td><label class="radioLabel" for="female">Female</label></td>
+                                 <td><label class="radioLabel" for="male">Male</label></td>
+                             </tr>
+                        </table>
+                     </td>
+                 </tr>
                  <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td></tr>
+                 <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" required></td></tr>
                  <tr><td>Agree to TOS?</td>
                      <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
                  </tr>

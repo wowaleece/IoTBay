@@ -19,7 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBManager;
-import uts.isd.model.dao.LoginDAO;
 
  
 
@@ -30,8 +29,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
-            throws ServletException, IOException {       
-        
+            throws ServletException, IOException {
         
         //1- retrieve the current session
         HttpSession session = request.getSession();
@@ -39,18 +37,12 @@ public class LoginServlet extends HttpServlet {
         Validator validator = new Validator();
         //3- capture the posted credentials     
         String email = request.getParameter("email");
-        String hash = request.getParameter("password");
+        String password = request.getParameter("password");
         //5- retrieve the manager instance from session    // now doing this step during LoginDAO after step 12   
-        DBManager manager = (DBManager) request.getAttribute("manager");
-        LoginDAO loginDAO = new LoginDAO();
+        DBManager manager = (DBManager) session.getAttribute("manager");
         
         User user = null;  
-        
-        session.setAttribute("emailErr", "Enter email");
-        session.setAttribute("passErr", "Enter password");
-        session.setAttribute("existErr", "");
-        session.setAttribute("nameErr", "Enter name"); // ?????
-        
+        validator.clear(session); // updated the %Err attributes to default "please enter"
         
         if (!validator.validateEmail(email)) {           
             //8-set incorrect email error to the session           
@@ -58,7 +50,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").include(request,response);
             //9- redirect user back to the login.jsp     
 
-        } else if (!validator.validatePassword(hash)) {                  
+        } else if (!validator.validatePassword(password)) {                  
 
             //11-set incorrect password error to the session           
             session.setAttribute("passErr","Error: Password format incorrect");
@@ -67,19 +59,17 @@ public class LoginServlet extends HttpServlet {
         } else {
             try {
                 //user = loginDAO.checkLogin(email, hash);
-                user = manager.findUser(loginDAO.checkLogin(email, hash));
+                user = manager.checkLogin(email, password);
                 //logg a login attempt
                 if (user != null) {
                     session.setAttribute("user", user);
-                    request.getRequestDispatcher("main.jsp").include(request, response);
+                    request.getRequestDispatcher("index.jsp").include(request, response);
                     
                 } else {
                     session.setAttribute("existErr", "User does not exist");
                     request.getRequestDispatcher("login.jsp").include(request, response);
                 }   
             } catch (SQLException ex) {           
-                Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);       
-            } catch ( ClassNotFoundException ex) {           
                 Logger.getLogger(LoginServlet.class.getName()).log(Level.SEVERE, null, ex);       
             }
         }

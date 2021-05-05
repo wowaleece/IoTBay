@@ -70,7 +70,7 @@ public class ConnServlet extends HttpServlet {
 
         
 
-    @Override //Destroy the servlet and release the resources of the application (terminate also the db connection)
+    @Override //Destroy the servlet and release the resources of the application (terminate also the db connection) // automatic when application closes
     public void destroy() {
 
         try {
