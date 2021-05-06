@@ -12,75 +12,38 @@ import java.io.Serializable;
  * @author marinasantanelli
  */
 public class User implements Serializable {
-    private int userID;
+    private int userID; // don't know that this is secure enough? 
     private String email;
-    private String fname;
-    private String lname; 
-    private String password;
-    private String gender;
-    private String dob; 
+    private String uType; //user type customer/admin
+    private String phoneNo; //can be null filled on order completion
+    
 
-    public User(String email, String fname, String lname, String password, String gender, String dob) {
+    public User(int userID, String email , String uType, String phoneNo) { //String password,
+        this.userID = userID;
         this.email = email;
-        this.fname = fname;
-        this.lname = lname;
-        this.password = password;
-        this.gender = gender;
-        this.dob = dob;
- 
+        this.uType = uType;
+        this.phoneNo = phoneNo; 
     }
-    
-    public User(int userID){
-        // get email and shit from the apps database
+
+    public int getUserID() {
+        return userID;
     }
-    
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getuType() {
+        return uType;
     }
 
-    public String getFname() {
-        return fname;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setFname(String fname) {
-        this.fname = fname;
+    public void setPhoneNo(String phNumber) {
+        this.phoneNo = phoneNo;
     }
-
-    public String getLname() {
-        return lname;
-    }
-
-    public void setLname(String lname) {
-        this.lname = lname;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
-    }
-
+    
+   
 }

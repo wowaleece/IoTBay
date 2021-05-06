@@ -10,14 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
-        <%session.invalidate();%>
         <title>Home</title>
     </head>
     <body>
         <h1>IoTBay Home</h1>
         
          <div>Welcome to the IoTBay Web Application!</div>
-        <br  />
+        <br/>
             
         
         <div>
@@ -31,6 +30,9 @@
         <div>
             <a class="button" href="mainGuest.jsp">Guest Enter</a>
         </div>
+        
+        
+        <jsp:include page="/ConnServlet" flush="true" /> <!-- loads db conn -->
         
         <%--
         <form action="register.jsp" method="POST">
