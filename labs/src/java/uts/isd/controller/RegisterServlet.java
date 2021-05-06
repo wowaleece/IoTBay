@@ -39,12 +39,13 @@ public class RegisterServlet extends HttpServlet {
         String phoneNo = request.getParameter("phoneNo");
         String fName = request.getParameter("fName");
         String lName = request.getParameter("lName");
-        String title = request.getParameter("title");
         String sex = request.getParameter("sex");
         String dob = request.getParameter("dob");
         String address = request.getParameter("address");
         String tos = request.getParameter("agree");
         //might still need to validate all these fields
+        
+        
         
         
         DBManager manager = (DBManager) session.getAttribute("manager");
@@ -84,7 +85,7 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("user",user);
                     
                     //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, 0);
+                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
                     request.getRequestDispatcher("index.jsp").include(request, response);
                 }
                 session.setAttribute("existErr", "Registry Failed");

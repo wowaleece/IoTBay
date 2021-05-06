@@ -20,8 +20,9 @@
              <table>
                  <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
                  <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td></tr>
-                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fname" required></td></tr>
-                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lname" required></td></tr>
+                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" required></td></tr>
+                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" required></td></tr>
+                 
                  <tr>
                      <td>Sex:</td>
                      <td>

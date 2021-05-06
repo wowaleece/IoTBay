@@ -5,6 +5,7 @@ DROP TABLE ADDRESSES;
 
 CREATE TABLE "ADDRESSES" (
 	"ADDRESSID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
+        ,"ADDRESS" VARCHAR(30)
 );
 
 CREATE TABLE "USERS" (
@@ -39,16 +40,18 @@ CREATE TABLE "LOGS" (
 );
 
 
-INSERT INTO USERS (userID, email, password, uType)
-VALUES (10,'james', 'smith', 'Customer')
-      ,(4, 'smith', 'Dickson', 'Customer')
-      ,(6, 'bobby', 'Jerry', 'Customer')
-      ,(8, 'Bobby', 'Bart', 'Customer')
-      ,(7, 'Jack', 'Graham', 'Admin')
+INSERT INTO USERS (email, password, uType)
+VALUES ('james', 'smith', 'Customer')
+      ,('smith', 'Dickson', 'Customer')
+      ,('bobby', 'Jerry', 'Customer')
+      ,('Bobby', 'Bart', 'Customer')
+      ,('Jack', 'Graham', 'Admin')
 ;
 INSERT INTO CUSTOMERS (userID, fname, lname)
-VALUES (10,'james','smith')
+VALUES (2,'james','smith')
       ,(4,'smith','smith')
-      ,(6,'bobby','smith')
-      ,(8,'Bobby','smith')
+      ,(5,'bobby','smith')
+      ,(3,'Bobby','smith')
 ;
+
+INSERT INTO ADDRESSES (ADDRESS) VALUES ('fuck'), ('meme'),('suck'),('ass');

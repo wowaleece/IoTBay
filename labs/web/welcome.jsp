@@ -20,19 +20,19 @@
             <thead>
                 <tr>
                     <th class="p"> Email</th>
-                    <th class="p"> Name</th>
-                    <th class="p"> Password</th>
-                    <th class="p"> Gender</th>
-                    <th class="p"> Date of Birth</th>
+                    <!--<th class="p"> Name</th>-->
+                    <%--<th class="p"> Password</th>--%>
+                    <th class="p"> User Type</th>
+                    <th class="p"> Phone No</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>${user.email}</td>
-                    <td>${user.fname} ${user.lname}</td>
-                    <td>${user.password}</td>
-                    <td>${user.gender}</td>
-                    <td>${user.dob}</td>
+                    <%--<td>${user.fname} ${user.lname}</td> --%>
+                    <%--<td>${user.password}</td> --%>
+                    <td>${user.uType}</td>
+                    <td>${user.phoneNo}</td>
                 </tr>
             </tbody>
         </table>
@@ -62,7 +62,7 @@
       </ul>
         --%>
         
-         <p style="color:#FFFFFF"> Click <a class="p" href="main.jsp">here</a> to proceed to the main index page.</p>
+         <p style="color:#FFFFFF"> Click <a class="p" href="index.jsp">here</a> to proceed to the main index page.</p>
         
     </body>
   

@@ -39,7 +39,7 @@ public class DBManager {
     //Find user by email and password in the database   
     public User checkLogin(String email, String password) throws SQLException{
         String sql = "SELECT u.userID, u.email, u.utype, u.PHONENO"
-                + " FROM app.users u INNER JOIN app.customers c on c.userid = u.userid"
+                + " FROM app.users u"
                 + " WHERE u.email = ? and u.password = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, email);
@@ -89,20 +89,21 @@ public class DBManager {
         // can we invalidate instead? 
     }
     
-    public void addCustomer(int userID, String fName, String lName, String title, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO customers (userID, fName, lName, title, sex, dob, addressid)"
-                   + " VALUES ( ? , ? , ? , ? , ?, ?, ?)";
+    
+    
+    public void addCustomer(int userID, String fName, String lName, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
+        String sql = "INSERT INTO customers (userID, fName, lName, sex, dob, addressid)"
+                   + " VALUES ( ? , ? , ? , ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, userID);
         statement.setString(2, fName); //need to add hash method later
         statement.setString(3, lName);
-        statement.setString(4, title);
-        statement.setString(5, sex);
-        statement.setString(6, dob);
-        statement.setInt(7, addressID);
+        statement.setString(4, sex);
+        statement.setString(5, dob);
+        statement.setInt(6, addressID);
         statement.executeUpdate();
         
-        log(userID, "Registered", "" + userID + " Registered as a customer");
+        //log(userID, "Registered", "" + userID + " Registered as a customer");
     }//addCustomer()
     
     //add anonymous customer
