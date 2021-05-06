@@ -27,9 +27,10 @@
             <a class="button" href="login.jsp">Log In</a>
         </div>        
         <br  />
-        <div>
+        
+        <!--<div>
             <a class="button" href="mainGuest.jsp">Guest Enter</a>
-        </div>
+        </div> -->
         
         
         <jsp:include page="/ConnServlet" flush="true" /> <!-- loads db conn -->
