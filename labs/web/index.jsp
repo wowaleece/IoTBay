@@ -20,7 +20,7 @@
             <a href="index.jsp">Home</a>
             <a href="register.jsp">Register</a>
             <a href="login.jsp"">Login</a>
-            <a href="mainGuest.jsp"">Browse Products</a>
+            <a href="ViewProducts.jsp"">Browse Products</a>
           </div>
        
         <span style="font-size:30px;cursor:pointer;color:#FFFFFF;" onclick="openNav()">&#9776; Menu </span>
