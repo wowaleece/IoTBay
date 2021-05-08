@@ -87,10 +87,10 @@ public class RegisterServlet extends HttpServlet {
                     //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
                     manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
                     request.getRequestDispatcher("index.jsp").include(request, response);
+                } else {
+                    session.setAttribute("existErr", "Registry Failed");
+                    request.getRequestDispatcher("register.jsp").include(request, response);
                 }
-                session.setAttribute("existErr", "Registry Failed");
-                request.getRequestDispatcher("register.jsp").include(request, response);
-                
                 //reload the page
                 
             } catch (SQLException ex) {           
