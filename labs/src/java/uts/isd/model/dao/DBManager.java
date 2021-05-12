@@ -91,7 +91,7 @@ public class DBManager {
     
     
     
-    public void addCustomer(int userID, String fName, String lName, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
+    public void addCustomer(int userID, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {                   //code for add-operation       
         String sql = "INSERT INTO customers (userID, fName, lName, sex, dob, addressid)"
                    + " VALUES ( ? , ? , ? , ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -99,7 +99,7 @@ public class DBManager {
         statement.setString(2, fName); //need to add hash method later
         statement.setString(3, lName);
         statement.setString(4, sex);
-        statement.setString(5, dob);
+        statement.setDate(5, dob);
         statement.setInt(6, addressID);
         statement.executeUpdate();
         

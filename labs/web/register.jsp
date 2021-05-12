@@ -18,10 +18,10 @@
          <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
 
              <table>
-                 <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required="true"></td></tr>
+                 <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required></td></tr>
                  <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td></tr>
-                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" required></td></tr>
-                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" required></td></tr>
+                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" ></td></tr>
+                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" ></td></tr>
                  
                  <tr>
                      <td>Sex:</td>
@@ -41,7 +41,7 @@
                      </td>
                  </tr>
                  <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td></tr>
-                 <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" required></td></tr>
+                 <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" ></td></tr>
                  <tr><td>Agree to TOS?</td>
                      <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
                  </tr>

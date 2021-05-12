@@ -10,6 +10,9 @@ package uts.isd.controller;
  * @author super
  */
 import java.io.Serializable;
+import java.sql.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.http.HttpSession;
@@ -17,11 +20,17 @@ import javax.servlet.http.HttpSession;
 
 public class Validator implements Serializable{ 
 
-
-    private String emailPattern = "[a-zA-Z0-9]{2,}";//"([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)";      
-    private String namePattern = "([A-Z][a-z]+[\\s])+[A-Z][a-z]*";       
-    private String passwordPattern = "[a-zA-Z0-9]{2,}";       
-
+    // debug regex using https://regexr.com/346hf
+    private String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)";  //"[a-zA-Z0-9]{2,}";    
+    private String stringPattern = "[A-Z][a-z]*";//"([A-Z][a-z]+[\\s])+[A-Z][a-z]*";       
+    private String passwordPattern = "[a-zA-Z0-9]{2,}";  // "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" // at least 8 char, one letter, one number and one special character
+    /*private String datePattern = "(18|19|20)[0-9]{2}[-](0[13578]|1[02])[-](0[1-9]|[12][0-9]|3[01])" //31 day months
+                               + "(18|19|20)[0-9]{2}[-](0[469]|11)[-](0[1-9]|[12][0-9]|30)[-]" //30 day months
+                               + "(18|19|20)[0-9]{2}[-](02)[-](0[1-9]|1[0-9]|2[0-8])" // 28 day Feb
+                               + "(((18|19|20)(04|08|[2468][048]|[13579][26]))|2000)[-](02)[-]29" // 29 day Feb
+            
+    */
+    
     public Validator(){    }       
 
     public boolean validate(String pattern, String input){       
@@ -45,15 +54,24 @@ public class Validator implements Serializable{
     }
 
 
-    public boolean validateName(String name){
+    public boolean validateString(String x){
 
-        return validate(namePattern,name); 
+        return validate(stringPattern,x); 
     }       
 
 
     public boolean validatePassword(String password){
 
         return validate(passwordPattern,password); 
+    }
+    
+    public Date sanitiseDate(String date){        
+        try {
+                return java.sql.Date.valueOf(date);
+        }catch (IllegalArgumentException ex) {
+            Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
     }
     
     public void clear(HttpSession session) {

@@ -23,10 +23,10 @@ CREATE TABLE "CUSTOMERS" (
     ,"LNAME" VARCHAR(30)
     ,"TITLE" VARCHAR(30)
     ,"SEX" VARCHAR(30)
-    ,"DOB" VARCHAR(30)
-	,"ADDRESSID" INT 
-        ,FOREIGN KEY (ADDRESSID) REFERENCES ADDRESSES(ADDRESSID)
-    --,"regDate" DATE(1)
+    ,"DOB" DATE
+    ,"ADDRESSID" INT 
+    ,"regDate" DATE
+    ,FOREIGN KEY (ADDRESSID) REFERENCES ADDRESSES(ADDRESSID)
     ,FOREIGN KEY (userID) REFERENCES USERS(userID)
 );
 
@@ -42,7 +42,7 @@ CREATE TABLE "LOGS" (
 
 INSERT INTO USERS (email, password, uType)
 VALUES ('james', 'smith', 'Customer')
-      ,('smith', 'Dickson', 'Customer')
+      ,('smith', 'Jackson', 'Customer')
       ,('bobby', 'Jerry', 'Customer')
       ,('Bobby', 'Bart', 'Customer')
       ,('Jack', 'Graham', 'Admin')
@@ -54,4 +54,4 @@ VALUES (2,'james','smith')
       ,(3,'Bobby','smith')
 ;
 
-INSERT INTO ADDRESSES (ADDRESS) VALUES ('fuck'), ('meme'),('suck'),('ass');
+INSERT INTO ADDRESSES (ADDRESS) VALUES ('address'), ('address'),('address'),('address');

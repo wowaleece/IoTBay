@@ -8,6 +8,7 @@ package uts.isd.controller;
  
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,39 +32,48 @@ public class RegisterServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
             throws ServletException, IOException {
         
+        //init helper classes
         HttpSession session = request.getSession();
+        DBManager manager = (DBManager) session.getAttribute("manager");
         Validator validator = new Validator();
-        //3- capture the posted credentials     
+        
+        //capture the posted credentials     
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phoneNo = request.getParameter("phoneNo");
         String fName = request.getParameter("fName");
         String lName = request.getParameter("lName");
         String sex = request.getParameter("sex");
-        String dob = request.getParameter("dob");
+        Date dob = validator.sanitiseDate(request.getParameter("dob"));
         String address = request.getParameter("address");
         String tos = request.getParameter("agree");
-        //might still need to validate all these fields
+        
+        //fill null strings
+        if (phoneNo == null) phoneNo = "";
+        if (fName == null) fName = "";
+        if (lName == null) lName = "";
+        if (sex == null) sex = "";
+        if (address == null) address = "";
         
         
         
         
-        DBManager manager = (DBManager) session.getAttribute("manager");
+        
+        //validate input
+        User user = null;  
+        validator.clear(session); // updated the %Err attributes to default "please enter"
+        
         
         
         //process the address, get ID
         //int addressID = manager.findAddress(address);
         
-        //check that the TOS has been signed.
-        if (tos != null && !tos.equals("Yes")){
-            session.setAttribute("regErr", "Error: please sign TOS"); 
-            request.getRequestDispatcher("register.jsp").include(request,response);
-        }
+        
+       
         
         
         //validate email and create user/customer
-        User user = null;  
-        validator.clear(session); // updated the %Err attributes to default "please enter"
+        
         
         
         if (!validator.validateEmail(email)) {           
