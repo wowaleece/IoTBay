@@ -5,6 +5,7 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
+import java.sql.Date;
 /**
 
 /**
@@ -16,6 +17,12 @@ public class User implements Serializable {
     private String email;
     private String uType; //user type customer/admin
     private String phoneNo; //can be null filled on order completion
+    private String fName;
+    private String lName;
+    private String sex;
+    private Date dob;
+    private Date regDate;
+    private Address address;
     
 
     public User(int userID, String email , String uType, String phoneNo) { //String password,
@@ -45,5 +52,48 @@ public class User implements Serializable {
         this.phoneNo = phoneNo;
     }
     
+    public Date getRegDate() {
+        return regDate;
+    }
+    
+    public String getfName() {
+        return fName;
+    }
+
+    public void setfName(String fName) {
+        this.fName = fName;
+    }
+
+    public String getlName() {
+        return lName;
+    }
+
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+    
+    public void setAddress(Address address){
+        this.address = address;
+    }
+    
+    public Address getAddress() {
+        return address;
+    }
    
 }

@@ -32,6 +32,15 @@
 	<url-pattern>/RegisterServlet</url-pattern>
     </servlet-mapping>
     
+    <servlet>
+        <servlet-name>EditServlet</servlet-name>
+        <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+	<servlet-name>EditServlet</servlet-name>
+	<url-pattern>/EditServlet</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>

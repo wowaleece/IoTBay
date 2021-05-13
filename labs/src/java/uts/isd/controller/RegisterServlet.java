@@ -77,14 +77,13 @@ public class RegisterServlet extends HttpServlet {
         
         
         if (!validator.validateEmail(email)) {           
-      
             session.setAttribute("emailErr", "Error: Email format incorrect"); 
             request.getRequestDispatcher("register.jsp").include(request,response);
-
 
         } else if (!validator.validatePassword(password)) {            
             session.setAttribute("passErr","Error: Password format incorrect");
             request.getRequestDispatcher("register.jsp").include(request,response);
+            
         } else {
             try {
 

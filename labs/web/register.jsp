@@ -15,46 +15,47 @@
     <body>
         <h1>Sign Up</h1>
 
-         <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
+        <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
+            <table>
+                <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required></td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
+                <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td><td>${sessionScope.passErr}</td></tr>
+                <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" ></td><td></td></tr>
+                <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" ></td><td></td></tr>
+                <tr>
+                    <td>Sex:</td>
+                    <td>
+                        <table>
+                            <tr>
+                                <td><input type="radio" id="other" name="sex" value="other"></td>
+                                <td><input type="radio" id="female" name="sex" value="female"></td>
+                                <td><input type="radio" id="male" name="sex" value="male"></td>
+                            </tr>
+                            <tr>
+                                <td><label class="radioLabel" for="other">Other</label></td>
+                                <td><label class="radioLabel" for="female">Female</label></td>
+                                <td><label class="radioLabel" for="male">Male</label></td>
+                            </tr>
+                       </table>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td><td></td></tr>
+                <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" ></td><td></td></tr>
+                <tr><td>Agree to TOS?</td>
+                    <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
+                    <td></td>
+                </tr>
 
-             <table>
-                 <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required></td></tr>
-                 <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td></tr>
-                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" ></td></tr>
-                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" ></td></tr>
-                 
-                 <tr>
-                     <td>Sex:</td>
-                     <td>
-                         <table>
-                             <tr>
-                                 <td><input type="radio" id="other" name="sex" value="other"></td>
-                                 <td><input type="radio" id="female" name="sex" value="female"></td>
-                                 <td><input type="radio" id="male" name="sex" value="male"></td>
-                             </tr>
-                             <tr>
-                                 <td><label class="radioLabel" for="other">Other</label></td>
-                                 <td><label class="radioLabel" for="female">Female</label></td>
-                                 <td><label class="radioLabel" for="male">Male</label></td>
-                             </tr>
-                        </table>
-                     </td>
-                 </tr>
-                 <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td></tr>
-                 <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" ></td></tr>
-                 <tr><td>Agree to TOS?</td>
-                     <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
-                 </tr>
-             </table>
-             <br  />
+            </table>
+        <br>
 
-             <div>
-                 <a class="button" href="index.jsp">Cancel</a>
-                 <input class="button" type="submit" value="Sign up">
-             </div>
+        <div>
+            <a class="button" href="index.jsp">Cancel</a>
+            <input class="button" type="submit" value="Sign up">
+        </div>
                  
              
- </form>
+    </form>
   
 <%--
 <p>Agree to TOS?</p>

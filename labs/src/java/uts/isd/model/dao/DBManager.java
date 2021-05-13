@@ -40,7 +40,7 @@ public class DBManager {
     public User checkLogin(String email, String password) throws SQLException{
         String sql = "SELECT u.userID, u.email, u.utype, u.PHONENO"
                 + " FROM app.users u"
-                + " WHERE u.email = ? and u.password = ?";
+                + " WHERE u.active = TRUE and u.email = ? and u.password = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, email);
         statement.setString(2, password); //need to add hash method later

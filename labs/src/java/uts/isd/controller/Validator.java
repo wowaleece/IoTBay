@@ -21,8 +21,8 @@ import javax.servlet.http.HttpSession;
 public class Validator implements Serializable{ 
 
     // debug regex using https://regexr.com/346hf
-    private String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)";  //"[a-zA-Z0-9]{2,}";    
-    private String stringPattern = "[A-Z][a-z]*";//"([A-Z][a-z]+[\\s])+[A-Z][a-z]*";       
+    private String emailPattern = "([a-zA-Z0-9]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,5})*)"; //"([a-zA-Z0-9-]+)(([._-])([a-zA-Z0-9]+))*(@)([a-z]+)(.)([a-z]{3})((([.])[a-z]{0,2})*)";  //"[a-zA-Z0-9]{2,}";    
+    private String stringPattern = "[A-Za-z0-9]*";//"([A-Z][a-z]+[\\s])+[A-Z][a-z]*";       
     private String passwordPattern = "[a-zA-Z0-9]{2,}";  // "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$" // at least 8 char, one letter, one number and one special character
     /*private String datePattern = "(18|19|20)[0-9]{2}[-](0[13578]|1[02])[-](0[1-9]|[12][0-9]|3[01])" //31 day months
                                + "(18|19|20)[0-9]{2}[-](0[469]|11)[-](0[1-9]|[12][0-9]|30)[-]" //30 day months

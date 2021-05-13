@@ -5,15 +5,21 @@ DROP TABLE ADDRESSES;
 
 CREATE TABLE "ADDRESSES" (
 	"ADDRESSID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
-        ,"ADDRESS" VARCHAR(30)
+        ,"STREETNAME" VARCHAR(30)
+        ,"UNITNUMBER" VARCHAR(30)
+        ,"SUBURB" VARCHAR(30)
+        ,"POSTCODE" INT
+        ,"STATE" VARCHAR(30)
+        ,"COUNTRY" VARCHAR(30)
 );
 
 CREATE TABLE "USERS" (
 	 "USERID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
 	,"EMAIL" VARCHAR(30) UNIQUE NOT NULL
-	,"PASSWORD" VARCHAR(30) unique NOT NULL
+	,"PASSWORD" VARCHAR(30) UNIQUE NOT NULL
 	,"UTYPE" VARCHAR(30) -- type of user
 	,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
+        ,"ACTIVE" BOOLEAN DEFAULT TRUE
 );
 
 CREATE TABLE "CUSTOMERS" (
@@ -25,7 +31,7 @@ CREATE TABLE "CUSTOMERS" (
     ,"SEX" VARCHAR(30)
     ,"DOB" DATE
     ,"ADDRESSID" INT 
-    ,"regDate" DATE
+    ,"REGDATE" DATE
     ,FOREIGN KEY (ADDRESSID) REFERENCES ADDRESSES(ADDRESSID)
     ,FOREIGN KEY (userID) REFERENCES USERS(userID)
 );
@@ -43,9 +49,9 @@ CREATE TABLE "LOGS" (
 INSERT INTO USERS (email, password, uType)
 VALUES ('james', 'smith', 'Customer')
       ,('smith', 'Jackson', 'Customer')
-      ,('bobby', 'Jerry', 'Customer')
-      ,('Bobby', 'Bart', 'Customer')
-      ,('Jack', 'Graham', 'Admin')
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer')
+      ,('Bobby@hotmail.com.au', 'Bart', 'Customer')
+      ,('Jack@gmail.com', 'Graham', 'Admin')
 ;
 INSERT INTO CUSTOMERS (userID, fname, lname)
 VALUES (2,'james','smith')
