@@ -14,6 +14,7 @@
 <%@page import="uts.isd.model.dao.DBConnector"%>
 <%@page import="uts.isd.model.dao.DB"%>
 <%@page import="uts.isd.model.dao.DBManager"%>
+<jsp:include page="header.jsp" />
 <%
 String id = request.getParameter("PRODUCTID");
 String driver = "org.apache.derby.jdbc.ClientDriver";
@@ -43,18 +44,9 @@ ResultSet resultSet = null;
         <h1 style="text-align:center">IoT Bay Store</h1>
         
         <!-- TO DO: QUERY DATABASE FOR ITEM NAME ---> 
-        <div class="topnav">
-            <div class="search-container">
-                <form action="/action_page.php">
-                  <input type="text" placeholder="Search..." name="search">
-                  <button type="submit"><i class="fa fa-search"></i></button>
-                </form> 
-            </div>
-        </div>
-        
  
         <div>
-            <h1 style="color:white" >Products</h1> 
+            <h1 style="color:lightblue" >Products</h1> 
            
             <table border = "1" width = "100%">
                 <tr>    
@@ -93,9 +85,12 @@ ResultSet resultSet = null;
             
             <br>
             <br>
-            <p style="color:white">You are not logged in. </p>
-            <p style="color:#FFFFFF"> Click <a class="p" href="login.jsp">here</a> to login.</p>
-            <p style="color:#FFFFFF"> Click <a class="p" href="register.jsp"> here</a> to register.</p>
+            
+            <!-- TO DO: FIGURE OUT HOW TO DO AN IF STATEMENT --> 
+            <p style="color:grey">You are not logged in. </p>
+            <p> ${user.email}</td></p>
+            <p> Click <a class="p" href="login.jsp">here</a> to login.</p>
+            <p> Click <a class="p" href="register.jsp"> here</a> to register.</p>
         </>
     </body>
 </html>
