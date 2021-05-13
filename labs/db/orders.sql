@@ -9,12 +9,12 @@
  */
 
 CREATE TABLE Orders (
-    OrderID varchar(20) NOT NULL PRIMARY KEY
+    OrderID BIGINT NOT NULL PRIMARY KEY
         GENERATED ALWAYS AS IDENTITY 
         (START WITH 1, INCREMENT BY 1),
     UserID varchar(20) NOT NULL UNIQUE, 
     OrderTime timestamp DEFAULT CURRENT_TIMESTAMP,
-    OrderDate date,
+--     OrderDate date, we do not need date because OrderTime accounts for date also. 
     OrderStatus varchar(20),
     ShippingStatus varchar(20), 
     PaymentStatus varchar(20), 
@@ -35,6 +35,6 @@ CREATE TABLE OrderLineItems (
     OrderID varchar(20) NOT NULL,
     Status varchar(20),
     ProductName varchar(20), 
-    UnitPrice float, 
-    PRIMARY KEY (UserID)
+    UnitPrice float
+--     PRIMARY KEY (UserID)
 );

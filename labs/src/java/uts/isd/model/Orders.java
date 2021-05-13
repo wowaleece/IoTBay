@@ -17,7 +17,6 @@ public class Orders {
     private String Status; 
     private String ShippingStatus;
     private String OrderTime; 
-    private String OrderDate; 
     private String StreetName; 
     private String UnitNumber; 
     private String Suburb; 
@@ -27,13 +26,12 @@ public class Orders {
     private String NameonCard; 
     private String CardType; 
 
-    public Orders(String OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String OrderDate, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) {
+    public Orders(String OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.Status = Status;
         this.ShippingStatus = ShippingStatus; 
         this.OrderTime = OrderTime;
-        this.OrderDate = OrderDate;
         this.StreetName = StreetName;
         this.UnitNumber = UnitNumber;
         this.Suburb = Suburb;
@@ -81,14 +79,6 @@ public class Orders {
 
     public void setOrderTime(String OrderTime) {
         this.OrderTime = OrderTime;
-    }
-
-    public String getOrderDate() {
-        return OrderDate;
-    }
-
-    public void setOrderDate(String OrderDate) {
-        this.OrderDate = OrderDate;
     }
 
     public String getStreetName() {
