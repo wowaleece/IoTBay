@@ -13,6 +13,32 @@
         <title>Home</title>
     </head>
     <body>
+        
+        <!-- Side nav function starts here --> 
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.jsp">Home</a>
+            <a href="register.jsp">Register</a>
+            <a href="login.jsp"">Login</a>
+            <a href="ViewProducts.jsp"">Browse Products</a>
+          </div>
+       
+        <span style="font-size:30px;cursor:pointer;color:#FFFFFF;" onclick="openNav()">&#9776; Menu </span>
+    
+        <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+        
+        </script>
+        
+        <!-- Side nav function ends here --> 
+        
+        
         <h1>IoTBay Home</h1>
         
          <div>Welcome to the IoTBay Web Application!</div>
@@ -27,9 +53,10 @@
             <a class="button" href="login.jsp">Log In</a>
         </div>        
         <br  />
-        <div>
+        
+        <!--<div>
             <a class="button" href="mainGuest.jsp">Guest Enter</a>
-        </div>
+        </div> -->
         
         
         <jsp:include page="/ConnServlet" flush="true" /> <!-- loads db conn -->
