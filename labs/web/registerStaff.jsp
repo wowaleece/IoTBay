@@ -14,44 +14,34 @@
     </head>
     <body>
         <h1>Sign Up</h1>
-
-         <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
+        
+         <form action="RegisterStaffServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
 
              <table>
                  <tr><td>Email Address:</td><td><input type="text" id="email" name="email" required></td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
                  <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td><td>${sessionScope.passErr}</td></tr>
-                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" ></td><td></td></tr>
-                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" ></td><td></td></tr>
-                 <tr>
-                     <td>Sex:</td>
-                     <td>
-                         <table>
-                             <tr>
-                                 <td><input type="radio" id="other" name="sex" value="other"></td>
-                                 <td><input type="radio" id="female" name="sex" value="female"></td>
-                                 <td><input type="radio" id="male" name="sex" value="male"></td>
-                             </tr>
-                             <tr>
-                                 <td><label class="radioLabel" for="other">Other</label></td>
-                                 <td><label class="radioLabel" for="female">Female</label></td>
-                                 <td><label class="radioLabel" for="male">Male</label></td>
-                             </tr>
-                        </table>
+                <!--<tr><td>First Name:</td><td><input type="text" id="fname" name="fName" ></td><td></td></tr>
+                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" ></td><td></td></tr> -->
+                 <tr><td><label for="uType">User Type:</label></td>
+                     <td><select id="uType" name="uType" required>
+                            <option value="Customer">Customer</option>
+                            <option value="Staff">Staff</option>
+                         </select>
                      </td>
-                     <td></td>
-                 </tr>
-                 <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td><td></td></tr>
+                     <td></td> 
+                </tr>
+                <!-- <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" required></td><td></td></tr>
                  <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" ></td><td></td></tr>
                  <tr><td>Agree to TOS?</td>
                      <td><input type="checkbox" id="agree" name="inputGroup" value="Yes">I have read and agree to the <a href="tos.html">Terms of Service</a>.</td>
                      <td></td>
-                 </tr>
+                 </tr> -->
              </table>
-             <br  />
+             <br>
 
              <div>
                  <a class="button" href="index.jsp">Cancel</a>
-                 <input class="button" type="submit" value="Sign up">
+                 <input class="button" type="submit"> ${sessionScope.existErr}${sessionScope.emailErr}${sessionScope.passErr}
              </div>
                  
              

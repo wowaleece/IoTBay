@@ -9,6 +9,7 @@ import java.time.ZoneOffset;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
+import uts.isd.model.Log;
 import uts.isd.model.Product;
 
 /* 
@@ -261,6 +262,17 @@ public class DBManager {
         st.setString(3, actDesc);
         st.executeUpdate();
     }//log
+    
+    
+    
+
+    public List<Log> findLogs(int userID,OffsetDateTime from, OffsetDateTime to) {
+        String sql = "SELECT c.fname,c.lname, l.logTime, l.activityType, l.activityDetail"
+                   + " FROM logs l INNER JOIN customers c on c.userID = l.userID INNER JOIN users u ON u.userID = l.userID"
+                   + " WHERE l.userID = ? AND l.logTime > ? AND l.logTime < ?"
+    }
+    
+    
 
     
    
