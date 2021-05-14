@@ -1,6 +1,5 @@
 package uts.isd.model.dao;
 
-import com.sun.javafx.binding.Logging;
 import uts.isd.model.User;
 import uts.isd.model.Address;
 import java.sql.*;
@@ -87,14 +86,14 @@ public class DBProduct {
         statement.executeUpdate();
     }*/
     
-        public void addProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {                   //code for add-operation       
+        public void addProduct(String productName, String stockLevel, Float unitPrice, String category) throws SQLException {                   //code for add-operation       
         String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)"
                    + " VALUES ( ? , ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, PRODUCTNAME); //need to add hash method later
-        statement.setString(2, STOCKLEVEL);
-        statement.setFloat(3, UNITPRICE);
-        statement.setString(4, CATEGORY);
+        statement.setString(1, productName); //need to add hash method later
+        statement.setString(2, stockLevel);
+        statement.setFloat(3, unitPrice);
+        statement.setString(4, category);
 
         statement.executeUpdate();
     }//addCustomer()

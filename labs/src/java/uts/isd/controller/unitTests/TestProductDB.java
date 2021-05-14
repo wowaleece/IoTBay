@@ -72,14 +72,15 @@ public class TestProductDB {
     
     private void testAdd() throws SQLException { 
          System.out.print("Product Name: "); 
-         String PRODUCTNAME = in.nextLine();  
+         String productName = in.nextLine();  
          System.out.print("Stock Level: "); 
-         String STOCKLEVEL = in.nextLine();    
+         String stockLevel = in.nextLine();    
          System.out.print("UnitPrice: "); 
-         Float UNITPRICE = in.nextFloat();  
+         float unitPrice = in.nextFloat();
+         in.next();
          System.out.print("Category: "); 
-         String CATEGORY= in.next();  
-         db.addProduct(PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY); 
+         String category= in.nextLine();  
+         db.addProduct(productName, stockLevel, unitPrice, category); 
          System.out.println("Product has been added to the database");
     }
     
