@@ -5,6 +5,7 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
+import java.util.*; 
 
 /**
  *
@@ -25,8 +26,9 @@ public class Orders {
     private boolean BillingAddress; 
     private String NameonCard; 
     private String CardType; 
+    private float TotalPrice; 
 
-    public Orders(String OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) {
+    public Orders(String OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType, float TotalPrice) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.Status = Status;
@@ -40,6 +42,7 @@ public class Orders {
         this.BillingAddress = BillingAddress;
         this.NameonCard = NameonCard;
         this.CardType = CardType;
+        this.TotalPrice = TotalPrice;
     }
 
     public String getOrderID() {
@@ -143,6 +146,14 @@ public class Orders {
 
     public void setCardType(String CardType) {
         this.CardType = CardType;
+    }
+
+    public float getTotalPrice() {
+        return TotalPrice;
+    }
+
+    public void setTotalPrice(float TotalPrice) {
+        this.TotalPrice = TotalPrice;
     }
     
     

@@ -6,6 +6,7 @@
 package uts.isd.model.dao;
 import uts.isd.model.User;
 import java.sql.*;
+import uts.isd.model.Orders;
 
 /**
  *
@@ -15,93 +16,125 @@ import java.sql.*;
 public class DBManager_Orders {
 
     private Statement st;
+    private Connection conn; 
 
     public DBManager_Orders(Connection conn) throws SQLException {       
-       st = conn.createStatement();   
-    }
-
-    DBManager_Orders() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       this.conn = conn;   
     }
     // Saving an order is reserved for customers with a registered ID. Otherwise, order is saved as a cart in a session for Guests.
     // If a registered user wants to save an order, query will check if order exists already in their account and use old order details, but just add more item lines to it. 
-    public void saveOrder(String UserID, String OrderStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String[] ProductName)throws SQLException {
-        int check;
-        check = st.executeUpdate("WHERE EXISTS (SELECT OrderID FROM Orders WHERE UserID = " + UserID + "and OrderStatus = 'Saved');");
-        // this checks if user has an existing order saved in their database. Return 1 if there is existing order, 0 is there is none. 
-        if(check == 1){
-            String OrderID = getOrderID(UserID);   
-            updateOrder(UserID, OrderID, OrderStatus, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, "0", "0");
-            addOrderLineItem(UserID, OrderID, "Saved", ProductName);
-        } else {
-            String query = "INSERT INTO Orders ('UserID', 'OrderStatus', 'StreetName', 'UnitNumber', 'Suburb', 'Postcode', 'AddressState', 'BillingAddress') VALUES ('" + UserID+ "', 'Saved', '" + StreetName+"', '" + UnitNumber +"', '" + Suburb +"', '"+Postcode+"', '"+AddressState+"', '"+BillingAddress+"');";            
-            st.executeUpdate(query);
-            String OrderID = getOrderID(UserID);
-            addOrderLineItem(UserID, OrderID, "Saved", ProductName);
+    public void saveOrder(String UserID, String OrderStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String ProductName)throws SQLException {
+        int check = 0; 
+        String query = "SELECT ORDERID FROM APP.ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        PreparedStatement Statement = conn.prepareStatement(query);
+        ResultSet rs = Statement.executeQuery();
+        while (rs.next()){
+            String OrderID = rs.getString("ORDERID");
+            System.out.println(OrderID);
+            check = 1; 
         }
+        if (check == 1) {
+            String OrderID = getOrderID(UserID);
+            updateOrder(UserID, OrderID, OrderStatus, "0", StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, "0", "0");
+            addOrderLineItem(UserID, OrderID, "Saved", ProductName);
+        }else{
+            System.out.println(check);
+            query = "INSERT INTO APP.ORDERS (USERID, ORDERSTATUS, STREETNAME, UNITNUMBER, SUBURB, POSTCODE, ADDRESSSTATE, BILLINGADDRESS) VALUES ('" + UserID+ "', 'Saved', '" + StreetName+"', '" + UnitNumber +"', '" + Suburb +"', "+Postcode+", '"+AddressState+"', "+BillingAddress+")";            
+            st.executeUpdate(query);
+        }    
     }
    
     public String getOrderID(String UserID)throws SQLException {
-        try {
-            ResultSet rs = st.executeQuery("SELECT OrderID FROM Orders WHERE UserID = " + UserID + "and OrderStatus = 'Saved';");
-            while (rs.next()) {
-                String orderID = rs.getString("OrderID");
-                System.out.println(orderID);
-                return orderID;
-            }
-        } catch (SQLException e) {
-            System.out.println("No order ID found");
+        String query = "SELECT ORDERID FROM APP.ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        PreparedStatement Statement = conn.prepareStatement(query);
+        ResultSet rs = Statement.executeQuery();        
+        while (rs.next()) {
+            String orderID = rs.getString("ORDERID");
+            System.out.println(orderID);
+            return orderID;
         }
         return null;
     }   
     
-    public void findOrder()throws SQLException {
-        st.executeUpdate("stiill need to find a way to filter through");
+    public Orders findOrder(String OrderID)throws SQLException { // Only searches via OrderID
+        String sql = "SELECT * FROM APP.ORDERS WHERE ORDERID = '" + OrderID + "'";
+        PreparedStatement Statement = conn.prepareStatement(sql);
+        ResultSet rs = Statement.executeQuery();
+        
+        while (rs.next()){ 
+            String ORDERID_TEMP = rs.getString(1); 
+            if (ORDERID_TEMP.equals(OrderID)){
+                String UserID = rs.getString(2);
+                Timestamp OrderTime_ts = rs.getTimestamp(3);
+                    String OrderTime = OrderTime_ts.toString();
+                String OrderStatus = rs.getString(4);
+                String ShippingStatus = rs.getString(5);
+                String StreetName = rs.getString(6);
+                String UnitNumber = rs.getString(7);
+                String Suburb = rs.getString(8);
+                int Postcode = rs.getInt(9);
+                String AddressState = rs.getString(10);
+                boolean BillingAddress = rs.getBoolean(11);
+                String NameonCard = rs.getString(12);
+                String CardType = rs.getString(13);
+                float TotalPrice = rs.getFloat(14);
+                return new Orders(OrderID, UserID, OrderStatus, ShippingStatus, OrderTime, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, NameonCard, CardType, TotalPrice); 
+            }
+        }
+        return null;  
     }
     
-    public void updateOrder(String UserID, String OrderID, String OrderStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) throws SQLException {
+    public void updateOrder(String UserID, String OrderID, String OrderStatus, String ShippingStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) throws SQLException {
         float TotalPrice = getTotalPrice(OrderID);
-        String query = "UPDATE Orders SET UserID = '" + UserID + "', OrderID = '" + OrderID + "', TotalPrice = '" + TotalPrice +"' , StreetName = '" + StreetName + "' , UnitNumber = '" + UnitNumber +"' , Suburb = '" + Suburb + "' , Postcode = '" + Postcode + "' , AddressState = '" + AddressState + "', BillingAddress = '" + BillingAddress +"', NameonCard = '" + NameonCard +"' , CardType = '" + CardType +"';";   
-        st.executeUpdate(query);
+        String query = "UPDATE APP.ORDERS SET USERID = '" + UserID + "', ORDERID = '" + OrderID + "', TOTALPRICE = " + TotalPrice +" , STREETNAME = '" + StreetName + "' , UNITNUMBER = '" + UnitNumber +"' , SUBURB = '" + Suburb + "' , POSTCODE = " + Postcode + " , ADDRESSSTATE = '" + AddressState + "', BILLINGADDRESS = " + BillingAddress +", NAMEONCARD = '" + NameonCard +"' , CARDTYPE = '" + CardType +"'";   
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(2, UserID);
+        statement.setString(4, OrderStatus);
+        statement.setString(5, ShippingStatus);
+        statement.setString(6, StreetName);
+        statement.setString(7, UnitNumber);
+        statement.setString(8, Suburb);
+        statement.setInt(9, Postcode);
+        statement.setString(10, AddressState);
+        statement.setBoolean(11, BillingAddress);
+        statement.setString(12, NameonCard);
+        statement.setString(13, CardType);
+        statement.setFloat(14, TotalPrice);
     }
 
-    public void deleteOrder(String OrderID, String OrderStatus)throws SQLException {
-        String query = "UPDATE Orders SET OrderStatus = 'Invalid' WHERE OrderID = '" + OrderID + "';";
-        st.executeUpdate(query);
+    public void deleteOrder(String OrderID)throws SQLException {
+        String query = "SELECT * FROM APP.ORDERS WHERE ORDERID = '" + OrderID + "'";
+        PreparedStatement Statement = conn.prepareStatement(query);
+        ResultSet rs = Statement.executeQuery();
+        while (rs.next()){
+            rs.updateString("ORDERSTATUS", "Invalid");
+        }
     }
     
     public float getTotalPrice(String OrderID)throws SQLException {
         float TotalPrice = 0; 
         // get all the product prices associated with OrderID
         try {
-            String query = "SELECT UnitPrice FROM Products WHERE OrderID = '" + OrderID +"'";
+            String query = "SELECT UNITPRICE FROM PRODUCTS WHERE ORDERID = '" + OrderID +"'";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                float UnitPrice = rs.getFloat("UnitPrice");
+                float UnitPrice = rs.getFloat("UNITPRICE");
                 System.out.println(UnitPrice);
                 TotalPrice = TotalPrice + UnitPrice;
-            return TotalPrice;    
             }
         } catch (SQLException e) {
-            System.out.println("No product details found");
+            System.out.println("No Product Details Found");
         }
-        return 0;   
+        
+        return TotalPrice;   
     }
-//    
-//    public float getTotalPrice(float[] unitPrice){
-//        float total_price = 0; 
-//        for (int i = 0; i < unitPrice.length; i++){
-//            total_price = total_price + unitPrice[i];
-//        }
-//        return total_price; 
-//    }
-//    
+  
     public float getProductPrice(String ProductName) throws SQLException {
         try {
-            String query = "SELECT UnitPrice FROM Products WHERE ProductName = '" + ProductName +"';";
+            String query = "SELECT UNITPRICE FROM PRODUCTS WHERE PRODUCTNAME = '" + ProductName +"'";
             ResultSet rs = st.executeQuery(query);
             while (rs.next()) {
-                float UnitPrice = rs.getFloat("UnitPrice");
+                float UnitPrice = rs.getFloat("UNITPRICE");
                 System.out.println(UnitPrice);
                 return UnitPrice;
             }
@@ -111,23 +144,22 @@ public class DBManager_Orders {
         return 0;
     }
 
-    public void addOrderLineItem(String UserID, String OrderID, String Status, String[] ProductName)throws SQLException {
-        for (int i = 0; i < ProductName.length; i++){
-            float ProductPrice = getProductPrice(ProductName[i]);
-            String query = "INSERT INTO OrderLineItems (UserID, OrderID, Status, ProductName, UnitPrice) VALUES ('" + UserID+ "', '"+ OrderID+"','Saved','"+ProductName[i]+"', " + ProductPrice+");";
-            st.executeUpdate(query);
-        }
+    public void addOrderLineItem(String UserID, String OrderID, String Status, String ProductName)throws SQLException {
+        float ProductPrice = getProductPrice(ProductName);
+        String query = "INSERT INTO ORDERLINEITEMS (USERID, ORDERID, STATUS, PRODUCTNANE, UNITPRICE) VALUES ('" + UserID+ "', '"+ OrderID+"','Saved','"+ProductName+"', " + ProductPrice+")";
+        st.executeUpdate(query);
     }
-    
-    public void deleteOrderLineItem(String UserID, String OrderID, String[] ProductName)throws SQLException {
-        for (int i = 0; i < ProductName.length; i++){
-            String query = "UPDATE OrderLineItems SET Status = 'Invalid' WHERE UserID = '" + UserID + "' AND OrderID = '"+ OrderID + "';";
-            st.executeUpdate(query);
+ 
+    public void deleteOrderLineItem(String UserID, String OrderID, String ProductName)throws SQLException {
+        String query = "SELECT * FROM APP.ORDERLINEITEMS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        PreparedStatement Statement = conn.prepareStatement(query);
+        ResultSet rs = Statement.executeQuery();
+        while (rs.next()){
+            rs.updateString("ORDERSTATUS", "Invalid");
         }
     }
     
 }
-
 
     /* Create 
        Read
