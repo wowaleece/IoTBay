@@ -30,7 +30,8 @@ public class Validator implements Serializable{
                                + "(((18|19|20)(04|08|[2468][048]|[13579][26]))|2000)[-](02)[-]29" // 29 day Feb
             
     */
-    
+    private String timestampPattern = "[0-9]{4}-[0-1][0-9]-(?:[0-2][0-9]|3[01]) (?:1[0-2]|0[0-9])(?::([0-5][0-9]|60)){2}";
+            
     public Validator(){    }       
 
     public boolean validate(String pattern, String input){       
@@ -65,6 +66,10 @@ public class Validator implements Serializable{
         return validate(passwordPattern,password); 
     }
     
+    boolean validateTimestamp(String ts) {
+        return validate(timestampPattern,ts);
+    }
+    
     public Date sanitiseDate(String date){        
         try {
                 return java.sql.Date.valueOf(date);
@@ -80,5 +85,7 @@ public class Validator implements Serializable{
         session.setAttribute("existErr", "");
         session.setAttribute("nameErr", "Enter name");
     }
+
+    
     
 }

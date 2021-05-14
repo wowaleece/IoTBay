@@ -3,9 +3,7 @@ package uts.isd.model.dao;
 import uts.isd.model.User;
 import uts.isd.model.Address;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
@@ -250,26 +248,64 @@ public class DBManager {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//findAddress
     
-    public void log(int userID, String actType, String actDesc) throws SQLException {
-        OffsetDateTime odt = OffsetDateTime.now( ZoneOffset.UTC ) ;  // Capture the current moment in UTC.
+    
+    /**
+     * 
+     * @param userID
+     * @param actType
+     * @param actDesc
+     * @param relatedID
+     * @return logID long / 0 if failed.
+     * @throws SQLException 
+     */
+    public long log(int userID, String actType, String actDesc, long relatedID) throws SQLException {
+        Timestamp ts = new Timestamp(System.currentTimeMillis());  // Capture the current moment in UTC.
 
-        String sql = "Insert into logs (userid,logTime,activityType,activityDetails) ";
-        sql = sql +  "          Values (     ?,      ?,           ?,              ?)";
-        PreparedStatement st = conn.prepareStatement(sql);
-        st.setInt(1, userID);
-        st.setObject(2, odt);
-        st.setString(3, actType);
-        st.setString(3, actDesc);
-        st.executeUpdate();
+        String sql = "Insert into logs (userid,logTime,activityType,activityDetails,relatedID) "
+                            +  "Values (     ?,      ?,           ?,              ?,        ?)";
+        PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        ps.setInt(1, userID);
+        ps.setObject(2, ts);
+        ps.setString(3, actType);
+        ps.setString(4, actDesc);
+        ps.setLong(5, relatedID);
+        ps.executeUpdate();
+        
+        ResultSet rs = ps.getGeneratedKeys();
+        if (rs != null && rs.next()) {
+            return rs.getLong(1);
+        } else {
+            return 0;
+        }
     }//log
     
     
-    
-
-    public List<Log> findLogs(int userID,OffsetDateTime from, OffsetDateTime to) {
-        String sql = "SELECT c.fname,c.lname, l.logTime, l.activityType, l.activityDetail"
-                   + " FROM logs l INNER JOIN customers c on c.userID = l.userID INNER JOIN users u ON u.userID = l.userID"
-                   + " WHERE l.userID = ? AND l.logTime > ? AND l.logTime < ?"
+    /**
+     * 
+     * @param userID
+     * @param from
+     * @param to
+     * @return ArrayList<Log> for given user ID and dates
+     * @throws java.sql.SQLException
+     */
+    public ArrayList<Log> findLogs(int userID, Timestamp from, Timestamp to) throws SQLException {
+        //Build list of log objects to return
+        ArrayList<Log> logs = new ArrayList<Log>();
+        
+        String sql = "SELECT l.logID, l.userID, l.logTime, l.activityType, l.activityDetail"
+                   + " FROM logs "
+                   + " WHERE l.userID = ? AND l.logTime > ? AND l.logTime < ?";
+        
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setInt(1, userID);
+        ps.setObject(2, from);
+        ps.setObject(3, to);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            logs.add(new Log(rs.getLong("logID"), rs.getInt("userID"), (Timestamp) rs.getObject("logTime"), rs.getString("activityType"), rs.getString("activityDetail")));
+        }
+        
+        return logs;
     }
     
     

@@ -23,6 +23,7 @@ public class User implements Serializable {
     private Date dob;
     private Date regDate;
     private Address address;
+    private Log log;
     
 
     public User(int userID, String email , String uType, String phoneNo) { //String password,
@@ -95,5 +96,15 @@ public class User implements Serializable {
     public Address getAddress() {
         return address;
     }
+    
+    private void setLog(Log log) {
+        this.log = log;
+    }
+    
+    public Log getLog(){
+        return log;
+    }
+    
+    
    
 }

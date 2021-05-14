@@ -37,7 +37,7 @@ public class LogoutServlet {
             session.invalidate();
         // log the logout activity   
             try {
-                manager.log(user.getUserID(), "logout",user.getEmail() + " has logged out");
+                manager.log(user.getUserID(), "logout",user.getEmail() + " has logged out", user.getLog().geLogID());
                 //how to disconnect from the DB? 
 
             } catch (SQLException ex) {

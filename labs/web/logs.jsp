@@ -3,6 +3,8 @@
     Created on : 3 Apr 2021, 10:27:38 pm
     Author     : marinasantanelli
 --%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="uts.isd.model.Log"%>
 <%@page import="uts.isd.model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -36,31 +38,36 @@
                 </tr>
             </tbody>
         </table>
-                    <br  />
-                    <br  />
-      <%--
-<ul>
-         <li><p><b>Email:</b>
-            <%= request.getParameter("email")%>
-         </p></li>
-         <li><p><b>First Name:</b>
-            <%= request.getParameter("fname")%>
-         </p></li>
-         <li>
-             <p><b>Password:</b>
-            <%= request.getParameter("password")%>
-         </p></li>
-         <li><p><b>Gender:</b>
-            <%= request.getParameter("gender")%>
-         </p></li>
-         <li><p><b>Favcol:</b>
-            <%= request.getParameter("favcol")%>
-         </p></li>
-         <li><p><b>Tos:</b>
-            <%= request.getParameter("tos")%>
-         </p></li>
-      </ul>
-        --%>
+        <br>
+        <br>
+        
+        <form action="UserLogsServlet">
+            <table border="1">
+            <thead>
+                <tr>
+                    <th class="p">TimeStamp</th>
+                    <th class="p">Activity Type</th>
+                    <th class="p">Activity Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%
+                ArrayList<Log> logs = (ArrayList<Log>)request.getAttribute("logs");   
+                for (Log result: logs) { 
+                %>
+                <tr>
+                    <td><%=result.getLogTime() %></td>
+                    <td><%=result.getActivityType() %></td>
+                    <td><%=result.getActivityDetails() %></td>
+                    <td><a class="button" href="EditProduct.jsp"> Edit </a> <a class="button" href="DeleteProduct.jsp"> Delete </a></td>
+                </tr>
+                <% } %> 
+            </tbody>
+        </table>
+            
+        </form>
+
+
         
          <p style="color:#FFFFFF"> Click <a class="p" href="index.jsp">here</a> to proceed to the main index page.</p>
         
