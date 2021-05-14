@@ -12,49 +12,46 @@
 <%@page import="uts.isd.model.dao.DBManager"%>
 <%@page import="uts.isd.model.dao.DBProduct"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="header.jsp" />
 <!DOCTYPE html>
-
-    <head>
+<html>
+     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
-        <title>Catalogue Management</title>
+        <title>Device Catalogue</title>
     </head>
-    
+    <body>
         <h1>Device Catalogue</h1>
         <form method="post" action="ProductsServlet">
-            <% 
-                List<Product> products = (List<Product>)request.getAttribute("products");   
-            %>
-            <thead>
+            <table border = "1" width = "100%">
                 <tr>
-                    <th class="p"> Product ID</th>
-                    <th class="p"> Product name </th>
-                    <th class="p"> Stock Level </th>
-                    <th class="p"> Price </th>
-                    <th class="p"> Category </th>
-                    <th class="p"> Actions </th>
+                    <th> Product name </th>
+                    <th> Stock Level </th>
+                    <th> Price </th>
+                    <th> Category </th>
+                    <th> Actions </th>
                 </tr>
-            </thead> 
 
-            <tbody> 
-                <% for (Product result: products) { %>
-                <tr>
-                    <td><%=result.getID() %></td>
-                    <td><%=result.getProductName() %></td>
-                    <td><%=result.getStockLevel() %></td>
-                    <td><%=result.getUnitPrice() %></td>
-                    <td><%=result.getCategory() %></td>
-                    <td><a class="button" href="EditProduct.jsp"> Edit </a> <a class="button" href="DeleteProduct.jsp"> Delete </a></td>
-                </tr>
-                <% } %> 
-            </tbody>
+                <% 
+                    List<Product> products = (List<Product>)request.getAttribute("product");   
+                %>
+                <% for (Product p: products) { %>
+                    <tr>
+                        <td><%=System.out.println(p.getID()) %></td>
+                        <td><%=System.out.println(p.getProductName()) %></td>
+                        <td><%=System.out.println(p.getStockLevel()) %></td>
+                        <td><%=System.out.println(p.getUnitPrice()) %></td>
+                        <td><%=System.out.println(p.getCategory()) %></td>
+                        <td>
+                            <a class="button" href="EditProduct.jsp"> Edit </a> 
+                            <a class="button" href="DeleteProduct.jsp"> Delete </a>
+                        </td>
+                    </tr>
+                    
+                    <% } %> 
+                
+            </table> 
         </form>
-        
-        <br> 
-        <div>
-            <a class="button" href="AddNewProduct.jsp">Add new device</a>
-        </div>
-        
-        <br  />    
-    
+    </body>
+</html> 
 

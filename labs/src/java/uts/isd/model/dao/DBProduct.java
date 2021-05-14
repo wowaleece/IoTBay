@@ -74,26 +74,14 @@ public class DBProduct {
        
     
     //Add new product into the database   
-    /*public void addProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException{
-        String sql = ("INSERT INTO PRODUCTS" + "VALUES('"+ PRODUCTNAME +"', '" + STOCKLEVEL +"','"+ UNITPRICE +"', '" + CATEGORY + "'");
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.executeUpdate(sql); 
-        statement.setInt( 1, Product.getID());
-        statement.setString(2, PRODUCTNAME);
-        statement.setString(3, STOCKLEVEL);
-        statement.setFloat(4, UNITPRICE);
-        statement.setString(5, CATEGORY);
-        statement.executeUpdate();
-    }*/
-    
-        public void addProduct(String productName, String stockLevel, Float unitPrice, String category) throws SQLException {                   //code for add-operation       
+        public void addProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {                   //code for add-operation       
         String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)"
                    + " VALUES ( ? , ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, productName); //need to add hash method later
-        statement.setString(2, stockLevel);
-        statement.setFloat(3, unitPrice);
-        statement.setString(4, category);
+        statement.setString(1, PRODUCTNAME); //need to add hash method later
+        statement.setString(2, STOCKLEVEL);
+        statement.setFloat(3, UNITPRICE);
+        statement.setString(4, CATEGORY);
 
         statement.executeUpdate();
     }//addCustomer()

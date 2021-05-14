@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,29 +29,7 @@ import uts.isd.model.dao.DBProduct;
  * @author Kayla Gelman
  */
 public class ProductsServlet extends HttpServlet {
-    private static final long serialVersionUID =1L;
- 
     
-    private static Scanner in = new Scanner(System.in); 
-    private DBConnector connector; 
-    private Connection conn;  
-    private DBProduct db; 
-    
-
-    
-    public ProductsServlet() throws SQLException { 
-        try { 
-            connector = new DBConnector();
-            conn = connector.openConnection();
-            db = new DBProduct(conn); 
-        } catch (ClassNotFoundException ex) { 
-            Logger.getLogger(TestProductDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-   
-
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -72,16 +51,27 @@ public class ProductsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+ 
+        
         HttpSession session = request.getSession();
-        /*DBProduct db = (DBProduct) session.getAttribute("product");*/
+        Product product;
+     
         try { 
+            DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager"); 
             /*DBProduct db  = new DBProduct();  */
-            List<Product> products = db.DisplayProducts(); 
-            request.setAttribute("products", products);
+            List<Product> products = ProductManager.DisplayProducts(); 
+            request.setAttribute("product", products);
         }catch (Exception e){ 
             System.out.println("Product does not exist"); 
+            return; 
         }
+        
+        RequestDispatcher requestDispatcher; 
+        requestDispatcher = request.getRequestDispatcher("DeviceCatalogue.jsp");
+        requestDispatcher.forward(request, response);
+        
         
     }
 
@@ -115,14 +105,5 @@ public class ProductsServlet extends HttpServlet {
         
     }*/
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

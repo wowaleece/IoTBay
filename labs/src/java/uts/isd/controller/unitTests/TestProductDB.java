@@ -77,8 +77,8 @@ public class TestProductDB {
          String stockLevel = in.nextLine();    
          System.out.print("UnitPrice: "); 
          float unitPrice = in.nextFloat();
-         in.next();
          System.out.print("Category: "); 
+         in.next();
          String category= in.nextLine();  
          db.addProduct(productName, stockLevel, unitPrice, category); 
          System.out.println("Product has been added to the database");

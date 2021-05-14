@@ -14,7 +14,7 @@
         <title>Catalogue Management</title>
     </head>
     <body>
-        <h1>Add New Product</h1>
+        <h1 style="text-align: left">Add New Product</h1>
         
         <form action="AddProductsServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please confirm all details are correct'); return false; }" method="POST">
 
@@ -39,9 +39,9 @@
                     </table>
                     </td>
                 
-                 <tr><td>Unit Price</td><td><input type="float" id="UnitPrice" name="UnitPrice" required></td></tr>
+                 <tr><td>Unit Price</td><td><input type="float" id="UNITPRICE" name="UNITPRICE" required></td></tr>
                  <!-- TO DO  - Make Category  a drop down list --> 
-                 <tr><td>Category</td><td><input type="text" id="Category" name="Category" required></td></tr>
+                 <tr><td>Category</td><td><input type="text" id="CATEGORY" name="CATEGORY" required></td></tr>
                  <tr><td>Are all product details correct? </td>
                  <td><input type="checkbox" id="agree" name="inputGroup" value="Yes"></td>
                  </tr>

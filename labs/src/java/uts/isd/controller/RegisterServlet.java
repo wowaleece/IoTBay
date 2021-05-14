@@ -45,9 +45,6 @@ public class RegisterServlet extends HttpServlet {
         String tos = request.getParameter("agree");
         //might still need to validate all these fields
         
-        
-        
-        
         DBManager manager = (DBManager) session.getAttribute("manager");
         
         

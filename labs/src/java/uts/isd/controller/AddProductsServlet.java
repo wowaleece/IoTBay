@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import uts.isd.model.Product;
-import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBProduct; 
 
 /**
@@ -28,24 +27,8 @@ import uts.isd.model.dao.DBProduct;
  */
 public class AddProductsServlet extends HttpServlet {
 
-   /* private static Scanner in = new Scanner(System.in); 
-    private DBConnector connector; 
-    private Connection conn;  
-    private DBProduct db; */
-    
 
-    /*public AddProductsServlet() throws SQLException { 
-        try { 
-            connector = new DBConnector();
-            conn = connector.openConnection();
-            db = new DBProduct(conn); 
-        } catch (ClassNotFoundException ex) { 
-            Logger.getLogger(TestProductDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }*/
-   
-
+ 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
 
     /**
@@ -57,7 +40,8 @@ public class AddProductsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         
         HttpSession session = request.getSession();
         String PRODUCTNAME = request.getParameter("PRODUCTNAME"); 
@@ -65,18 +49,17 @@ public class AddProductsServlet extends HttpServlet {
         Float UNITPRICE = Float.parseFloat(request.getParameter("UNITPRICE"));
         String CATEGORY= request.getParameter("CATEGORY"); 
         
-        
-        DBProduct product = (DBProduct) session.getAttribute("product"); 
+        DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager"); 
+        /*Product product = null; */
         
        try {
-            
-            product.addProduct(PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY);
-            session.setAttribute("product", product);
+           /*session.setAttribute("product", product);*/
+            ProductManager.addProduct(PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY);
+            /*session.setAttribute("product", product);*/
             request.getRequestDispatcher("index.jsp").include(request,response);
         } catch (SQLException ex) { 
-            Logger.getLogger(AddProductsServlet.class.getName()).log(Level.SEVERE, null, ex);
-            request.getRequestDispatcher("AddNewProduct.js").include(request, response);
-
+            Logger.getLogger(AddProductsServlet.class.getName()).log(Level.SEVERE, null, ex); 
+            request.getRequestDispatcher("AddNewProduct.jsp").include(request, response);
         }
 
           /*session.setAttribute("existErr", "Failed to add product");
@@ -84,15 +67,5 @@ public class AddProductsServlet extends HttpServlet {
         
         
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
 
 }

@@ -19,9 +19,9 @@
 String id = request.getParameter("PRODUCTID");
 String driver = "org.apache.derby.jdbc.ClientDriver";
 String connectionUrl = "jdbc:derby://localhost:1527/";
-String database = "productsDB";
-String userid = "isduser";
-String password = "admin";
+String database = "shopDB";
+String userid = "App";
+String password = "App";
 try {
 Class.forName(driver);
 } catch (ClassNotFoundException e) {
@@ -53,7 +53,7 @@ ResultSet resultSet = null;
                     <th class="p"> Product ID</th>
                     <th class="p"> Product name </th>
                     <th class="p"> Stock Level </th>
-                    <th class="p"> Price </th>
+                    <th class="p"> Price ($)</th>
                     <th class="p"> Category </th>
                 </tr>
                 <tr>
