@@ -60,4 +60,4 @@ VALUES (2,'james','smith')
       ,(3,'Bobby','smith')
 ;
 
-INSERT INTO ADDRESSES (ADDRESS) VALUES ('address'), ('address'),('address'),('address');
+INSERT INTO ADDRESSES (STREETNAME) VALUES ('address'), ('address'),('address'),('address');
