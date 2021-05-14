@@ -5,89 +5,98 @@
  */
 package uts.isd.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Kayla Gelman
  */
 public class Product {
-    protected int ID;  
-    protected String ProductName;  
-    protected String StockLevel; 
-    protected float UnitPrice; 
-    protected String Category;     
+    protected int PRODUCTID;  
+    protected String PRODUCTNAME;  
+    protected String STOCKLEVEL; 
+    protected float UNITPRICE; 
+    protected String CATEGORY;     
     
-    public Product() {         
-    }
-    
-    public Product(int id){ 
-        this.ID = ID; 
-    }
-    
+   
     /**
      *
-     * @param ID
-     * @param ProductName
-     * @param StockLevel
-     * @param UnitPrice
-     * @param Category
+     * @param PRODUCTID
+     * @param PRODUCTNAME
+     * @param STOCKLEVEL
+     * @param UNITPRICE
+     * @param CATEGORY
      */
-    public Product(int ID, String ProductName, String StockLevel, float UnitPrice, String Category){ 
-        this(ProductName, StockLevel, Category); 
-        this.ID = ID; 
+    /*public Product(int PRODUCTID, String PRODUCTNAME, String STOCKLEVEL, float UNITPRICE, String CATEGORY){ 
+        this(PRODUCTNAME, STOCKLEVEL, CATEGORY); 
+        this.PRODUCTID = PRODUCTID; 
+    }*/
+    
+    public Product(int PRODUCTID, String PRODUCTNAME, String STOCKLEVEL, float UNITPRICE, String CATEGORY){ 
+        this.PRODUCTID = PRODUCTID;  
+        this.PRODUCTNAME = PRODUCTNAME;  
+        this.STOCKLEVEL = STOCKLEVEL;  
+        this.UNITPRICE= UNITPRICE; 
+        this.CATEGORY= CATEGORY; 
     }
     
-    public Product(String ProductName, String StockLevel, float UnitPrice ){ 
-        this.ProductName = ProductName;  
-        this.StockLevel = StockLevel;  
-        this.UnitPrice = UnitPrice; 
+    //For searching 
+    public Product(ResultSet rs)
+    {
+        try
+        {
+            this.PRODUCTID = rs.getInt("PRODUCTID");
+            this.PRODUCTNAME = rs.getString("PRODUCTNAME");  
+            this.STOCKLEVEL = rs.getString("STOCKLEVEL");  
+            this.UNITPRICE= rs.getFloat("UNITPRICE"); 
+            this.CATEGORY= rs.getString("CATEGORY"); 
+        } catch (SQLException ex) {
+            Logger.getLogger(Product.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private Product(String ProductName, String StockLevel, String Category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Product(String ProductName, String StockLevel, String UnitPrice, String Category) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     
     public int getID(){ 
-        return ID; 
+        return PRODUCTID; 
     }
     
     public void setID(int ID){ 
-        this.ID = ID; 
+        this.PRODUCTID = PRODUCTID; 
     }
     
     public String getProductName(){ 
-        return ProductName; 
+        return PRODUCTNAME; 
     }
     
     public void setProductName(String ProductName) { 
-        this.ProductName = ProductName; 
+        this.PRODUCTNAME = PRODUCTNAME; 
     }
     
     public String getStockLevel(){ 
-        return StockLevel; 
+        return STOCKLEVEL; 
     }
     
-    public void getStockLevel(String StockLevel) { 
-        this.StockLevel = StockLevel; 
+    public void setStockLevel(String StockLevel) { 
+        this.STOCKLEVEL = STOCKLEVEL; 
     }
     
     public float getUnitPrice(){ 
-        return UnitPrice; 
+        return UNITPRICE; 
     }
     
-    public void getUnitPrice(float UnitPrice) { 
-        this.UnitPrice = UnitPrice; 
+    public void setUnitPrice(float UnitPrice) { 
+        this.UNITPRICE = UNITPRICE; 
     }
     
     public String getCategory(){ 
-        return Category; 
+        return CATEGORY; 
     }
     
-    public void getCategory(String Category) { 
-        this.Category = Category; 
+    public void setCategory(String Category) { 
+        this.CATEGORY = CATEGORY; 
     }
 }
     

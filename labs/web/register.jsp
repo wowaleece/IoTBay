@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="header.jsp" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +14,7 @@
         <title>Registration Page</title>
     </head>
     <body>
-        <h1>Sign Up</h1>
+        <h1 style="text-align: left;">Sign Up</h1>
 
         <form action="RegisterServlet" onsubmit="if(document.getElementById('agree').checked) { return true; } else { alert('Please indicate that you have read and agree to the Terms of Service'); return false; }" method="POST">
             <table>
