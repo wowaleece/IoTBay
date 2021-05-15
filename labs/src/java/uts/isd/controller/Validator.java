@@ -79,6 +79,7 @@ public class Validator implements Serializable{
         }
     }
     
+    
     public void clear(HttpSession session) {
         session.setAttribute("emailErr", "Enter email");
         session.setAttribute("passErr", "Enter password");
@@ -86,6 +87,6 @@ public class Validator implements Serializable{
         session.setAttribute("nameErr", "Enter name");
     }
 
-    
+
     
 }

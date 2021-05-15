@@ -36,6 +36,7 @@ public class User implements Serializable {
     public int getUserID() {
         return userID;
     }
+    
 
     public String getEmail() {
         return email;
@@ -104,6 +105,13 @@ public class User implements Serializable {
     public Log getLog(){
         return log;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "email=" + email + ", uType=" + uType + ", phoneNo=" + phoneNo + ", fName=" + fName + ", lName=" + lName + ", sex=" + sex + ", dob=" + dob + ", regDate=" + regDate + ", address=" + address + ", log=" + log + '}';
+    }
+
+    
     
     
    

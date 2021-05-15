@@ -10,14 +10,28 @@ package uts.isd.model;
  * @author super
  */
 public class Address {
+    private int addressID;
     private String streetName;
     private String unitNumber;
     private String suburb;
     private int postcode;
     private String state;
     private String country; 
-    
 
+    public Address(int addressID, String streetName, String unitNumber, String suburb, int postcode, String state, String country) {
+        this.addressID = addressID;
+        this.streetName = streetName;
+        this.unitNumber = unitNumber;
+        this.suburb = suburb;
+        this.postcode = postcode;
+        this.state = state;
+        this.country = country;
+    }
+
+    
+    public int getAddressID() {
+        return addressID;
+    }
     public String getStreetName() {
         return streetName;
     }

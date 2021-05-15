@@ -18,8 +18,7 @@
         <form action="EditCServlet" method="POST">
 
             <table>
-                <tr><td>Email Address:</td><td><input type="text" id="email" name="email" placeholder="${user.email}" required></td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
-                <tr><td>Password:</td><td><input type="password" id="password" name="password" required></td><td>${sessionScope.passErr}</td></tr>
+                <tr><td>Email Address:</td><td>${user.email}</td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
                 <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" placeholder="${user.fName}" ></td><td></td></tr>
                 <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" placeholder="${user.lName}" ></td><td></td></tr>
                 <tr>

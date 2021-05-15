@@ -39,9 +39,7 @@ public class EditCServlet extends HttpServlet {
         Validator validator = new Validator();
         
         
-        //capture the posted credentials     
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        //capture the posted credentials
         String phoneNo = request.getParameter("phoneNo");
         String fName = request.getParameter("fName");
         String lName = request.getParameter("lName");
@@ -55,30 +53,21 @@ public class EditCServlet extends HttpServlet {
         String country = request.getParameter("country");
         int postcode;
         String tempPC = request.getParameter("postcode");
-        
-        
-        String tos = request.getParameter("agree");
+        int userID;
         
         
         //fill null strings
         User user = (User) session.getAttribute("user");
+        userID = user.getUserID();
         if (phoneNo == null) phoneNo = user.getPhoneNo();
         if (fName == null) fName = user.getfName();
         if (lName == null) lName = user.getlName();
         if (sex == null) sex = user.getSex();
+        if (dob == null) dob = user.getDob();
         
-        
-        
-        
-        
-        
-        
-        
+            
         //validate input
-         
         validator.clear(session); // updated the %Err attributes to default "please enter"
-        
-        
         
         //process the address, get ID
         //int addressID = manager.findAddress(address);
@@ -93,46 +82,18 @@ public class EditCServlet extends HttpServlet {
         }
         if(state == null) state = address.getState();
         if(country == null) country = address.getCountry();
-            
-        
-       
-        
-        
+
         //validate email and create user/customer
-        
-        
-        
-        if (!validator.validateEmail(email)) {           
-            session.setAttribute("emailErr", "Error: Email format incorrect"); 
-            request.getRequestDispatcher("register.jsp").include(request,response);
 
-        } else if (!validator.validatePassword(password)) {            
-            session.setAttribute("passErr","Error: Password format incorrect");
-            request.getRequestDispatcher("register.jsp").include(request,response);
+        try {
+            manager.updateUser(userID, phoneNo);
+//            manager.updateCustomer(userID, fName, lName, state, sex, dob, postcode);
             
-        } else {
-            try {
-
-                manager.addUser(email, password, "Customer", phoneNo);
-                user = manager.checkLogin(email,password);   
-                //logg a login attempt
-                if (user != null) {
-                    session.setAttribute("user",user);
-                    
-                    //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
-                    request.getRequestDispatcher("index.jsp").include(request, response);
-                } else {
-                    session.setAttribute("existErr", "Registry Failed");
-                    request.getRequestDispatcher("register.jsp").include(request, response);
-                }
-                //reload the page
-                
-            } catch (SQLException ex) {           
-                Logger.getLogger(EditCServlet.class.getName()).log(Level.SEVERE, null, ex);     
-                request.getRequestDispatcher("register.jsp").include(request, response);
-            }
+            
+        } catch (SQLException ex) {           
+            Logger.getLogger(EditCServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        request.getRequestDispatcher("editCustomer.jsp").include(request, response);
     }
     
 }

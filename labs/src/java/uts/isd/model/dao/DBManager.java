@@ -71,20 +71,27 @@ public class DBManager {
     
 
     //update a user details in the database   
-    public void updateUser( int userID, String email, String password, String uType, String phoneNo) throws SQLException {       
+    public void updateUser( int userID, String password, String phoneNo) throws SQLException {       
         String sql = "UPDATE users " 
-                   + "SET email = ? , password = ? , uType = ? , phoneNo = ? " 
+                   + "SET password = ? , phoneNo = ? " 
                    + "WHERE userID = ? " ;
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, email);
-        statement.setString(2, password); //need to add hash method later
-        statement.setString(3, uType);
-        statement.setString(4, phoneNo);
-        statement.setInt(5, userID);
+        statement.setString(1, password); //need to add hash method later
+        statement.setString(2, phoneNo);
+        statement.setInt(3, userID);
         statement.executeUpdate();
         //code for update-operation   
         
-    }       
+    }
+    public void updateUser(int userID, String phoneNo) throws SQLException {       
+        String sql = "UPDATE users " 
+                   + "SET phoneNo = ? " 
+                   + "WHERE userID = ? " ;
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, phoneNo);
+        statement.setInt(2, userID);
+        statement.executeUpdate();
+    }
 
     //delete a user from the database   
     public void deleteUser(String email) throws SQLException{       
@@ -209,10 +216,21 @@ public class DBManager {
     }//addCustomer()
     
     //add anonymous customer
-    public void addCustomer( String fName, String lName, String title, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
+    /**
+     * 
+     * @param fName
+     * @param lName
+     * @param title
+     * @param sex
+     * @param dob
+     * @param addressID
+     * @return int customerID of new customer
+     * @throws SQLException 
+     */
+    public int addCustomer( String fName, String lName, String title, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
         String sql = "INSERT INTO customers ( fName, lName, title, sex, dob, addressid)"
                    + " VALUES ( ? , ? , ? , ?, ?, ?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, fName); //need to add hash method later
         statement.setString(2, lName);
         statement.setString(3, title);
@@ -220,20 +238,38 @@ public class DBManager {
         statement.setString(5, dob);
         statement.setInt(6, addressID);
         statement.executeUpdate();
+        
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs != null && rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0;
+        }
     }//addCustomer()
     
     
-    public void updateCustomer(int userID, String fName, String lName, String title, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO customers (userID, fName, lName, title, sex, dob, addressid)"
-                   + " VALUES ( ? , ? , ? , ? , ?, ?)";
+    public void updateCustomer(Integer customerID, String fName, String lName, String title, String sex, Date dob, Integer addressID) throws SQLException {                   //code for add-operation       
+        String sql = "UPDATE customers "
+                    + "SET fName = ?, lName = ?, title = ?, sex = ?, dob = ?, addressID = ?"
+                    + "WHERE customerID = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setInt(1, userID);
-        statement.setString(2, fName); //need to add hash method later
-        statement.setString(3, lName);
-        statement.setString(4, title);
-        statement.setString(5, sex);
-        statement.setString(6, dob);
-        statement.setInt(7, addressID);
+        statement.setString(1, fName); //need to add hash method later
+        statement.setString(2, lName);
+        statement.setString(3, title);
+        statement.setString(4, sex);
+        statement.setDate(5, dob);
+        statement.setInt(6, addressID);
+        statement.setInt(7, customerID);
+        statement.executeUpdate();
+    }//updateCustomer()
+    
+    public void updateCustomer(int customerID, Integer addressID) throws SQLException {                   //code for add-operation       
+        String sql = "UPDATE customers "
+                    + "SET addressID = ?"
+                    + "WHERE customerID = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, addressID);
+        statement.setInt(2, customerID);
         statement.executeUpdate();
     }//updateCustomer()
     
