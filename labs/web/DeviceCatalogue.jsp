@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
         <title>Device Catalogue</title>
     </head>
-    <body action ="ProductsServlet">
+    <body>
         <h1>Device Catalogue</h1>
                 
             <table border = "1" width = "100%">

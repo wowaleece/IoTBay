@@ -79,6 +79,18 @@ public class Validator implements Serializable{
         }
     }
     
+    /**
+     * Converts null strings to empty and enforces lower case only.
+     * @param s
+     * @return 
+     */
+    public String sanitiseString(String s) {
+        if (s == null) s = "";
+        return s.toLowerCase();
+    }
+    
+    
+    
     
     public void clear(HttpSession session) {
         session.setAttribute("emailErr", "Enter email");

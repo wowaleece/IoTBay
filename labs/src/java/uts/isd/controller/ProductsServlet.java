@@ -45,7 +45,7 @@ public class ProductsServlet extends HttpServlet {
     
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
+        doGet(request, response);
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -69,12 +69,12 @@ public class ProductsServlet extends HttpServlet {
                 case "/update":
                     updateTodo(request, response);
                     break;*/
-                case "/list":
+                case "/ProductsServletList":
                     DisplayProducts(request, response);
                     break;
                 default:
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("DeviceCatalogue.jsp");
-                    dispatcher.forward(request, response);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+                    //dispatcher.forward(request, response);
                     break;
             }
         } catch (SQLException ex) {

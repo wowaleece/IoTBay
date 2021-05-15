@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import uts.isd.model.User;
+import uts.isd.model.dao.DBCustomer;
 import uts.isd.model.dao.DBManager;
 
  
@@ -35,27 +36,28 @@ public class RegisterServlet extends HttpServlet {
         //init helper classes
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
-        DBCustomer dbCustomer = (DBCustomer) session.getAttribute("customer");
+        DBCustomer dbCust= (DBCustomer) session.getAttribute("dbCustomer");
+        //DBCustomer dbCust = new DBCustomer();
         Validator validator = new Validator();
         
-        //capture the posted credentials     
-        String email = request.getParameter("email");
+        //capture the posted credentials   
+        String email = request.getParameter("email").toLowerCase();
         String password = request.getParameter("password");
-        String phoneNo = request.getParameter("phoneNo");
+        String phoneNo = request.getParameter("phoneNo").toLowerCase();
         String fName = request.getParameter("fName");
         String lName = request.getParameter("lName");
         String sex = request.getParameter("sex");
-        Date dob = validator.sanitiseDate(request.getParameter("dob"));
+        String dobString = request.getParameter("dob");
         String address = request.getParameter("address");
         String tos = request.getParameter("agree");
         
-        //fill null strings
-        if (phoneNo == null) phoneNo = "";
+        //fill null strings, sanatise input
+        
         if (fName == null) fName = "";
         if (lName == null) lName = "";
         if (sex == null) sex = "";
         if (address == null) address = "";
-        
+        Date dob = validator.sanitiseDate(dobString);
         
         
         
@@ -95,7 +97,7 @@ public class RegisterServlet extends HttpServlet {
                     session.setAttribute("user",user);
                     
                     //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
+                    dbCust.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
                     request.getRequestDispatcher("index.jsp").include(request, response);
                 } else {
                     session.setAttribute("existErr", "Registry Failed");

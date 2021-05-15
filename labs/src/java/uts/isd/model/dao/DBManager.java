@@ -26,6 +26,9 @@ public class DBManager {
         this.conn = conn;
     }
 
+    protected Connection getConn(){
+        return conn;
+    }
     
     public User findUser(int userID) throws SQLException {  
         String sql = "SELECT email, utype, phoneno FROM users WHERE userID = ?"; //and isValid = true // validTo < sysdate

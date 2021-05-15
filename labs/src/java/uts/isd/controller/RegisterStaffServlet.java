@@ -41,21 +41,9 @@ public class RegisterStaffServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phoneNo = request.getParameter("phoneNo");
-        String fName = request.getParameter("fName");
-        String lName = request.getParameter("lName");
-        String sex = request.getParameter("sex");
-        Date dob = validator.sanitiseDate(request.getParameter("dob"));
-        String address = request.getParameter("address");
-        String tos = request.getParameter("agree");
+        String uType = request.getParameter("uType");
         
-        //fill null strings
-        if (phoneNo == null) phoneNo = "";
-        if (fName == null) fName = "";
-        if (lName == null) lName = "";
-        if (sex == null) sex = "";
-        if (address == null) address = "";
-        
-        
+
         
         
         
@@ -94,7 +82,6 @@ public class RegisterStaffServlet extends HttpServlet {
                     session.setAttribute("user",user);
                     
                     //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
                     request.getRequestDispatcher("index.jsp").include(request, response);
                 } else {
                     session.setAttribute("existErr", "Registry Failed");

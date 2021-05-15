@@ -39,8 +39,8 @@
         <br>
         <br>
         
-        <form action="UserLogsServlet">
-            <table border="1">
+        
+        <table border="1">
             <thead>
                 <tr>
                     <th class="p">TimeStamp</th>
@@ -63,7 +63,7 @@
             </tbody>
         </table>
             
-        </form>
+        
 
 
         

@@ -23,7 +23,7 @@
             <div>${user.email}</div>
             <div class="errors">${sessionScope.existErr}</div>
             <a class="button" href="index.jsp">Go back</a>
-            <a class="button" href="UserLogs"
+            <a class="button" href="UserLogs">logs</a>
         </div>
     </body>
 </html>

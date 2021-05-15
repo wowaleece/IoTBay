@@ -24,7 +24,11 @@ public class DBCustomer {
     public DBCustomer(Connection conn) throws SQLException {       
         this.conn = conn;
     }
-
+    /*
+    public DBCustomer(DBManager manager) throws SQLException {
+        this.conn = manager.getConn();
+    }
+    */
     
     public void addCustomer(int userID, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {                   //code for add-operation       
         String sql = "INSERT INTO customers (userID, fName, lName, sex, dob, addressid)"
