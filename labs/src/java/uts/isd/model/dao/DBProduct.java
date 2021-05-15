@@ -20,13 +20,14 @@ import uts.isd.model.Product;
 */
 
 public class DBProduct {
-
+    
     private Statement st; 
     private Connection conn; // using connection and prepared statements instead of dynamic statement 
                              // https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
-    public DBProduct(Connection conn) throws SQLException {       
+    public DBProduct(Connection conn) throws SQLException {      
         this.conn = conn;
+        
     }
     
     public List<Product> DisplayProducts() 
@@ -36,13 +37,13 @@ public class DBProduct {
             ResultSet rs = p.executeQuery();
             
             //Build list of user objects to return
-            ArrayList<Product> products = new ArrayList<Product>();
+            ArrayList<Product> product = new ArrayList<Product>();
             
             while (rs.next())
             {
-                products.add(new Product(rs));
+                product.add(new Product(rs));
             }
-            return products;
+            return product;
         }
         catch (Exception e)
         {
@@ -50,7 +51,6 @@ public class DBProduct {
             return null;
         }
     }
-    
     
     
     //Find by ProductName in database 
@@ -63,10 +63,11 @@ public class DBProduct {
             String PRODUCTNAME_TEMP = result.getString(2); 
             if (PRODUCTNAME_TEMP.equals(PRODUCTNAME)){
                 Integer PRODUCTID = result.getInt(1); 
-                String STOCKLEVEL = result.getString(3); 
-                Float UNITPRICE = result.getFloat(4);
-                String CATEGORY = result.getString(5); 
-                return new Product(PRODUCTID, PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY); 
+                Integer QUANTITY = result.getInt(3); 
+                String STOCKLEVEL = result.getString(4); 
+                Float UNITPRICE = result.getFloat(5);
+                String CATEGORY = result.getString(6); 
+                return new Product(PRODUCTID, PRODUCTNAME, QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY); 
             }
         }
         return null;  
@@ -74,26 +75,28 @@ public class DBProduct {
        
     
     //Add new product into the database   
-        public void addProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)"
-                   + " VALUES ( ? , ? , ?, ?)";
+        public void addProduct(String PRODUCTNAME, int QUANTITY, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {                   //code for add-operation       
+        String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY)"
+                   + " VALUES ( ? , ?, ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, PRODUCTNAME); //need to add hash method later
-        statement.setString(2, STOCKLEVEL);
-        statement.setFloat(3, UNITPRICE);
-        statement.setString(4, CATEGORY);
+        statement.setString(1, PRODUCTNAME); 
+        statement.setInt(2, QUANTITY);
+        statement.setString(3, STOCKLEVEL);
+        statement.setFloat(4, UNITPRICE);
+        statement.setString(5, CATEGORY);
 
         statement.executeUpdate();
     }//addCustomer()
     
     //update product details in the database   
-    public void updateProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {       
-        String sql = ("UPDATE PRODUCTS SET PRODUCTNAME ='"+ PRODUCTNAME +"', STOCKLEVEL ='" + STOCKLEVEL +"',UNITPRICE ='"+ UNITPRICE +"', CATEGORY = '" + CATEGORY + "' WHERE PRODUCTNAME= '" + PRODUCTNAME + "'");
+    public void updateProduct(String PRODUCTNAME, int QUANTITY, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {       
+        String sql = ("UPDATE PRODUCTS SET PRODUCTNAME ='"+ PRODUCTNAME +"', QUANTITY ='" + QUANTITY +"', STOCKLEVEL ='" + STOCKLEVEL +"',UNITPRICE ='"+ UNITPRICE +"', CATEGORY = '" + CATEGORY + "' WHERE PRODUCTNAME= '" + PRODUCTNAME + "'");
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(2, PRODUCTNAME);
-        statement.setString(3, STOCKLEVEL); 
-        statement.setFloat(4, UNITPRICE);
-        statement.setString(5,CATEGORY);
+        statement.setInt(3, QUANTITY);
+        statement.setString(4, STOCKLEVEL); 
+        statement.setFloat(5, UNITPRICE);
+        statement.setString(6,CATEGORY);
         statement.executeUpdate();
         
     }       

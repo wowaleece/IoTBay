@@ -22,6 +22,8 @@
                  <!-- TO DO  - ID should be automated --> 
                 <!-- <tr><td>ID</td><td><input type="text" id="PRODUCTID" name="PRODUCTID" required="true"></td></tr>-->
                  <tr><td>Product Name</td><td><input type="text" id="PRODUCTNAME" name="PRODUCTNAME" required="true"></td></tr>
+                  <tr><td>Quantity</td><td><input type="text" id="QUANTITY" name="QUANTITY" required="true"></td></tr>
+
                  <!-- TO DO  - Make Stock level automated or add radio buttons for Low, Medium, High --> 
                  <td>Stock Level:</td>
                      <td>

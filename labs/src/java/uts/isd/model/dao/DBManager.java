@@ -93,64 +93,11 @@ public class DBManager {
         // can we invalidate instead? 
     }
     
-    public ArrayList<Product> fectProducts() throws SQLException { 
-        String sql = "select * from PRODUCTS"; 
-        /*PreparedStatement Statement = conn.prepareStatement(sql);*/
-        ResultSet rs = st.executeQuery(sql);   
-        ArrayList<Product> temp = new ArrayList();  
-        
-        while (rs.next()){ 
-            Integer PRODUCTID = rs.getInt(1);  
-            String PRODUCTNAME = rs.getString(2); 
-            String STOCKLEVEL = rs.getString(3); 
-            Float UNITPRICE = rs.getFloat(4); 
-            String CATEGORY = rs.getString(5);  
-            temp.add(new Product(PRODUCTID, PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)); 
-        
-        }
-        return temp; 
-    }
+   
 
-    /*public Product DisplayProduct() {   
-        try {
-            String sql = "SELECT * FROM PRODUCTS";
-            PreparedStatement Statement = conn.prepareStatement(sql);
-            ResultSet rs = Statement.executeQuery();  //search database for matching product 
-            
-            while (rs.next()){ 
-                Integer PRODUCTID = rs.getInt(1);  
-                String PRODUCTNAME = rs.getString(2); 
-                String STOCKLEVEL = rs.getString(3); 
-                Float UNITPRICE = rs.getFloat(4); 
-                String CATEGORY = rs.getString(5); 
-                boolean add = temp.add(new Product(PRODUCTID, PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)); 
-            }
-        
-        } catch (SQLException e) { 
-            JOptionPane.showMessageDialog(null,e); 
-        }
-        return temp;
-    } */
     
     
-    //Find by ProductName in database 
-    public Product findProduct(String PRODUCTNAME) throws SQLException {   
-        String sql = "SELECT * FROM PRODUCTS WHERE PRODUCTNAME = '" + PRODUCTNAME + "'";
-        PreparedStatement Statement = conn.prepareStatement(sql);
-        ResultSet result = Statement.executeQuery();  //search database for matching product 
-        
-        while (result.next()){ 
-            String PRODUCTNAME_TEMP = result.getString(2); 
-            if (PRODUCTNAME_TEMP.equals(PRODUCTNAME)){
-                Integer PRODUCTID = result.getInt(1); 
-                String STOCKLEVEL = result.getString(3); 
-                Float UNITPRICE = result.getFloat(4);
-                String CATEGORY = result.getString(5); 
-                return new Product(PRODUCTID, PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY); 
-            }
-        }
-        return null;  
-    } 
+    
        
     
     //Add new product into the database   
@@ -177,21 +124,6 @@ public class DBManager {
         statement.executeUpdate();
         
     }       
-    
-    //Deletes product from the database
-    public void DeleteProduct(String PRODUCTNAME)throws SQLException{
-      st.executeUpdate("DELETE FROM PRODUCTS WHERE PRODUCTNAME = '" + PRODUCTNAME + "'"); 
-    }
-
-    public void updateProduct(String PRODUCTNAME, String STOCKLEVEL, String UNITPRICE, String CATEGORY) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public void addProduct(String PRODUCTID, String PRODUCTNAME, String STOCKLEVEL, String UNITPRICE, String CATEGORY) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    
     
     
     public void addCustomer(int userID, String fName, String lName, String sex, String dob, int addressID) throws SQLException {                   //code for add-operation       
@@ -242,9 +174,7 @@ public class DBManager {
        
     }//deleteCustomer()
     
-    
-    
-    
+   
     public int findAddress(String address) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }//findAddress

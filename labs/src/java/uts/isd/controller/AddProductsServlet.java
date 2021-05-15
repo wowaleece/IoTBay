@@ -45,6 +45,7 @@ public class AddProductsServlet extends HttpServlet {
         
         HttpSession session = request.getSession();
         String PRODUCTNAME = request.getParameter("PRODUCTNAME"); 
+        int QUANTITY = Integer.parseInt(request.getParameter("QUANTITY")); 
         String STOCKLEVEL = request.getParameter("STOCKLEVEL"); 
         Float UNITPRICE = Float.parseFloat(request.getParameter("UNITPRICE"));
         String CATEGORY= request.getParameter("CATEGORY"); 
@@ -54,7 +55,7 @@ public class AddProductsServlet extends HttpServlet {
         
        try {
            /*session.setAttribute("product", product);*/
-            ProductManager.addProduct(PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY);
+            ProductManager.addProduct(PRODUCTNAME, QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY);
             /*session.setAttribute("product", product);*/
             request.getRequestDispatcher("index.jsp").include(request,response);
         } catch (SQLException ex) { 

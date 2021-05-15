@@ -73,14 +73,17 @@ public class TestProductDB {
     private void testAdd() throws SQLException { 
          System.out.print("Product Name: "); 
          String productName = in.nextLine();  
+         System.out.print("Quantity: "); 
+         int Quantity = in.nextInt();  
          System.out.print("Stock Level: "); 
+         in.next();
          String stockLevel = in.nextLine();    
          System.out.print("UnitPrice: "); 
          float unitPrice = in.nextFloat();
          System.out.print("Category: "); 
          in.next();
          String category= in.nextLine();  
-         db.addProduct(productName, stockLevel, unitPrice, category); 
+         db.addProduct(productName, Quantity, stockLevel, unitPrice, category); 
          System.out.println("Product has been added to the database");
     }
     
@@ -109,13 +112,15 @@ public class TestProductDB {
             if(db.CheckProduct(PRODUCTNAME)){ 
                 System.out.print("Product Name: "); 
                 String ProductName = in.nextLine();  
+                System.out.print("Quantity: "); 
+                int Quantity = in.nextInt(); 
                 System.out.print("Stock Level: "); 
                 String StockLevel = in.nextLine();    
                 System.out.print("UnitPrice: "); 
                 Float UnitPrice = in.nextFloat();    
                 System.out.print("Category: "); 
                 String Category= in.nextLine();
-                db.updateProduct(ProductName, StockLevel, UnitPrice, Category);   
+                db.updateProduct(ProductName, Quantity,StockLevel, UnitPrice, Category);   
             }else { 
                 System.out.println("Product does not exist"); 
             }
@@ -133,7 +138,7 @@ public class TestProductDB {
         List<Product> products = db.DisplayProducts();
         System.out.println("PRODUCTS TABLE: ");
         products.forEach((Product) -> {
-            System.out.printf("%s %s %f %s \n ", Product.getProductName(), Product.getStockLevel(), Product.getUnitPrice(), Product.getCategory());
+            System.out.printf("%s %d %s %f %s \n ", Product.getProductName(), Product.getQuantity(), Product.getStockLevel(), Product.getUnitPrice(), Product.getCategory());
         });
         System.out.println();
          
