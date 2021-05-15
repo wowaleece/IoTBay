@@ -3,6 +3,7 @@
     Created on : 05/04/2021, 1:17:41 AM
     Author     : alice_zly8mn7
 --%>
+
 <%@page import="uts.isd.model.User"%>
 <%@page contentType="text/html" pageEncoding="windows-1252"%>
 <!DOCTYPE html>
@@ -18,8 +19,11 @@
             User user = (User)session.getAttribute("user");
         %>       
         <div>
-            <p>You are viewing your account, ${user.fname}</p>            
-            <a class="button" href="main.jsp">Go back</a>
+            <p>You are viewing your account</p>
+            <div>${user.email}</div>
+            <div class="errors">${sessionScope.existErr}</div>
+            <a class="button" href="index.jsp">Go back</a>
+            <a class="button" href="UserLogs"
         </div>
     </body>
 </html>

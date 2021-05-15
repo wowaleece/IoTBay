@@ -27,7 +27,7 @@ public class DBAddress {
 
     
 
-    }
+    
     
 
 
@@ -52,6 +52,15 @@ public class DBAddress {
         return temp;
     } */
     
+    public Address allAddresses(String search) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }//allAddress
+    
+    public ArrayList<Address> findAddresses(String search) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+
     
     
     

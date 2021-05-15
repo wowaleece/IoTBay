@@ -5,11 +5,13 @@
  */
 package uts.isd.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author super
  */
-public class Address {
+public class Address implements Serializable {
     private int addressID;
     private String streetName;
     private String unitNumber;

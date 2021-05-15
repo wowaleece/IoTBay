@@ -5,10 +5,12 @@
  */
 package uts.isd.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author super
  */
-public class Customer {
+public class Customer implements Serializable {
     
 }

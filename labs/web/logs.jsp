@@ -3,7 +3,8 @@
     Created on : 3 Apr 2021, 10:27:38 pm
     Author     : marinasantanelli
 --%>
-<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="java.lang.Iterable"%>
 <%@page import="uts.isd.model.Log"%>
 <%@page import="uts.isd.model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,10 +15,7 @@
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
         <title>Welcome Page</title>
     </head>
-    <body>
-        
-        <h1>Welcome!</h1>
-        
+    <body>  
         <table border="1">
             <thead>
                 <tr>
@@ -51,17 +49,17 @@
                 </tr>
             </thead>
             <tbody>
-                <%
-                ArrayList<Log> logs = (ArrayList<Log>)request.getAttribute("logs");   
-                for (Log result: logs) { 
+               <%
+                List<Log> logs = (List<Log>)request.getAttribute("logs");   
+                for (Log log: logs) { 
                 %>
                 <tr>
-                    <td><%=result.getLogTime() %></td>
-                    <td><%=result.getActivityType() %></td>
-                    <td><%=result.getActivityDetails() %></td>
-                    <td><a class="button" href="EditProduct.jsp"> Edit </a> <a class="button" href="DeleteProduct.jsp"> Delete </a></td>
+                    <td><%=log.getLogTime() %></td>
+                    <td><%=log.getActivityType() %></td>
+                    <td><%=log.getActivityDetails() %></td>
+                    
                 </tr>
-                <% } %> 
+                <% } //close for loop%>  
             </tbody>
         </table>
             

@@ -35,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
         //init helper classes
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
+        DBCustomer dbCustomer = (DBCustomer) session.getAttribute("customer");
         Validator validator = new Validator();
         
         //capture the posted credentials     

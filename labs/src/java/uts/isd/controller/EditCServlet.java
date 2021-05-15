@@ -87,7 +87,7 @@ public class EditCServlet extends HttpServlet {
 
         try {
             manager.updateUser(userID, phoneNo);
-//            manager.updateCustomer(userID, fName, lName, state, sex, dob, postcode);
+//            manager.updateCustomerAddress(userID, fName, lName, state, sex, dob, postcode);
             
             
         } catch (SQLException ex) {           

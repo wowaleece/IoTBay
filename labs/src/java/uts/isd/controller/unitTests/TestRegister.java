@@ -13,6 +13,7 @@ import uts.isd.controller.Validator;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
+import uts.isd.model.dao.DBCustomer;
 import uts.isd.model.dao.DBManager;
 
 
@@ -34,6 +35,7 @@ public class TestRegister {
             DBConnector connector = new DBConnector();
             Connection conn = connector.openConnection();
             DBManager manager = new DBManager(conn);
+            DBCustomer dbCust = new DBCustomer(conn);
             Validator validator = new Validator();
             
             //test input
@@ -73,7 +75,7 @@ public class TestRegister {
                 System.out.println("added user");
                 user  = manager.checkLogin(email,password);
                 System.out.println("got userID");
-                manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
+                dbCust.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {

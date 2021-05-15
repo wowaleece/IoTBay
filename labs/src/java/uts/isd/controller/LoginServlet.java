@@ -60,11 +60,11 @@ public class LoginServlet extends HttpServlet {
             try {
                 //user = loginDAO.checkLogin(email, hash);
                 user = manager.checkLogin(email, password);
-                //logg a login attempt
+                //log a login attempt
                 if (user != null) {
                     session.setAttribute("user", user);
                     request.getRequestDispatcher("index.jsp").include(request, response);
-                    
+                    manager.log(user.getUserID(), "login", "logged in");
                 } else {
                     session.setAttribute("existErr", "User does not exist");
                     request.getRequestDispatcher("login.jsp").include(request, response);

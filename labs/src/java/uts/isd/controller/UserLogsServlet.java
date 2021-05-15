@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -31,7 +32,35 @@ public class UserLogsServlet extends HttpServlet {
     private Timestamp from;
     private Timestamp to;
     private long defaultFrom = 2592000000L; // 30 days
+    private long currentTime;
     
+    
+    @Override 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)   
+            throws ServletException, IOException {
+        /* Use getPathInfo to figure out what URL suffix is being used in the request.
+         * i.e. the bit after the controller mapping.
+         * https://stackoverflow.com/questions/4278083/how-to-get-request-uri-without-context-path
+         * 
+         * ALSO: Make sure in web.xmxl you use a wildcard to match any sub-path you want to use in this controller.
+         *  <servlet-mapping>
+         *    <servlet-name>UsersController</servlet-name>
+         *    <url-pattern>/User/*</url-pattern>
+         *   </servlet-mapping>
+         */
+        String pathinfo = request.getServletPath();
+        switch (pathinfo)
+        {
+            case "/UserLogs":
+                doUserLogsGet(request, response);
+                break;
+            case "/AdminLogs":
+                doAdminLogsGet(request, response);
+                break;
+                
+        }
+       
+    }
     
     @Override   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
@@ -70,7 +99,7 @@ public class UserLogsServlet extends HttpServlet {
         if (user != null) {           
             
             try {
-                ArrayList<Log> logs = manager.findLogs(user.getUserID(),from,to);
+                List<Log> logs = manager.findLogs(user.getUserID(),from,to);
                 request.setAttribute("logs", logs);
             } catch (SQLException ex) {
                 request.setAttribute("existErr", "no results");
@@ -81,5 +110,45 @@ public class UserLogsServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").include(request,response);
         }
     }
-    
+
+    private void doAdminLogsGet(HttpServletRequest request, HttpServletResponse response) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+             
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     * 
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    private void doUserLogsGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        
+        if (user == null){
+            session.setAttribute("existErr", "Error, no one is logged in.");
+            request.getRequestDispatcher("account.jsp").include(request,response);
+            return;//early return since nothing can be done.
+        } 
+        
+        currentTime = System.currentTimeMillis();
+        from = new Timestamp(currentTime - defaultFrom);
+        to = new Timestamp(currentTime);
+        
+        DBManager manager = (DBManager) session.getAttribute("manager");
+        List<Log> logs;
+        try{
+            logs = manager.findLogs(user.getUserID(), from, to);
+            request.setAttribute("logs", logs);
+        }   catch (SQLException ex) {
+            Logger.getLogger(UserLogsServlet.class.getName()).log(Level.SEVERE, null, ex);
+            session.setAttribute("existErr", "Logs unavaliable");
+        }
+        
+        request.getRequestDispatcher("/logs.jsp").include(request,response); //should be .forward(request,response); ? 
+    }
 }

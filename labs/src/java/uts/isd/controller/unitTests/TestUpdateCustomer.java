@@ -118,7 +118,7 @@ public class TestUpdateCustomer {
                 */
                 
                 int addressID = user.getAddress().getAddressID();
-                //manager.updateCustomer(customerID, fName, lName, state, sex, dob, addressID);
+                //manager.updateCustomerAddress(customerID, fName, lName, state, sex, dob, addressID);
                 
             } else {
                 System.out.println("login failed.");

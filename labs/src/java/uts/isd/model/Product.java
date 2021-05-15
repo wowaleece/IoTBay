@@ -5,6 +5,7 @@
  */
 package uts.isd.model;
 
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -14,7 +15,7 @@ import java.util.logging.Logger;
  *
  * @author Kayla Gelman
  */
-public class Product {
+public class Product implements Serializable {
     protected int PRODUCTID;  
     protected String PRODUCTNAME;  
     protected String STOCKLEVEL; 

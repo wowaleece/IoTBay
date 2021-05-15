@@ -14,3 +14,7 @@ WHERE userID = ?;
 INSERT INTO customers (userID, fName, lName, title, sex, dob, addressid)
 			values 	( ? , ? , ? , ? , ?, ?) 
 			;
+
+SELECT l.logID, l.userID, l.logTime, l.activityType, l.activityDetail
+                    FROM logs l
+                   WHERE l.userID = 5 AND l.logTime > ? AND l.logTime < ?
