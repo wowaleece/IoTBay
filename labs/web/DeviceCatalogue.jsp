@@ -49,7 +49,7 @@
                         
                         <td>
                             <a class="button" href="EditProduct.jsp"> Edit </a> 
-                            <a class="button" href="DeleteProduct.jsp"> Delete </a>
+                            <a class="button" href="DeleteProduct.jsp?ProductID=<%=p.getID()%>"> Delete </a>
                         </td>
                     </tr>  
                 <% } %> 
