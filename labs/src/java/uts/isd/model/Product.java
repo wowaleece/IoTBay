@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  */
 public class Product implements Serializable {
     protected int PRODUCTID;  
-    protected String PRODUCTNAME;  
+    protected String PRODUCTNAME; 
+    protected int QUANTITY; 
     protected String STOCKLEVEL; 
     protected float UNITPRICE; 
     protected String CATEGORY;     
@@ -27,6 +28,7 @@ public class Product implements Serializable {
      *
      * @param PRODUCTID
      * @param PRODUCTNAME
+     * @param QUANTITY
      * @param STOCKLEVEL
      * @param UNITPRICE
      * @param CATEGORY
@@ -36,9 +38,10 @@ public class Product implements Serializable {
         this.PRODUCTID = PRODUCTID; 
     }*/
     
-    public Product(int PRODUCTID, String PRODUCTNAME, String STOCKLEVEL, float UNITPRICE, String CATEGORY){ 
+    public Product(int PRODUCTID, String PRODUCTNAME, int QUANTITY, String STOCKLEVEL, float UNITPRICE, String CATEGORY){ 
         this.PRODUCTID = PRODUCTID;  
         this.PRODUCTNAME = PRODUCTNAME;  
+        this.QUANTITY = QUANTITY; 
         this.STOCKLEVEL = STOCKLEVEL;  
         this.UNITPRICE= UNITPRICE; 
         this.CATEGORY= CATEGORY; 
@@ -51,6 +54,7 @@ public class Product implements Serializable {
         {
             this.PRODUCTID = rs.getInt("PRODUCTID");
             this.PRODUCTNAME = rs.getString("PRODUCTNAME");  
+            this.QUANTITY = rs.getInt("QUANTITY"); 
             this.STOCKLEVEL = rs.getString("STOCKLEVEL");  
             this.UNITPRICE= rs.getFloat("UNITPRICE"); 
             this.CATEGORY= rs.getString("CATEGORY"); 
@@ -76,6 +80,13 @@ public class Product implements Serializable {
         this.PRODUCTNAME = PRODUCTNAME; 
     }
     
+    public int getQuantity(){ 
+        return QUANTITY; 
+    }
+    
+    public void setQuantity(int QUANTITY){ 
+        this.QUANTITY = QUANTITY; 
+    }
     public String getStockLevel(){ 
         return STOCKLEVEL; 
     }

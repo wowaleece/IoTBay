@@ -26,8 +26,11 @@
             <a href="register.jsp">Register</a>
             <a href="login.jsp">Login</a>
             <a href="ViewProducts.jsp">Browse Products</a>
-            <a href="AddNewProduct.jsp">Add New Product</a>
+            <a href="AddNewProduct.jsp">Add New Product (Admin)</a>
+            <a href="DeviceCatalogue.jsp">Device Management (Admin)</a>
           </div>
+        
+        
         
         <div class="topnav"> 
             <div class="container-header">
