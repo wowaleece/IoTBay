@@ -35,17 +35,17 @@ public class LogoutServlet {
         
             // invalidate session
             session.invalidate();
-        // log the logout activity   
-            try {
-                manager.log(user.getUserID(), "logout",user.getEmail() + " has logged out");
-                //how to disconnect from the DB? 
-
-            } catch (SQLException ex) {
-                Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
-            //send user back to the main page
-            request.getRequestDispatcher("index.jsp").include(request, response);
+//        // log the logout activity   
+//            try {
+//                manager.log(user.getUserID(), "logout",user.getEmail() + " has logged out");
+//                //how to disconnect from the DB? 
+//
+//            } catch (SQLException ex) {
+//                Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//            
+//            //send user back to the main page
+////            request.getRequestDispatcher("index.jsp").include(request, response);
         }
     }
 }

@@ -11,43 +11,58 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="uts.isd.model.dao.DBConnector"%>
 <%@page import="uts.isd.model.dao.DB"%>
-<%@page import="uts.isd.model.dao.DBManager"%>
+<%@page import="uts.isd.model.dao.DBManager_Orders"%>
+<%@page import="uts.isd.model.Orders"%>
+<%@page import="uts.isd.model.OrderLineItems"%>
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<jsp:include page="header.jsp"/>
 
 <!DOCTYPE html>
 
-<%  int orderId = (int) session.getAttribute("orderID");
-    int userId = (int) session.getAttribute("userID");
-    String UserID = userId.toString(); %> 
+<%  
+    //int orderId = (Integer) session.getAttribute("OrderID");
+    //int userId = (Integer) session.getAttribute("userID");
+%> 
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>View Individual Order </title>
+        <title>View Order History </title>
     </head>
     
-    <% ArrayList<Orders> orders = (ArrayList<Orders>)session.getAttribute("orders");
-        session.setAttribute("orders", orders);
-        request.setAttribute("orders", orders); %>
+    <% 
+        ArrayList <Orders> orders = (ArrayList<Orders>) session.getAttribute("Orders");
+        session.setAttribute("Orders", orders);
+//        request.setAttribute("Orders", orders); 
+    %>
+
         
     <body>
+        
         <h1>Viewing Order History </h1>
         <table border="1">
             <thead>
                 <tr>
-                    <th class="p">Order Number</th>
-                    <th class="p">Date Ordered</th>
-                    <th class="p">Payment Status</th>
-                    <th class="p">Order Status</th>
+                    <th>Order Number</th>
+                    <th>Date Ordered</th>
+                    <th>Payment Status</th>
+                    <th>Order Status</th>
+                    <th>Action</th>
                 </tr>
-                <tr>
-                <c:forEach items="${orders}" var="order">  
+            </thead>
+                <c:forEach items="${orders}" var="Orders">  
                     <tr>
-                        <td>${Orders.OrderID}</td>
-                        <td>${Orders.OrderDate}</td>
-                        <td>${Orders.PaymentStatus}</td>
-                        <td>${Orders.OrderStatus}</td>
+                        <td>${orders.OrderID}</td>
+                        <td>${orders.OrderDate}</td>
+                        <td>${orders.PaymentStatus}</td>
+                        <td>${orders.OrderStatus}</td>
+                        <td><form method="POST" action="OrdersServletDelete"><input type="button" value="Delete Order"></form><form method="post" action="OrdersServletFind" ><input type="button" value="View Order"></form></td>
                     </tr>
                 </c:forEach>
+                
+      
                     <%--<%      try{
                                 connection = DriverManager.getConnection(connectionUrl+database, userid, password);
                                 statement=connection.createStatement();
@@ -69,8 +84,8 @@
                                     e.printStackTrace();
                             }
                     %>--%>
-                </tr>
-            </thead>
+               
+            
         </table>
                     <br  />
                     <br  />

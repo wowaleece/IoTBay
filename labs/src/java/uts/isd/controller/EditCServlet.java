@@ -119,9 +119,9 @@ public class EditCServlet extends HttpServlet {
                 if (user != null) {
                     session.setAttribute("user",user);
                     
-                    //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
-                    request.getRequestDispatcher("index.jsp").include(request, response);
+//                    //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
+//                    manager.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
+//                    request.getRequestDispatcher("index.jsp").include(request, response);
                 } else {
                     session.setAttribute("existErr", "Registry Failed");
                     request.getRequestDispatcher("register.jsp").include(request, response);

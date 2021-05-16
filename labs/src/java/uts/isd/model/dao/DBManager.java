@@ -33,9 +33,9 @@ public class DBManager {
         statement.setInt(1, userID);
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
         User user = null;
-        if (result.next()) {
-            user = new User(userID, result.getString("email"),result.getString("utype"),result.getString("phoneno"));
-        } // if the result is not null, get userID
+//        if (result.next()) {
+//            user = new User(userID, result.getString("email"),result.getString("utype"),result.getString("phoneno"));
+//        } // if the result is not null, get userID
         
         return user;   
     }
@@ -52,7 +52,7 @@ public class DBManager {
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
         User user = null;
         // if the result is not null, get userID
-        if (result.next()) {user =  new User(result.getInt("userID"), result.getString("email"),result.getString("utype"),result.getString("phoneno"));} 
+//        if (result.next()) {user =  new User(result.getInt("userID"), result.getString("email"),result.getString("utype"),result.getString("phoneno"));} 
        
         return user;
     }

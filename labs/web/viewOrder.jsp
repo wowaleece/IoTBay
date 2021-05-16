@@ -14,8 +14,7 @@
 <%@page import="uts.isd.model.dao.DBManager_Orders"%>
 
 
-<jsp:include page="./isd/controller/OrdersServlet.java" flush="true"/>
-<jsp:include page ="./isd/controller/OrderLineItemsServlet" flush="true"/>
+
 
 <!DOCTYPE html>
 <%--<%  int orderId = (int) session.getAttribute("orderID");
@@ -28,7 +27,11 @@
         <title>View Individual Order </title>
     </head>
     <body>
-        <h1>Viewing Individual Order - Hello World?</h1>
+        <%--<jsp:include page="./isd/controller/OrdersServlet.java" flush="true"/>--%>
+        <%--<jsp:include page ="./isd/controller/OrderLineItemsServlet" flush="true"/>--%>
+        <%--<jsp:useBean id="order" type="java.util.ArrayList" scope="session"/>--%>
+        
+        <h1>Viewing Individual Order</h1>
         <table border="1">
             <thead>
                 <tr>
@@ -37,6 +40,7 @@
                     <th class="p">Items</th>
                     <th class="p">Payment</th>
                     <th class="p">Status</th>
+                    <th class="p">Action</th>
                 </tr>
             </thead>
             <td>${Orders.OrderID}</td>
@@ -47,13 +51,14 @@
             </td>
             <td>${Orders.PaymentStatus}</td>
             <td>${Orders.OrderStatus}</td>
+            <td><form method="POST" action="/OrdersServletDelete"><input type="button" value="Delete Order"></form></td>
             
                 <tr>
                     
                 </tr>
             
         </table>
-                    <br  />
-                    <br  />
+                    <br/>
+                    <br/>
     </body>
 </html>
