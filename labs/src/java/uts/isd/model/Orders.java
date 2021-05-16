@@ -20,6 +20,7 @@ public class Orders implements Serializable {
     private String UserID;
     private String Status; 
     private String ShippingStatus;
+    private String PaymentStatus; 
     private String OrderTime; 
     private String StreetName; 
     private String UnitNumber; 
@@ -31,11 +32,12 @@ public class Orders implements Serializable {
     private String CardType; 
     private float TotalPrice; 
 
-    public Orders(int OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType, float TotalPrice) {
+    public Orders(int OrderID, String UserID, String Status, String ShippingStatus, String PaymentStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType, float TotalPrice) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.Status = Status;
         this.ShippingStatus = ShippingStatus; 
+        this.PaymentStatus = PaymentStatus;
         this.OrderTime = OrderTime;
         this.StreetName = StreetName;
         this.UnitNumber = UnitNumber;
@@ -54,9 +56,10 @@ public class Orders implements Serializable {
         {
             this.OrderID = rs.getInt("ORDERID");
             this.UserID = rs.getString("USERID");  
-            this.Status = rs.getString("PRODUCTNAME"); 
-            this.ShippingStatus = rs.getString("STOCKLEVEL");  
-            this.OrderTime= rs.getString("ORDERTIME"); 
+            this.Status = rs.getString("ORDERSTATUS"); 
+            this.ShippingStatus = rs.getString("SHIPPINGSTATUS");  
+            this.PaymentStatus = rs.getString("PAYMENTSTATUS");
+            this.OrderTime = (rs.getTimestamp("ORDERTIME")).toString(); 
             this.StreetName= rs.getString("STREENAME"); 
             this.UnitNumber = rs.getString("UNITNUMBER");
             this.Suburb = rs.getString("SUBRUB");  
@@ -101,6 +104,16 @@ public class Orders implements Serializable {
     public void setShippingStatus(String ShippingStatus) {
         this.ShippingStatus = ShippingStatus;
     }
+
+    public String getPaymentStatus() {
+        return PaymentStatus;
+    }
+
+    public void setPaymentStatus(String PaymentStatus) {
+        this.PaymentStatus = PaymentStatus;
+    }
+    
+    
 
     public String getOrderTime() {
         return OrderTime;

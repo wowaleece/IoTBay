@@ -63,7 +63,7 @@
                 </li> 
                 <li>
                 <!-- TO DO: ADD ACTUAL LINK TO VIEW CART -->
-                <button onclick="location.href='ViewCart.jsp'" type="button"><i style="font-size:24px" class="fa">  &#xf07a;</i></button></li>
+                <button onclick="location.href='cart.jsp'" type="button"><i style="font-size:24px" class="fa">  &#xf07a;</i></button></li>
                 <li>
                 <form method="POST" action="OrdersServletList">
                 <input type="submit" value="Orders" />

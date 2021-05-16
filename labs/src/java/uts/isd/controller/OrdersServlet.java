@@ -104,10 +104,11 @@ public class OrdersServlet extends HttpServlet {
     
     private void ListOrders(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
+        System.out.println("Hello line 107");
         HttpSession session = request.getSession();
         DBManager_Orders OrderManager = (DBManager_Orders) session.getAttribute("OrderManager"); 
         List <Orders> orders = OrderManager.DisplayOrders();
-        request.setAttribute("OrderID", orders);
+        request.setAttribute("Orders", orders);
         RequestDispatcher dispatcher = request.getRequestDispatcher("viewOrdersList.jsp");
         dispatcher.forward(request,response);
      }

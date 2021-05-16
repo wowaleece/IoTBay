@@ -53,11 +53,12 @@
                 </tr>
             </thead>
                 <c:forEach items="${orders}" var="Orders">  
+                    ${orders}
                     <tr>
                         <td>${orders.OrderID}</td>
-                        <td>${orders.OrderDate}</td>
+                        <td>${orders.OrderTime}</td>
                         <td>${orders.PaymentStatus}</td>
-                        <td>${orders.OrderStatus}</td>
+                        <td>${orders.Status}</td>
                         <td><form method="POST" action="OrdersServletDelete"><input type="button" value="Delete Order"></form><form method="post" action="OrdersServletFind" ><input type="button" value="View Order"></form></td>
                     </tr>
                 </c:forEach>

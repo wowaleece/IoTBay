@@ -64,13 +64,13 @@ public class DBManager_Orders {
             PreparedStatement p = this.conn.prepareStatement("SELECT * FROM ORDERS");
             ResultSet rs = p.executeQuery();
             
-            ArrayList<Orders> order = new ArrayList<Orders>();
+            ArrayList<Orders> orders = new ArrayList<>();
             
             while (rs.next())
             {
-                order.add(new Orders(rs));
+                orders.add(new Orders(rs));
             }
-            return order;
+            return orders;
         }
         catch (Exception e)
         {
@@ -106,6 +106,7 @@ public class DBManager_Orders {
                     String OrderTime = OrderTime_ts.toString();
                 String OrderStatus = rs.getString(4);
                 String ShippingStatus = rs.getString(5);
+                String PaymentStatus = rs.getString(6);
                 String StreetName = rs.getString(7);
                 String UnitNumber = rs.getString(8);
                 String Suburb = rs.getString(9);
@@ -115,7 +116,7 @@ public class DBManager_Orders {
                 String NameonCard = rs.getString(13);
                 String CardType = rs.getString(14);
                 float TotalPrice = rs.getFloat(15);
-                return new Orders(OrderID, UserID, OrderStatus, ShippingStatus, OrderTime, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, NameonCard, CardType, TotalPrice); 
+                return new Orders(OrderID, UserID, OrderStatus, ShippingStatus, PaymentStatus, OrderTime, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, NameonCard, CardType, TotalPrice); 
             }
         }
         return null;  
