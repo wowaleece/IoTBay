@@ -21,7 +21,7 @@
         %>  --%>     
         <div>
             <p>You are viewing your account</p>
-            <%--<jsp:include flush="true" page="ProfileServlet"/> --%>
+            <jsp:include flush="true" page="ProfileServlet"/>
             <div class="errors">${sessionScope.existErr}</div>
             <a class="button" href="index.jsp">Go back</a>
             <a class="button" href="UserLogs">logs</a>
