@@ -7,7 +7,8 @@ package uts.isd.model.dao;
 import uts.isd.model.User;
 import java.sql.*;
 import uts.isd.model.Orders;
-
+import java.util.List;
+import java.util.ArrayList;
 /**
  *
  * @author alice_zly8mn7
@@ -25,7 +26,7 @@ public class DBManager_Orders {
     // If a registered user wants to save an order, query will check if order exists already in their account and use old order details, but just add more item lines to it. 
     public void saveOrder(String UserID, String OrderStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String ProductName)throws SQLException {
         int check = 0; 
-        String query = "SELECT ORDERID FROM APP.ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        String query = "SELECT ORDERID FROM ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
         PreparedStatement Statement = conn.prepareStatement(query);
         ResultSet rs = Statement.executeQuery();
         while (rs.next()){
@@ -39,7 +40,7 @@ public class DBManager_Orders {
             addOrderLineItem(UserID, OrderID, "Saved", ProductName);
         }else{
             System.out.println(check);
-            query = "INSERT INTO APP.ORDERS (USERID, ORDERSTATUS, STREETNAME, UNITNUMBER, SUBURB, POSTCODE, ADDRESSSTATE, BILLINGADDRESS) VALUES (?, ?, ?, ?, ? , ?, ?, ?)";            
+            query = "INSERT INTO ORDERS (USERID, ORDERSTATUS, STREETNAME, UNITNUMBER, SUBURB, POSTCODE, ADDRESSSTATE, BILLINGADDRESS) VALUES (?, ?, ?, ?, ? , ?, ?, ?)";            
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, UserID);
             statement.setString(2, OrderStatus);
@@ -56,9 +57,32 @@ public class DBManager_Orders {
         }    
 
     }
-   
+    
+    public List <Orders> DisplayOrders(){
+        
+         try {
+            PreparedStatement p = this.conn.prepareStatement("SELECT * FROM ORDERS");
+            ResultSet rs = p.executeQuery();
+            
+            ArrayList<Orders> orders = new ArrayList<>();
+            
+            while (rs.next())
+            {
+                orders.add(new Orders(rs));
+            }
+            return orders;
+        }
+        catch (Exception e)
+        {
+            /*Logging.logMessage("Unable to getAllProducts", e);*/
+            return null;
+        }
+        
+        
+    }
+    
     public int getOrderID(String UserID)throws SQLException {
-        String query = "SELECT ORDERID FROM APP.ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        String query = "SELECT ORDERID FROM ORDERS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
         PreparedStatement Statement = conn.prepareStatement(query);
         ResultSet rs = Statement.executeQuery();        
         while (rs.next()) {
@@ -70,7 +94,7 @@ public class DBManager_Orders {
     }   
     
     public Orders findOrder(int OrderID)throws SQLException { // Only searches via OrderID
-        String sql = "SELECT * FROM APP.ORDERS WHERE ORDERID = " + OrderID ;
+        String sql = "SELECT * FROM ORDERS WHERE ORDERID = " + OrderID ;
         PreparedStatement Statement = conn.prepareStatement(sql);
         ResultSet rs = Statement.executeQuery();
         
@@ -82,16 +106,17 @@ public class DBManager_Orders {
                     String OrderTime = OrderTime_ts.toString();
                 String OrderStatus = rs.getString(4);
                 String ShippingStatus = rs.getString(5);
-                String StreetName = rs.getString(6);
-                String UnitNumber = rs.getString(7);
-                String Suburb = rs.getString(8);
-                int Postcode = rs.getInt(9);
-                String AddressState = rs.getString(10);
-                boolean BillingAddress = rs.getBoolean(11);
-                String NameonCard = rs.getString(12);
-                String CardType = rs.getString(13);
-                float TotalPrice = rs.getFloat(14);
-                return new Orders(OrderID, UserID, OrderStatus, ShippingStatus, OrderTime, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, NameonCard, CardType, TotalPrice); 
+                String PaymentStatus = rs.getString(6);
+                String StreetName = rs.getString(7);
+                String UnitNumber = rs.getString(8);
+                String Suburb = rs.getString(9);
+                int Postcode = rs.getInt(10);
+                String AddressState = rs.getString(11);
+                boolean BillingAddress = rs.getBoolean(12);
+                String NameonCard = rs.getString(13);
+                String CardType = rs.getString(14);
+                float TotalPrice = rs.getFloat(15);
+                return new Orders(OrderID, UserID, OrderStatus, ShippingStatus, PaymentStatus, OrderTime, StreetName, UnitNumber, Suburb, Postcode, AddressState, BillingAddress, NameonCard, CardType, TotalPrice); 
             }
         }
         return null;  
@@ -99,7 +124,7 @@ public class DBManager_Orders {
     
     public void updateOrder(String UserID, int OrderID, String OrderStatus, String ShippingStatus, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType) throws SQLException {
         float TotalPrice = getTotalPrice(OrderID);
-        String query = "UPDATE APP.ORDERS SET TOTALPRICE = ? , STREETNAME = ? , UNITNUMBER = ? , SUBURB = ? , POSTCODE = ? , ADDRESSSTATE = ?, BILLINGADDRESS = ?, NAMEONCARD = ? , CARDTYPE = ? WHERE USERID = ? AND ORDERID = ?";   
+        String query = "UPDATE ORDERS SET TOTALPRICE = ? , STREETNAME = ? , UNITNUMBER = ? , SUBURB = ? , POSTCODE = ? , ADDRESSSTATE = ?, BILLINGADDRESS = ?, NAMEONCARD = ? , CARDTYPE = ? WHERE USERID = ? AND ORDERID = ?";   
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setFloat(1, TotalPrice);
         statement.setString(2, StreetName);
@@ -116,7 +141,7 @@ public class DBManager_Orders {
     }
 
     public void deleteOrder(int OrderID)throws SQLException {
-        String query = "SELECT ORDERSTATUS FROM APP.ORDERS WHERE ORDERID = " + OrderID ;
+        String query = "SELECT ORDERSTATUS FROM ORDERS WHERE ORDERID = " + OrderID ;
         Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 //        PreparedStatement Statement = conn.prepareStatement(query);
         ResultSet rs = stmt.executeQuery(query);
@@ -125,7 +150,7 @@ public class DBManager_Orders {
             rs.updateRow();
         }
         
-        query = "SELECT * FROM APP.ORDERLINEITEMS WHERE ORDERID = " + OrderID;
+        query = "SELECT * FROM ORDERLINEITEMS WHERE ORDERID = " + OrderID;
         rs = stmt.executeQuery(query);
         while (rs.next()){
             rs.updateString("STATUS", "Cancelled");
@@ -138,7 +163,7 @@ public class DBManager_Orders {
         float TotalPrice = 0; 
         // get all the product prices associated with OrderID
 //        String ProductName = getProductName(OrderID)
-        String query = "SELECT UNITPRICE FROM APP.ORDERLINEITEMS WHERE ORDERID = "+ OrderID;
+        String query = "SELECT UNITPRICE FROM ORDERLINEITEMS WHERE ORDERID = "+ OrderID;
         PreparedStatement Statement = conn.prepareStatement(query);
         ResultSet rs = Statement.executeQuery();    
         while (rs.next()) {
@@ -171,10 +196,10 @@ public class DBManager_Orders {
 
     public void addOrderLineItem(String UserID, int OrderID, String Status, String ProductName)throws SQLException {
         float ProductPrice = getProductPrice(ProductName); // need to link to products db with Kayla
-        String query = "INSERT INTO APP.ORDERLINEITEMS (USERID, ORDERID, STATUS, PRODUCTNANE, UNITPRICE) VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO ORDERLINEITEMS (USERID, ORDERID, STATUS, PRODUCTNAME, UNITPRICE) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, UserID);
-        statement.setString(2, "Saved");
+        statement.setInt(2, OrderID);
         statement.setString(3, Status);
         statement.setString(4, ProductName);
         statement.setFloat(5, ProductPrice);
@@ -183,7 +208,7 @@ public class DBManager_Orders {
     }
  
     public void deleteOrderLineItem(String UserID, int OrderID, String ProductName)throws SQLException {
-        String query = "SELECT * FROM APP.ORDERLINEITEMS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
+        String query = "SELECT * FROM ORDERLINEITEMS WHERE USERID = '" + UserID + "' AND ORDERSTATUS = 'Saved'";
         PreparedStatement Statement = conn.prepareStatement(query);
         ResultSet rs = Statement.executeQuery();
         while (rs.next()){

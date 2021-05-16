@@ -66,12 +66,18 @@ div{
     font-weight: bold;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th { 
+    background-color: #00B4CC;
+    color: white; 
+}
 td {
-    color: grey;
-    font-weight: bold;
-    font-size: 16px;
-    
-    padding: 5px;
+  text-align: left;
+  padding: 8px;
 }
 
 input {
@@ -295,4 +301,12 @@ li>a
   margin-left: 50px;
 }
 
+.containter {
+    line-height: 1.22;
+    witdth: 15%;
+    color: grey;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center; 
+}
 

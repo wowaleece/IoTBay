@@ -13,6 +13,7 @@ import java.sql.*;
 import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBManager;
+import uts.isd.controller.unitTests.TestInput;
 
 
 
@@ -23,7 +24,7 @@ import uts.isd.model.dao.DBManager;
  */
 public class TestLogin {
     
-    private static Scanner in = new Scanner(System.in);
+    
     
     
     public static void main(String[] args) {
@@ -35,11 +36,8 @@ public class TestLogin {
             DBManager manager = new DBManager(conn);
             
             //test input
-            System.out.print("User email: ");
-            String email = in.nextLine();
-
-            System.out.print("User password: ");
-            String password = in.nextLine();
+            String email = TestInput.askString("User Email:");
+            String password = TestInput.askString("User password: ");
             
             User user = manager.checkLogin(email,password);
             if( user != null) {

@@ -6,6 +6,9 @@
 
 <%@page import="uts.isd.model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="/OrdersServlet" flush="true"/>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="uts.isd.model.User"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,30 +18,25 @@
         <title>JSP Page</title>
         <style> 
              * {box-sizing: border-box;}
+             tr:nth-child(even) {background-color: #f2f2f2;}
+             tr:nth-child(odd) {background-color: #ffffff;}
         </style> 
     </head>
     <body>
         
         
-        <%
+         <%
             User user = (User)session.getAttribute("user");
         %>   
         
         <% if (user != null && user.isAdmin()) { %>
          <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="index.jsp">Home</a>
-            <a href="register.jsp">Register</a>
-            <a href="login.jsp">Login</a>
-            <a href="ViewProducts.jsp">Browse Products</a>
-            <a href="AddNewProduct.jsp">Add New Product</a>
-          </div>
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
-            <p> Admin View </p>
-            <a href="account.jsp">View Profile</a>
+            <p> Admin View </p> 
             <a href="AddNewProduct.jsp">Add New Product</a>
             <a href="ProductsServletAdminList">Device Management</a>
           </div>
+
          <% } else if(user != null) {  %>
             <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -91,8 +89,11 @@
                 </li> 
                 <li>
                 <!-- TO DO: ADD ACTUAL LINK TO VIEW CART -->
-                <button onclick="location.href='ViewCart.jsp'" type="button"><i style="font-size:24px" class="fa">  &#xf07a;</i></button></li>
-                </ul> 
+                <button onclick="location.href='cart.jsp'" type="button"><i style="font-size:24px" class="fa">  &#xf07a;</i></button></li>
+                <li>
+                <form method="POST" action="OrdersServletList">
+                <input type="submit" value="Orders" />
+                </form><i style="font-size:24px" class="fa"></i></button></li></ul> 
             </nav> 
             
           

@@ -1,9 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
+    <filter>
+        <filter-name>AdminAuthFilter</filter-name>
+        <filter-class>uts.isd.controller.AdminAuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AdminAuthFilter</filter-name>
+        <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
     <servlet>
         <servlet-name>ConnServlet </servlet-name>
         <servlet-class>uts.isd.controller.ConnServlet </servlet-class>
         <load-on-startup>0</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutServlet</servlet-name>
+        <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ProfileServlet</servlet-name>
+        <servlet-class>uts.isd.controller.ProfileServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UserLogsServlet</servlet-name>
+        <servlet-class>uts.isd.controller.UserLogsServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterServlet</servlet-name>
+        <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProductsServlet</servlet-name>
@@ -13,22 +41,33 @@
         <servlet-name>AddProductsServlet</servlet-name>
         <servlet-class>uts.isd.controller.AddProductsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddressServlet</servlet-name>
+        <servlet-class>uts.isd.controller.AddressServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
-    <servlet>
-        <servlet-name>RegisterServlet</servlet-name>
-        <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
-    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/LogoutServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ProfileServlet</servlet-name>
+        <url-pattern>/ProfileServlet</url-pattern>
+        <url-pattern>/ProfileServlet/Admin/Edit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UserLogsServlet</servlet-name>
+        <url-pattern>/UserLogsServlet</url-pattern>
+        <url-pattern>/UserLogs</url-pattern>
+        <url-pattern>/AdminLogs</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
@@ -36,19 +75,33 @@
     <servlet-mapping>
         <servlet-name>ProductsServlet</servlet-name>
         <url-pattern>/ProductsServlet</url-pattern>
+        <url-pattern>/ProductsServletList</url-pattern>
+        <url-pattern>/ProductsServletDelete</url-pattern>
+        <url-pattern>/ProductsServletEditProduct</url-pattern>
+        <url-pattern>/ProductsServletAdminList</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddProductsServlet</servlet-name>
         <url-pattern>/AddProductsServlet</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>AddressServlet</servlet-name>
+        <url-pattern>/AddressServlet</url-pattern>
+        <url-pattern>/AddAddress</url-pattern>
+        <url-pattern>/FindAddress</url-pattern>
+        <url-pattern>/UpdateAddress</url-pattern>
+        <url-pattern>/DeleteAddress</url-pattern>
+    </servlet-mapping>
     <servlet>
-        <servlet-name>EditServlet</servlet-name>
-        <servlet-class>uts.isd.controller.RegisterServlet</servlet-class>
+        <servlet-name>OrdersServlet</servlet-name>
+        <servlet-class>uts.isd.controller.OrdersServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-	<servlet-name>EditServlet</servlet-name>
-	<url-pattern>/EditServlet</url-pattern>
+        <servlet-name>OrdersServlet</servlet-name>
+        <url-pattern>/OrdersServlet</url-pattern>
+        <url-pattern>/OrdersServletList</url-pattern>
+        <url-pattern>/OrdersServletFind</url-pattern>
+        <url-pattern>/OrdersServletDelete</url-pattern>
     </servlet-mapping>
     
     <session-config>

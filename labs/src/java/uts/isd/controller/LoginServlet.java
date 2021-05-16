@@ -16,16 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.model.Customer;
 
 import uts.isd.model.User;
-import uts.isd.model.dao.DBManager;
+import uts.isd.model.dao.*;
+
 
  
 
 public class LoginServlet extends HttpServlet {
-
-    private String email;
-    private String hash;
 
     @Override   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
@@ -36,19 +35,21 @@ public class LoginServlet extends HttpServlet {
         //2- create an instance of the Validator class    
         Validator validator = new Validator();
         //3- capture the posted credentials     
-        String email = request.getParameter("email");
+        String email = request.getParameter("email").toLowerCase();
         String password = request.getParameter("password");
         //5- retrieve the manager instance from session    // now doing this step during LoginDAO after step 12   
         DBManager manager = (DBManager) session.getAttribute("manager");
+        DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
+        DBAddress addressManager = (DBAddress) session.getAttribute("addressManager");
         
-        User user = null;  
+        User user = null; 
+        Customer customer = null;
         validator.clear(session); // updated the %Err attributes to default "please enter"
         
-        if (!validator.validateEmail(email)) {           
-            //8-set incorrect email error to the session           
+        if (!validator.validateEmail(email)) {                     
             session.setAttribute("emailErr", "Error: Email format incorrect"); //why do we use a different err for pass and email ext
             request.getRequestDispatcher("login.jsp").include(request,response);
-            //9- redirect user back to the login.jsp     
+    
 
         } else if (!validator.validatePassword(password)) {                  
 
@@ -60,11 +61,24 @@ public class LoginServlet extends HttpServlet {
             try {
                 //user = loginDAO.checkLogin(email, hash);
                 user = manager.checkLogin(email, password);
-                //logg a login attempt
+                //log a login attempt
                 if (user != null) {
+                    
+                    session.setAttribute("uType", user.getuType());
+                    
+                    //set customer if uType = customer
+                    if(user.getuType().equals("Customer")){
+                        customer = customerManager.findCustomerFromUser(user.getUserID());
+                        if(customer != null) {
+                            user.setCustomer(customer);
+                            session.setAttribute("customer",customer);
+                        }
+                        
+                    }
+                    
                     session.setAttribute("user", user);
                     request.getRequestDispatcher("index.jsp").include(request, response);
-                    
+                    manager.log(user.getUserID(), "login", "logged in");
                 } else {
                     session.setAttribute("existErr", "User does not exist");
                     request.getRequestDispatcher("login.jsp").include(request, response);

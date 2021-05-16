@@ -27,8 +27,14 @@ public class ConnServlet extends HttpServlet {
 
     private DBConnector db;
     private DBManager manager;
-    private Connection conn;
+    private DBProduct productManager; 
+    private DBCustomer customerManager;  
+    private DBAddress addressManager;
+    private Connection conn; 
+    private DBManager_Orders OrdersManager; 
 
+
+                    
         
     @Override //Create and instance of DBConnector for the deployment session
     public void init() {
@@ -57,6 +63,11 @@ public class ConnServlet extends HttpServlet {
 
         try {
             manager = new DBManager(conn);
+            customerManager = new DBCustomer(conn);
+            productManager = new DBProduct(conn);
+            addressManager = new DBAddress(conn);
+            
+            OrdersManager = new DBManager_Orders(conn);
 
         } catch (SQLException ex) {
             Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -64,7 +75,12 @@ public class ConnServlet extends HttpServlet {
         }
 
            //export the DB manager to the view-session (JSPs)
-        session.setAttribute("manager", manager);           
+        session.setAttribute("manager", manager);     
+        session.setAttribute("ProductManager", productManager);  //please use camel case           
+        session.setAttribute("addressManager", addressManager);  //please use camel case           
+        session.setAttribute("customerManager", customerManager);  //please use camel case           
+        session.setAttribute("manager", manager);   
+        session.setAttribute("OrderManager", OrdersManager);
 
     }   
 

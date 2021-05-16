@@ -4,8 +4,6 @@ import uts.isd.model.User;
 import uts.isd.model.Address;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.spi.DirStateFactory.Result;
@@ -20,13 +18,14 @@ import uts.isd.model.Product;
 */
 
 public class DBProduct {
-
+    
     private Statement st; 
     private Connection conn; // using connection and prepared statements instead of dynamic statement 
                              // https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
-    public DBProduct(Connection conn) throws SQLException {       
+    public DBProduct(Connection conn) throws SQLException {      
         this.conn = conn;
+        
     }
     
     public List<Product> DisplayProducts() 
@@ -36,13 +35,13 @@ public class DBProduct {
             ResultSet rs = p.executeQuery();
             
             //Build list of user objects to return
-            ArrayList<Product> products = new ArrayList<Product>();
+            ArrayList<Product> product = new ArrayList<Product>();
             
             while (rs.next())
             {
-                products.add(new Product(rs));
+                product.add(new Product(rs));
             }
-            return products;
+            return product;
         }
         catch (Exception e)
         {
@@ -50,7 +49,6 @@ public class DBProduct {
             return null;
         }
     }
-    
     
     
     //Find by ProductName in database 
@@ -63,10 +61,11 @@ public class DBProduct {
             String PRODUCTNAME_TEMP = result.getString(2); 
             if (PRODUCTNAME_TEMP.equals(PRODUCTNAME)){
                 Integer PRODUCTID = result.getInt(1); 
-                String STOCKLEVEL = result.getString(3); 
-                Float UNITPRICE = result.getFloat(4);
-                String CATEGORY = result.getString(5); 
-                return new Product(PRODUCTID, PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY); 
+                Integer QUANTITY = result.getInt(3); 
+                String STOCKLEVEL = result.getString(4); 
+                Float UNITPRICE = result.getFloat(5);
+                String CATEGORY = result.getString(6); 
+                return new Product(PRODUCTID, PRODUCTNAME, QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY); 
             }
         }
         return null;  
@@ -74,45 +73,37 @@ public class DBProduct {
        
     
     //Add new product into the database   
-    /*public void addProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException{
-        String sql = ("INSERT INTO PRODUCTS" + "VALUES('"+ PRODUCTNAME +"', '" + STOCKLEVEL +"','"+ UNITPRICE +"', '" + CATEGORY + "'");
+        public void addProduct(String PRODUCTNAME, int QUANTITY, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {                   //code for add-operation       
+        String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY)"
+                   + " VALUES ( ? , ?, ? , ?, ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
-        statement.executeUpdate(sql); 
-        statement.setInt( 1, Product.getID());
-        statement.setString(2, PRODUCTNAME);
+        statement.setString(1, PRODUCTNAME); 
+        statement.setInt(2, QUANTITY);
         statement.setString(3, STOCKLEVEL);
         statement.setFloat(4, UNITPRICE);
         statement.setString(5, CATEGORY);
-        statement.executeUpdate();
-    }*/
-    
-        public void addProduct(String productName, String stockLevel, Float unitPrice, String category) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO PRODUCTS ( PRODUCTNAME, STOCKLEVEL, UNITPRICE, CATEGORY)"
-                   + " VALUES ( ? , ? , ?, ?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
-        statement.setString(1, productName); //need to add hash method later
-        statement.setString(2, stockLevel);
-        statement.setFloat(3, unitPrice);
-        statement.setString(4, category);
 
         statement.executeUpdate();
     }//addCustomer()
     
     //update product details in the database   
-    public void updateProduct(String PRODUCTNAME, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {       
-        String sql = ("UPDATE PRODUCTS SET PRODUCTNAME ='"+ PRODUCTNAME +"', STOCKLEVEL ='" + STOCKLEVEL +"',UNITPRICE ='"+ UNITPRICE +"', CATEGORY = '" + CATEGORY + "' WHERE PRODUCTNAME= '" + PRODUCTNAME + "'");
+    public void updateProduct(String PRODUCTNAME, int QUANTITY, String STOCKLEVEL, Float UNITPRICE, String CATEGORY) throws SQLException {       
+        String sql = ("UPDATE PRODUCTS SET PRODUCTNAME ='"+ PRODUCTNAME +"', QUANTITY ='" + QUANTITY +"', STOCKLEVEL ='" + STOCKLEVEL +"',UNITPRICE ='"+ UNITPRICE +"', CATEGORY = '" + CATEGORY + "' WHERE PRODUCTNAME= '" + PRODUCTNAME + "'");
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(2, PRODUCTNAME);
-        statement.setString(3, STOCKLEVEL); 
-        statement.setFloat(4, UNITPRICE);
-        statement.setString(5,CATEGORY);
+        statement.setInt(3, QUANTITY);
+        statement.setString(4, STOCKLEVEL); 
+        statement.setFloat(5, UNITPRICE);
+        statement.setString(6,CATEGORY);
         statement.executeUpdate();
         
     }       
     
     //Deletes product from the database
-    public void DeleteProduct(String PRODUCTNAME)throws SQLException{
-      st.executeUpdate("DELETE FROM PRODUCTS WHERE PRODUCTNAME = '" + PRODUCTNAME + "'"); 
+    public void DeleteProduct(int PRODUCTID)throws SQLException{
+      String sql = ("DELETE FROM PRODUCTS WHERE PRODUCTID = ?"); 
+      PreparedStatement statement = conn.prepareStatement(sql); 
+      statement.executeUpdate(); 
     }
     
     //Checks for a product  
