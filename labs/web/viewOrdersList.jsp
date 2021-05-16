@@ -12,17 +12,25 @@
 <%@page import="uts.isd.model.dao.DBConnector"%>
 <%@page import="uts.isd.model.dao.DB"%>
 <%@page import="uts.isd.model.dao.DBManager"%>
-<jsp:include page="header.jsp" />
-
 
 <!DOCTYPE html>
+
+<%  int orderId = (int) session.getAttribute("orderID");
+    int userId = (int) session.getAttribute("userID");
+    String UserID = userId.toString(); %> 
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Individual Order </title>
     </head>
+    
+    <% ArrayList<Orders> orders = (ArrayList<Orders>)session.getAttribute("orders");
+        session.setAttribute("orders", orders);
+        request.setAttribute("orders", orders); %>
+        
     <body>
-        <h1>Viewing Individual Order</h1>
+        <h1>Viewing Order History </h1>
         <table border="1">
             <thead>
                 <tr>
@@ -32,7 +40,15 @@
                     <th class="p">Order Status</th>
                 </tr>
                 <tr>
-                    <%      try{
+                <c:forEach items="${orders}" var="order">  
+                    <tr>
+                        <td>${Orders.OrderID}</td>
+                        <td>${Orders.OrderDate}</td>
+                        <td>${Orders.PaymentStatus}</td>
+                        <td>${Orders.OrderStatus}</td>
+                    </tr>
+                </c:forEach>
+                    <%--<%      try{
                                 connection = DriverManager.getConnection(connectionUrl+database, userid, password);
                                 statement=connection.createStatement();
     //                            UserID = session data extract user information query - help James. 
@@ -52,7 +68,7 @@
                             } catch (Exception e) {
                                     e.printStackTrace();
                             }
-                    %>
+                    %>--%>
                 </tr>
             </thead>
         </table>

@@ -11,18 +11,24 @@
 <%@page import="java.sql.DriverManager"%>
 <%@page import="uts.isd.model.dao.DBConnector"%>
 <%@page import="uts.isd.model.dao.DB"%>
-<%@page import="uts.isd.model.dao.DBManager"%>
-<jsp:include page="header.jsp" />
+<%@page import="uts.isd.model.dao.DBManager_Orders"%>
 
+
+<jsp:include page="./isd/controller/OrdersServlet.java" flush="true"/>
+<jsp:include page ="./isd/controller/OrderLineItemsServlet" flush="true"/>
 
 <!DOCTYPE html>
+<%--<%  int orderId = (int) session.getAttribute("orderID");
+    int userId = (int) session.getAttribute("userID");
+    String UserID = userId.toString(); %>--%>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>View Individual Order </title>
     </head>
     <body>
-        <h1>Viewing Individual Order</h1>
+        <h1>Viewing Individual Order - Hello World?</h1>
         <table border="1">
             <thead>
                 <tr>
@@ -32,35 +38,20 @@
                     <th class="p">Payment</th>
                     <th class="p">Status</th>
                 </tr>
-                <tr>
-                    <%      try{
-                                connection = DriverManager.getConnection(connectionUrl+database, userid, password);
-                                statement=connection.createStatement();
-    //                            UserID = session data extract user information query - help James. 
-                                String sql = "SELECT * FROM APP.ORDERS WHERE USERID = '" + UserID +"'"; 
-                                resultSet = statement.executeQuery(sql);
-                                while(resultSet.next()){
-                                %>
-                                    <tr>
-                                    <td><%=int OrderID = resultSet.getInt("ORDERID");%></td>
-                                    <td><%=String OrderTime = (resultSet.getTimestamp("ORDERTIME")).toString; %></td>
-                                    <td><%String search_item_sql = "SELECT PRODUCTNAME FROM APP.ORDERLINEITEMS WHERE ORDERID = " + OrderID;
-                                          resultSet_items = statement.executeQuery(search_item_sql);
-                                          while(resultSet_items.next()){
-                                              resultSet_items.getString("PRODUCTNAME")
-                                          }%></td>
-                                    <td><%=resultSet.getFloat("PAYMENTSTATUS"); %></td>
-                                    <td><%=resultSet.getString("ORDERSTATUS"); %></td>
-                                    </tr>
-                                <%
-                                }
-                                connection.close();
-                            } catch (Exception e) {
-                                    e.printStackTrace();
-                            }
-                    %>
-                </tr>
             </thead>
+            <td>${Orders.OrderID}</td>
+            <td>${Orders.OrderTime}</td>             
+            <td>
+                <c:forEach item = "${OrderLineItems}" var="OrderLines"> 
+                    ${OrderLines.ProductName}
+            </td>
+            <td>${Orders.PaymentStatus}</td>
+            <td>${Orders.OrderStatus}</td>
+            
+                <tr>
+                    
+                </tr>
+            
         </table>
                     <br  />
                     <br  />
