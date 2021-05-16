@@ -14,23 +14,8 @@
 <%@page import="uts.isd.model.dao.DBConnector"%>
 <%@page import="uts.isd.model.dao.DB"%>
 <%@page import="uts.isd.model.dao.DBManager"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <jsp:include page="header.jsp" />
-<%
-String id = request.getParameter("PRODUCTID");
-String driver = "org.apache.derby.jdbc.ClientDriver";
-String connectionUrl = "jdbc:derby://localhost:1527/";
-String database = "shopDB";
-String userid = "App";
-String password = "App";
-try {
-Class.forName(driver);
-} catch (ClassNotFoundException e) {
-e.printStackTrace();
-}
-Connection connection = null;
-Statement statement = null;
-ResultSet resultSet = null;
-%>
 
 <!DOCTYPE html>
 <html>
@@ -48,47 +33,41 @@ ResultSet resultSet = null;
         <div>
             <h1 style="color:lightblue" >Products</h1> 
            
-            <table border = "1" width = "100%">
-                <tr>    
-                    <th class="p"> Product ID</th>
-                    <th class="p"> Product name </th>
-                    <th class="p"> Stock Level </th>
-                    <th class="p"> Price ($)</th>
-                    <th class="p"> Category </th>
-                </tr>
-                <tr>
-                    <%
-                        try{
-                        connection = DriverManager.getConnection(connectionUrl+database, userid, password);
-                        statement=connection.createStatement();
-                        String sql = "select * from PRODUCTS"; 
-                        resultSet = statement.executeQuery(sql);
-                        while(resultSet.next()){
-                        %>
-                            <tr>
-                            <td><%=resultSet.getInt("PRODUCTID") %></td>
-                            <td><%=resultSet.getString("PRODUCTNAME") %></td>
-                            <td><%=resultSet.getString("STOCKLEVEL") %></td>
-                            <td><%=resultSet.getFloat("UNITPRICE") %></td>
-                            <td><%=resultSet.getString("CATEGORY") %></td>
-                            </tr>
-                        <%
-                        }
-                        connection.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        %>
-                 </tr>
-                    
-            </table>
+             <table border = "1" width = "100%">
+                <thead>
+                    <tr>
+                        <th> Product name </th>
+                        <th> Quantity </th>
+                        <th> Stock Level </th>
+                        <th> Price </th>
+                        <th> Category </th> 
+                        <th> Add to cart </th> 
+                    </tr>
+                </thead> 
+                
+                        <c:forEach items="${products}" var="product">
+                        <tr>
+                            <td>${product.productName}</td>
+                            <td>${product.quantity}</td>
+                            <td>${product.stockLevel}</td>
+                            <td>${product.unitPrice}</td>
+                            <td>${product.category}</td>
+                            <td> 
+                            <form action="AddToCartServlet" method="post" >
+                                    <input class = "button" type="submit"  value="Add">
+                                </form>
+                            </td> 
+                        </tr>  
+                       </c:forEach>>
+            </table> 
             
             <br>
             <br>
             
             <!-- TO DO: FIGURE OUT HOW TO DO AN IF STATEMENT --> 
-            <p style="color:grey">You are not logged in. </p>
-            <p> ${user.email}</td></p>
+            
+            <p> Welcome ${user.email}</td></p>
+            <p style="color:grey">Note* If you are not logged in:  </p>
             <p> Click <a class="p" href="login.jsp">here</a> to login.</p>
             <p> Click <a class="p" href="register.jsp"> here</a> to register.</p>
         </>

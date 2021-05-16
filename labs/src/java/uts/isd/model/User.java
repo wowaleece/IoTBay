@@ -32,6 +32,11 @@ public class User implements Serializable {
         this.uType = uType;
         this.phoneNo = phoneNo; 
     }
+    
+    public boolean isAdmin()
+    {
+        return ("Admin".equals(this.uType));
+    }
 
     public int getUserID() {
         return userID;
