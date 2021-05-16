@@ -71,7 +71,7 @@ public class TestRegister {
                 System.out.println("added user");
                 user  = manager.checkLogin(email,password);
                 System.out.println("got userID");
-                dbCust.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
+                dbCust.addCustomer(fName, lName, sex, dob);
             }
             
         } catch (ClassNotFoundException | SQLException ex) {

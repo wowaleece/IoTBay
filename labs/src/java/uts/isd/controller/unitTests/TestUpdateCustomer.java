@@ -10,10 +10,12 @@ import java.util.logging.*;
 import java.sql.*;
 import uts.isd.controller.Validator;
 import uts.isd.model.Address;
+import uts.isd.model.Customer;
 
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
+import uts.isd.model.dao.DBCustomer;
 import uts.isd.model.dao.DBManager;
 
 
@@ -35,6 +37,7 @@ public class TestUpdateCustomer {
             DBConnector connector = new DBConnector();
             Connection conn = connector.openConnection();
             DBManager manager = new DBManager(conn);
+            DBCustomer customerManager = new DBCustomer(conn);
             Validator validator = new Validator();
             
             //test input
@@ -46,6 +49,7 @@ public class TestUpdateCustomer {
             String password = in.nextLine();
             
             User user = manager.checkLogin(email,password);
+            Customer cust = user.getCustomer();
             if( user != null) {
                 System.out.println("login successful, update details:");
                 System.out.println(user.toString());
@@ -90,12 +94,12 @@ public class TestUpdateCustomer {
                 int userID = user.getUserID();
                 //int customerID = user.getCustomerID();
                 if (phoneNo == null) phoneNo = user.getPhoneNo();
-                if (fName == null) fName = user.getfName();
-                if (lName == null) lName = user.getlName();
-                if (sex == null) sex = user.getSex();
-                if (dob == null) dob = user.getDob();
+                if (fName == null) fName = cust.getfName();
+                if (lName == null) lName = cust.getlName();
+                if (sex == null) sex = cust.getSex();
+                if (dob == null) dob = cust.getDob();
 
-                
+                customerManager.updateCustomer(userID, fName, lName, sex, dob);
                 /*
                 //process the address, get ID
                 //int addressID = manager.findAddress(address);
@@ -117,7 +121,7 @@ public class TestUpdateCustomer {
                 int addressID  = manager.findAddress();
                 */
                 
-                int addressID = user.getAddress().getAddressID();
+                //int addressID = user.getAddress().getAddressID();
                 //manager.updateCustomerAddress(customerID, fName, lName, state, sex, dob, addressID);
                 
             } else {

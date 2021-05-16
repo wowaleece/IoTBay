@@ -45,6 +45,9 @@ public class User implements Serializable {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
+    public Customer getCustomer() {
+        return customer;
+    }
     
     public int getCustomerID(){
         return customer.getCustomerID();

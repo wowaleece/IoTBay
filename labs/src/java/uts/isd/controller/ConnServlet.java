@@ -31,7 +31,6 @@ public class ConnServlet extends HttpServlet {
     private DBCustomer customerManager;  
     private DBAddress addressManager;
     private Connection conn; 
-    private Connection conn;
     private DBManager_Orders OrdersManager; 
 
 
