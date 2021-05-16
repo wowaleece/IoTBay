@@ -14,7 +14,7 @@ import java.sql.Date;
  */
 public class User implements Serializable {
     private int userID; // don't know that this is secure enough? 
-    private int customerID;
+    private Customer customer;
     private String email;
     private String uType; //user type customer/admin
     private String phoneNo; //can be null filled on order completion
@@ -34,6 +34,10 @@ public class User implements Serializable {
         this.phoneNo = phoneNo; 
     }
 
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    
     public int getUserID() {
         return userID;
     }
@@ -59,50 +63,6 @@ public class User implements Serializable {
         return regDate;
     }
     
-    public String getfName() {
-        return fName;
-    }
-
-    public void setfName(String fName) {
-        this.fName = fName;
-    }
-
-    public String getlName() {
-        return lName;
-    }
-
-    public void setlName(String lName) {
-        this.lName = lName;
-    }
-
-    public String getSex() {
-        return sex;
-    }
-
-    public void setSex(String sex) {
-        this.sex = sex;
-    }
-
-    public Date getDob() {
-        return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
-    }
-    
-    public void setAddress(Address address){
-        this.address = address;
-    }
-    
-    public Address getAddress() {
-        return address;
-    }
-    
-    private void setLog(Log log) {
-        this.log = log;
-    }
-    
     public Log getLog(){
         return log;
     }
@@ -111,6 +71,9 @@ public class User implements Serializable {
     public String toString() {
         return "User{" + "email=" + email + ", uType=" + uType + ", phoneNo=" + phoneNo + ", fName=" + fName + ", lName=" + lName + ", sex=" + sex + ", dob=" + dob + ", regDate=" + regDate + ", address=" + address + ", log=" + log + '}';
     }
+
+ 
+    
 
     
     

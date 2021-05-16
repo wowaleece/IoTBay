@@ -20,7 +20,10 @@ import javax.servlet.http.HttpSession;
 import uts.isd.model.Address;
 
 import uts.isd.model.User;
+import uts.isd.model.Customer;
+import uts.isd.model.dao.DBCustomer;
 import uts.isd.model.dao.DBManager;
+
 
  
 
@@ -36,6 +39,7 @@ public class EditCServlet extends HttpServlet {
         //init helper classes
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
+        DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
         Validator validator = new Validator();
         
         
@@ -58,12 +62,13 @@ public class EditCServlet extends HttpServlet {
         
         //fill null strings
         User user = (User) session.getAttribute("user");
+        Customer customer = (Customer) session.getAttribute("customer");
         userID = user.getUserID();
         if (phoneNo == null) phoneNo = user.getPhoneNo();
-        if (fName == null) fName = user.getfName();
-        if (lName == null) lName = user.getlName();
-        if (sex == null) sex = user.getSex();
-        if (dob == null) dob = user.getDob();
+        if (fName == null) fName = customer.getfName();
+        if (lName == null) lName = customer.getlName();
+        if (sex == null) sex = customer.getSex();
+        if (dob == null) dob = customer.getDob();
         
             
         //validate input
@@ -71,7 +76,7 @@ public class EditCServlet extends HttpServlet {
         
         //process the address, get ID
         //int addressID = manager.findAddress(address);
-        Address address = user.getAddress();
+        Address address = customer.getAddress();
         if(unitNo == null) unitNo = address.getUnitNumber();
         if(street == null) street = address.getStreetName();
         if(suburb == null) suburb = address.getSuburb();
@@ -87,7 +92,7 @@ public class EditCServlet extends HttpServlet {
 
         try {
             manager.updateUser(userID, phoneNo);
-//            manager.updateCustomerAddress(userID, fName, lName, state, sex, dob, postcode);
+            customerManager.updateCustomer(customer.getCustomerID(), fName, lName, state, sex, dob, postcode);
             
             
         } catch (SQLException ex) {           

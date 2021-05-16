@@ -81,7 +81,25 @@ public class DBManager {
             return 0;
         }
     }
-    
+    //Add a user-data into the database   
+    public int addUser(String email, String password, String uType, String phoneNo, int customerID) throws SQLException{
+        String sql = "INSERT INTO users (email, password, uType, phoneNo, customerID) "
+                             + "  VALUES ( ?  , ?       , ?    , ?      , ?          )";
+        PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        statement.setString(1, email);
+        statement.setString(2, password); //need to add hash method later
+        statement.setString(3, uType);
+        statement.setString(4, phoneNo);
+        statement.setInt(5, customerID);
+        statement.executeUpdate();
+        
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs != null && rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0;
+        }
+    }
     
 
     //update a user details in the database   

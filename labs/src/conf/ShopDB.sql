@@ -1,6 +1,6 @@
 DROP TABLE LOGS;
-DROP TABLE CUSTOMERS;
 DROP TABLE USERS;
+DROP TABLE CUSTOMERS;
 DROP TABLE ADDRESSES;
 DROP TABLE PRODUCTS;
 
@@ -15,19 +15,8 @@ CREATE TABLE "ADDRESSES" (
 	,"ACTIVE" BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE "USERS" (
-        "USERID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
-       ,"EMAIL" VARCHAR(30) UNIQUE NOT NULL
-       ,"PASSWORD" VARCHAR(30) NOT NULL
-       ,"UTYPE" VARCHAR(30) -- type of user
-       ,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
-       ,"ACTIVE" BOOLEAN DEFAULT TRUE
-       CONSTRAINT ON DELETE CASCADE
-);
-
 CREATE TABLE "CUSTOMERS" (
     "CUSTOMERID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
-    ,"USERID" INT 
     ,"FNAME" VARCHAR(30)
     ,"LNAME" VARCHAR(30)
     ,"TITLE" VARCHAR(30)
@@ -37,7 +26,18 @@ CREATE TABLE "CUSTOMERS" (
     ,"REGDATE" DATE
 	,"ACTIVE" BOOLEAN DEFAULT TRUE
     ,FOREIGN KEY (ADDRESSID) REFERENCES ADDRESSES(ADDRESSID)
-    ,FOREIGN KEY (userID) REFERENCES USERS(userID)
+);
+
+CREATE TABLE "USERS" (
+        "USERID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
+       ,"EMAIL" VARCHAR(30) UNIQUE NOT NULL
+       ,"PASSWORD" VARCHAR(30) NOT NULL
+       ,"UTYPE" VARCHAR(30) -- type of user
+       ,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
+       ,"ACTIVE" BOOLEAN DEFAULT TRUE
+       ,"CUSTOMERID" INT 
+       ,FOREIGN KEY (customerID) REFERENCES CUSTOMERS(customerID) 
+       ON DELETE CASCADE
 );
 
 CREATE TABLE "LOGS" (
@@ -65,21 +65,22 @@ VALUES ( 'Arduino', 1,'Low', 30, 'Micro-Controller')
 , ( 'BME180', 1,'Low', 15, 'Sensor')
 , ( 'Motion Sensor', 2, 'Low', 5, 'Sensor'); 
 
+INSERT INTO CUSTOMERS (fname, lname)
+VALUES ('james','smith')
+      ,('smith','smith')
+      ,('bobby','smith')
+      ,('Bobby','smith')
+;
 
-INSERT INTO USERS (email, password, uType)
-VALUES ('james', 'smith', 'Customer')
-      ,('smith', 'Jackson', 'Customer')
-      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer')
-      ,('Bobby@hotmail.com.au', 'Bart', 'Customer')
-      ,('Jack@gmail.com', 'Graham', 'Admin')
-      ,('trades@gmail.com', 'Graham', 'Customer')
+INSERT INTO USERS (email, password, uType,customerID)
+VALUES ('james', 'smith', 'Customer',1)
+      ,('smith', 'Jackson', 'Customer',2)
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
+      ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
+      ,('Jack@gmail.com', 'Graham', 'Admin',null)
+      ,('trades@gmail.com', 'Graham', 'Customer',null)
 
 ;
-INSERT INTO CUSTOMERS (userID, fname, lname)
-VALUES (2,'james','smith')
-      ,(4,'smith','smith')
-      ,(5,'bobby','smith')
-      ,(3,'Bobby','smith')
-;
+
 
 INSERT INTO ADDRESSES (STREETNAME) VALUES ('address'), ('address'),('address'),('address');

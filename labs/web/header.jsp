@@ -25,9 +25,12 @@
             <a href="index.jsp">Home</a>
             <a href="register.jsp">Register</a>
             <a href="login.jsp">Login</a>
+            <a href="logout.jsp">Logout</a>
+            <a href="account.jsp">View Profile</a>
             <a href="ViewProducts.jsp">Browse Products</a>
             <a href="AddNewProduct.jsp">Add New Product (Admin)</a>
             <a href="ProductsServletList">Device Management (Admin)</a>
+            
           </div>
         
         

@@ -9,6 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
+import uts.isd.model.Customer;
 import uts.isd.model.Log;
 import uts.isd.model.Product;
 
@@ -33,14 +34,28 @@ public class DBCustomer {
     */
     
     
+    public Customer findCustomer(int customerID) throws SQLException {  
+        String sql = "SELECT  fName, lName, sex, dob FROM customers WHERE customerID = ?"; //and isValid = true // validTo < sysdate
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, customerID);
+        ResultSet result = statement.executeQuery();  //search database for matching email hash pair
+        Customer customer = null;
+        if (result.next()) {
+            customer = new Customer(customerID,result.getString("fName"),result.getString("lName"),result.getString("sex"),result.getDate("dob"));
+        } // if the result is not null, get userID
+        
+        return customer;   
+    }
+
+    /* depricated
     public int addCustomer(String email, String password, String phoneNo, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {
         DBManager manager = new DBManager(conn);
         int userID = 0;
-        int customerID;
+        int customerID = 0;
         
         try{
             userID = manager.addUser(email, password, "Customer", phoneNo);
-            customerID = addCustomer(userID, fName, lName, sex, dob);
+            customerID = addCustomer(fName, lName, sex, dob);
             return customerID;
         } catch (SQLException ex){
             try{
@@ -51,7 +66,7 @@ public class DBCustomer {
             throw (SQLException) ex;
         }
     }
-    
+    */
     
     /**
      * add registered customer
@@ -63,15 +78,14 @@ public class DBCustomer {
      * @return customerID
      * @throws SQLException 
      */
-    public int addCustomer(int userID, String fName, String lName, String sex, Date dob) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO customers (userID, fName, lName, sex, dob)"
-                   + " VALUES ( ? , ? , ? , ? , ?)";
+    public int addCustomer(String fName, String lName, String sex, Date dob) throws SQLException {                   //code for add-operation       
+        String sql = "INSERT INTO customers (fName, lName, sex, dob)"
+                   + " VALUES ( ? , ? , ? , ?)";
         PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        statement.setInt(1, userID);
-        statement.setString(2, fName); //need to add hash method later
-        statement.setString(3, lName);
-        statement.setString(4, sex);
-        statement.setDate(5, dob);
+        statement.setString(1, fName); //need to add hash method later
+        statement.setString(2, lName);
+        statement.setString(3, sex);
+        statement.setDate(4, dob);
         statement.executeUpdate();
         
         ResultSet rs = statement.getGeneratedKeys();

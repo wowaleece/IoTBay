@@ -60,7 +60,7 @@ public class RegisterServlet extends HttpServlet {
         
         //validate input
         User user = null;
-        int customerID = 0 ;
+        Customer customer = null ;
         validator.clear(session); // updated the %Err attributes to default "please enter"
         
         
@@ -94,13 +94,18 @@ public class RegisterServlet extends HttpServlet {
                     //manager.addCustomer(user.getUserID(), fName, lName, sex, dob, addressID);
                     //dbCust.addCustomer(userID, fName, lName, sex, dob, 0);
                     
-                    customerID = dbCust.addCustomer(email,password,phoneNo, fName, lName, sex, dob, 0);
-                    session.setAttribute("uType","Customer");
-                    user = manager.checkLogin(email, password);
-                    if(user != null && customerID != 0){
-                        session.setAttribute("customerID", customerID);
-                        user.Update(dbCust.findCustomer(customerID));
+                    int customerID = dbCust.addCustomer(fName, lName, sex, dob);
+                    customer = dbCust.findCustomer(customerID);
+                    
+                    int userID = manager.addUser(email, password, "Customer", phoneNo, customerID);
+                    user = manager.findUser(userID);
+                    manager.log(user.getUserID(), "register", "Registered as a user");
+                    
+                    if(user != null && customer != null){
+                        session.setAttribute("uType",user.getuType());
+                        session.setAttribute("customer", customer );
                         session.setAttribute("user", user);
+                        manager.log(user.getUserID(), "login", "logged in");
                         
                     }
                     
