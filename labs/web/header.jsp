@@ -7,6 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:include page="/OrdersServlet" flush="true"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@page import="uts.isd.model.User"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,13 +17,26 @@
         <title>JSP Page</title>
         <style> 
              * {box-sizing: border-box;}
+             tr:nth-child(even) {background-color: #f2f2f2;}
+             tr:nth-child(odd) {background-color: #ffffff;}
         </style> 
     </head>
     <body>
         
-       
         
+         <%
+            User user = (User)session.getAttribute("user");
+        %>   
+        
+        <% if (user != null && user.isAdmin()) { %>
          <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
+            <p> Admin View </p> 
+            <a href="AddNewProduct.jsp">Add New Product</a>
+            <a href="ProductsServletAdminList">Device Management</a>
+          </div>
+         <% } else {  %>
+            <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="index.jsp">Home</a>
             <a href="register.jsp">Register</a>
@@ -33,7 +47,10 @@
             <a href="AddNewProduct.jsp">Add New Product (Admin)</a>
             <a href="ProductsServletList">Device Management (Admin)</a>
             
+            <a href="ProductsServletList">Browse Products</a>
           </div>
+         
+            <% }%>
         
         
         

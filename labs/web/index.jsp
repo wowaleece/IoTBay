@@ -22,7 +22,7 @@
         <div class="button-container-div">
             <a class="button" href="register.jsp">Register </a>
             <a class="button" href="login.jsp">Log In </a>
-            <a class="button" href="ViewProducts.jsp">Browse </a>
+            <a class="button" href="ProductsServletList">Browse </a>
         </div>
         
         <!--<div>

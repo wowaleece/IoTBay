@@ -41,6 +41,11 @@ public class User implements Serializable {
         this.phoneNo = phoneNo; 
         this.customer = customer;
     }
+    
+    public boolean isAdmin()
+    {
+        return ("Admin".equals(this.uType));
+    }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
