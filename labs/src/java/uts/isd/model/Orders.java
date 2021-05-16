@@ -13,7 +13,7 @@ import java.util.*;
  */
 public class Orders {
     
-    private String OrderID;
+    private int OrderID;
     private String UserID;
     private String Status; 
     private String ShippingStatus;
@@ -28,7 +28,7 @@ public class Orders {
     private String CardType; 
     private float TotalPrice; 
 
-    public Orders(String OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType, float TotalPrice) {
+    public Orders(int OrderID, String UserID, String Status, String ShippingStatus, String OrderTime, String StreetName, String UnitNumber, String Suburb, int Postcode, String AddressState, boolean BillingAddress, String NameonCard, String CardType, float TotalPrice) {
         this.OrderID = OrderID;
         this.UserID = UserID;
         this.Status = Status;
@@ -45,11 +45,11 @@ public class Orders {
         this.TotalPrice = TotalPrice;
     }
 
-    public String getOrderID() {
+    public int getOrderID() {
         return OrderID;
     }
 
-    public void setOrderID(String OrderID) {
+    public void setOrderID(int OrderID) {
         this.OrderID = OrderID;
     }
 
