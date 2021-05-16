@@ -1,12 +1,13 @@
 DROP TABLE LOGS;
 DROP TABLE USERS;
+DROP TABLE PRODUCTS;
 DROP TABLE CUSTOMERS;
 DROP TABLE ADDRESSES;
 DROP TABLE ORDERS;
 
 
 CREATE TABLE "ADDRESSES" (
-	,"STREETNAME" VARCHAR(30)
+	"STREETNAME" VARCHAR(30)
 	,"UNITNUMBER" VARCHAR(30)
 	,"SUBURB" VARCHAR(30)
 	,"POSTCODE" INT
@@ -63,7 +64,26 @@ CREATE TABLE "PRODUCTS"(
 INSERT INTO "PRODUCTS" (PRODUCTNAME,QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY)
 VALUES ( 'Arduino', 1,'Low', 30, 'Micro-Controller')
 , ( 'BME180', 1,'Low', 15, 'Sensor')
-, ( 'Motion Sensor', 2, 'Low', 5, 'Sensor'); 
+, ( 'Motion Sensor', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 1', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 2', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 3', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 4', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 5', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 6', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 7', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 8', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 9', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 10', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 11', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 12', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 13', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 14', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 15', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 16', 2, 'Low', 5, 'Sensor')
+ ( 'Test Sensor 17', 2, 'Low', 5, 'Sensor'); 
+
+
 CREATE TABLE ORDERS (
     ORDERID BIGINT NOT NULL PRIMARY KEY
         GENERATED ALWAYS AS IDENTITY 
@@ -98,11 +118,43 @@ INSERT INTO CUSTOMERS (fname, lname)
 VALUES ('james','smith')
       ,('smith','smith')
       ,('bobby','smith')
-      ,('Bobby','smith')
+      ,('Kayla','Gel')
+      ,('Leah','Gel')
+      ,('Tia','smith')
+      ,('Irena','smith')
+      ,('Alex','smith')
+      ,('Simba','smith')
+      ,('Marina','smith')
+      ,('Alice','smith')
+      ,('Atif','smith')
+      ,('Sarah','smith')
+      ,('marshall','smith')
+      ,('Lilly','smith')
+      ,('Bob','smith')
+      ,('Ross','smith')
+      ,('Ruby','smith')
+      ,('Ishan','smith')
+      ,('jared','smith')
 ;
 
 INSERT INTO USERS (email, password, uType,customerID)
 VALUES ('james', 'smith', 'Customer',1)
+      ,('smith', 'Jackson', 'Customer',2)
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
+      ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
+      ,('admin@gmail.com', 'Admin', 'Admin',null)
+      ,('Jack@gmail.com', 'Graham', 'Admin',null)
+      ,('trades@gmail.com', 'Graham', 'Customer',null)
+      ,('smith', 'Jackson', 'Customer',2)
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
+      ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
+      ,('Jack@gmail.com', 'Graham', 'Admin',null)
+      ,('trades@gmail.com', 'Graham', 'Customer',null)
+      ,('smith', 'Jackson', 'Customer',2)
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
+      ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
+      ,('Jack@gmail.com', 'Graham', 'Admin',null)
+      ,('trades@gmail.com', 'Graham', 'Customer',null)
       ,('smith', 'Jackson', 'Customer',2)
       ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
       ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
