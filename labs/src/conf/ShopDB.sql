@@ -45,6 +45,35 @@ CREATE TABLE "LOGS" (
 	,FOREIGN KEY (USERid) REFERENCES USERS(USERID)
 );
 
+CREATE TABLE ORDERS (
+    ORDERID BIGINT NOT NULL PRIMARY KEY
+        GENERATED ALWAYS AS IDENTITY 
+        (START WITH 1, INCREMENT BY 1),
+    USERID varchar(20) NOT NULL, 
+    ORDERTIME timestamp DEFAULT CURRENT_TIMESTAMP,
+    ORDERSTATUS varchar(20) DEFUALT, 
+    SHIPPINGSTATUS varchar(20) DEFAULT 'Unsent', 
+    PAYMENTSTATUS varchar(20) DEFAULT 'Unpaid', 
+    STREETNAME varchar(30), 
+    UNITNUMBER varchar(10), 
+    SUBURB varchar(30), 
+    POSTCODE int, 
+    ADDRESSSTATE varchar(20), 
+    BILLINGADDRESS boolean, 
+    NAMEONCARD varchar(30),
+    CARDTYPE varchar(20), 
+    TOTALPRICE float
+
+);
+
+CREATE TABLE ORDERLINEITEMS (
+    USERID varchar(20) NOT NULL, 
+    ORDERID int,
+    STATUS varchar(20),
+    PRODUCTNAME varchar(20), 
+    UNITPRICE float
+);
+
 
 INSERT INTO USERS (email, password, uType)
 VALUES ('james', 'smith', 'Customer')
