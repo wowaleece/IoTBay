@@ -11,6 +11,7 @@ package uts.isd.controller;
  */
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -30,7 +31,7 @@ public class Validator implements Serializable{
                                + "(((18|19|20)(04|08|[2468][048]|[13579][26]))|2000)[-](02)[-]29" // 29 day Feb
             
     */
-    private String timestampPattern = "[0-9]{4}-[0-1][0-9]-(?:[0-2][0-9]|3[01]) (?:1[0-2]|0[0-9])(?::([0-5][0-9]|60)){2}";
+    private String timestampPattern = "[0-9]{4}-[0-1][0-9]-(?:[0-2][0-9]|3[01])?\\s(:1[0-2]|0[0-9])(:([0-5][0-9]|60)){2}";
             
     public Validator(){    }       
 
@@ -67,6 +68,7 @@ public class Validator implements Serializable{
     }
     
     boolean validateTimestamp(String ts) {
+        if (ts == null) return false;
         return validate(timestampPattern,ts);
     }
     
@@ -77,6 +79,30 @@ public class Validator implements Serializable{
             Logger.getLogger(Validator.class.getName()).log(Level.SEVERE, null, ex);
             return null;
         }
+    }
+    
+    /**
+     * sanitises HTML datetime input to timestamp friendly string
+     * @param ts
+     * @return String sanitised timestamp as string
+     */
+    public String sanitiseTimestamp(String ts){
+        if (ts != null){
+            ts = ts.replace('T', ' ') + ":00";
+        }
+        return ts;
+    }
+    
+    /**
+     * reverts timestamp format to HTML datetime 
+     * @param ts
+     * @return String HTML datetime string
+     */
+    public String revertTimestamp(String ts){
+        if (ts != null){
+            ts = ts.substring(0, 16).replace(' ', 'T');
+        }
+        return ts;
     }
     
     /**

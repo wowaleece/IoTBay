@@ -3,19 +3,20 @@
     Created on : 3 Apr 2021, 10:14:49 pm
     Author     : marinasantanelli
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:include page="header.jsp" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
-        <title>Registration Page</title>
+        <title>edit profile Page</title>
     </head>
     <body>
         <h1>Sign Up</h1>
 
-        <form action="EditCServlet" method="POST">
+        
 
             <table>
                 <tr><td>Email Address:</td><td>${user.email}</td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
@@ -35,6 +36,8 @@
                 <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" placeholder="${user.dob}"></td><td></td></tr>
                 <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" placeholder="${user.phoneNo}"></td><td></td></tr>
             </table>
+
+            
             <table>
                <tr><td>Address</td></tr>
                <tr><td><label type="number" for="unitNo">Unit number:</label></td>    <td><input type="text" id="unitNo" name="unitNo"></td></tr>
@@ -50,10 +53,22 @@
                 <a class="button" href="editCustomer.jsp">Cancel</a>
                 <input class="button" type="submit" value="Sign up">
             </div>
+       <table border="1">
+            
+               <c:forEach items="${addresses}" var="address">
+                    <tr>
+                    <td>${address.addressID}</td>
+                    <td>${address.streetName}</td>
+                    </tr>
+               </c:forEach>
+                
+            
+        </table>
+            
+        <jsp:include page="AddressServlet" flush="true"/>
+            <%--<jsp:param name="addresses" value="${addresses}"/> --%>
+       <%-- </jsp:include> --%>
 
-
-       </form>
-  
 <%--
 <p>Agree to TOS?</p>
 <input type="radio" id="yes" name="inputGroup" value="yes">

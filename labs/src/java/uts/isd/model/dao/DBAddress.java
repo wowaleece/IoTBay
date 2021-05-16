@@ -5,6 +5,7 @@ import uts.isd.model.Address;
 import java.sql.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
 import uts.isd.model.Log;
@@ -52,11 +53,27 @@ public class DBAddress {
         return temp;
     } */
     
-    public Address allAddresses(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Address> allAddresses() throws SQLException{
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        //try {
+            String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                        + " FROM addresses WHERE active <> false";
+            PreparedStatement Statement = conn.prepareStatement(sql);
+            ResultSet rs = Statement.executeQuery();  //search database for all active addresses 
+            
+            while(rs.next()){
+                addresses.add(new Address(rs));
+            }
+                
+        //} catch (SQLException e) { 
+        //    JOptionPane.showMessageDialog(null,e); 
+        //}
+        
+    
+        return addresses;  
     }//allAddress
     
-    public ArrayList<Address> findAddresses(String search) {
+    public List<Address> findAddresses(String search) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

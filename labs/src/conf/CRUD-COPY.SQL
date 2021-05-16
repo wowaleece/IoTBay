@@ -17,4 +17,10 @@ INSERT INTO customers (userID, fName, lName, title, sex, dob, addressid)
 
 SELECT l.logID, l.userID, l.logTime, l.activityType, l.activityDetail
                     FROM logs l
-                   WHERE l.userID = 5 AND l.logTime > ? AND l.logTime < ?
+                   WHERE l.userID = 5 AND l.logTime > '2021-05-16 01:12:00' AND l.logTime < '2021-05-16 01:12:00'
+				   
+;
+
+SELECT addressID, streetName, suburb, postcode, state, country
+FROM addresses where active <> false
+

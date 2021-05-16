@@ -2,11 +2,9 @@
     Document   : welcome
     Created on : 3 Apr 2021, 10:27:38 pm
     Author     : marinasantanelli
---%>
-<%@page import="java.util.List"%>
-<%@page import="java.lang.Iterable"%>
-<%@page import="uts.isd.model.Log"%>
-<%@page import="uts.isd.model.User"%>
+--%>																 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -38,7 +36,28 @@
         </table>
         <br>
         <br>
-        
+        <form action="UserLogs" method="post">
+            <table border="0">
+                <thead>
+                    <tr>
+                        <th><label name="tsFrom">From Date:${fromDateErr}</label></th>
+                        <th><label name="tsTo">To Date:${toDateErr}</label></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input id="from" name="tsFrom" type="datetime-local" min="2021-05-16T00:00" value="${tsFrom}"></td>
+                        <td><input id="from" name="tsTo" type="datetime-local" min="2021-05-16T00:00" value="${tsTo}"></td>
+                    </tr>
+                    <tr>
+                        <td><input type="submit"></td>
+                        <td>${existErr}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            
+        </form>
         
         <table border="1">
             <thead>
@@ -49,17 +68,19 @@
                 </tr>
             </thead>
             <tbody>
-               <%
-                List<Log> logs = (List<Log>)request.getAttribute("logs");   
-                for (Log log: logs) { 
-                %>
-                <tr>
-                    <td><%=log.getLogTime() %></td>
-                    <td><%=log.getActivityType() %></td>
-                    <td><%=log.getActivityDetails() %></td>
-                    
-                </tr>
-                <% } //close for loop%>  
+               
+               
+               <c:forEach items="${logs}" var="log">
+                    <tr>
+                    <td>${log.logTime}</td>
+                    <td>${log.activityType}</td>
+                    <td>${log.activityDetails}</td>
+
+                    </tr>
+               </c:forEach>
+                
+                
+                
             </tbody>
         </table>
             

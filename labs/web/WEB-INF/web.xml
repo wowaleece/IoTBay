@@ -25,6 +25,10 @@
         <servlet-name>AddProductsServlet</servlet-name>
         <servlet-class>uts.isd.controller.AddProductsServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddressServlet</servlet-name>
+        <servlet-class>uts.isd.controller.AddressServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>
@@ -51,6 +55,14 @@
     <servlet-mapping>
         <servlet-name>AddProductsServlet</servlet-name>
         <url-pattern>/AddProductsServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddressServlet</servlet-name>
+        <url-pattern>/AddressServlet</url-pattern>
+        <url-pattern>/AddAddress</url-pattern>
+        <url-pattern>/FindAddress</url-pattern>
+        <url-pattern>/UpdateAddress</url-pattern>
+        <url-pattern>/DeleteAddress</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

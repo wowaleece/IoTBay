@@ -18,7 +18,7 @@ import uts.isd.model.Product;
 
 public class DBManager {
 
-    private Statement st; 
+    /*private Statement st;*/ 
     private Connection conn; // using connection and prepared statements instead of dynamic statement 
                              // https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html
 
@@ -177,12 +177,12 @@ public class DBManager {
         
         String sql = "SELECT l.logID, l.userID, l.logTime, l.activityType, l.activityDetails"
                    + " FROM logs l"
-                   + " WHERE l.userID = ? ";// AND l.logTime > ? AND l.logTime < ?";
+                   + " WHERE l.userID = ? AND l.logTime > ? AND l.logTime < ?";
         
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setInt(1, userID);
-        //ps.setObject(2, from);
-        //ps.setObject(3, to);
+        ps.setTimestamp(2, from);
+        ps.setTimestamp(3, to);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             logs.add(new Log(rs.getLong("logID"), rs.getInt("userID"), (Timestamp) rs.getObject("logTime"), rs.getString("activityType"), rs.getString("activityDetails")));
