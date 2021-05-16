@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,10 +46,19 @@ public class ProfileServlet extends HttpServlet {
         //redundant but whatever
         
         String pathinfo = req.getServletPath();
+        String context = req.getContextPath();
+        ServletContext other = req.getServletContext();
+        StringBuffer other2 = req.getRequestURL();
         switch (pathinfo)
         {
-            case "/ProfileServlet":
+            case "/account.jsp":
                 doGetProfile(req, resp);
+                break;
+            case "/admin/*":
+                doGetProfileAdmin(req,resp);
+                break;
+            case "/ProfileServlet":
+                doEditProfileGet(req,resp);
                 break;
                 
         }
@@ -64,7 +74,7 @@ public class ProfileServlet extends HttpServlet {
             case "/ProfileServlet":
                 doEditCustomerPost(request, response);
                 break;
-            case "/Admin/Profile/Edit":
+            case "/ProfileServlet/Admin/Edit":
                 doEditAdminPost(request, response);
                 break;
                 
@@ -124,15 +134,52 @@ public class ProfileServlet extends HttpServlet {
         } catch (SQLException ex) {           
             Logger.getLogger(ProfileServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         //process the address update for customer and return to account.jsp
-        request.getServletContext().getRequestDispatcher("/updateAddress").include(request, response);
+        request.getServletContext().getRequestDispatcher("/UpdateAddress").forward(request, response);
         //request.getRequestDispatcher("account.jsp").include(request, response);
     }
     
     private void doGetProfile(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager"); 
+        
         Customer customer = (Customer)session.getAttribute("customer");
+        boolean isLoggedIn = session.getAttribute("user") != null && customer != null;
+        String uType = (String)session.getAttribute("uType");
+        boolean isCustomer = uType != null && uType.equals("Customer") ;
+        
+        if(isLoggedIn && isCustomer){
+            //req.getRequestDispatcher("/editCustomer.jsp").include(req,resp);
+            req.getRequestDispatcher("/view/viewCustomer.jsp").include(req,resp);
+            
+        } else {
+            req.getRequestDispatcher("/index.jsp").include(req,resp);
+        }      
+    }
+     private void doEditProfileGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        DBManager manager = (DBManager) session.getAttribute("manager"); 
+        
+        Customer customer = (Customer)session.getAttribute("customer");
+        boolean isLoggedIn = session.getAttribute("user") != null && customer != null;
+        String uType = (String)session.getAttribute("uType");
+        boolean isCustomer = uType != null && uType.equals("Customer") ;
+        
+        if(isLoggedIn && isCustomer){
+            //req.getRequestDispatcher("/editCustomer.jsp").include(req,resp);
+            req.getRequestDispatcher("/view/editCustomer.jsp").include(req,resp);
+            
+        } else {
+            req.getRequestDispatcher("/index.jsp").include(req,resp);
+        }      
+    }
+    
+    
+    
+    private void doGetProfileAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        DBManager manager = (DBManager) session.getAttribute("manager"); 
         boolean isLoggedIn = session.getAttribute("user") != null;
         String uType = (String)session.getAttribute("uType");
         boolean isAdmin = uType != null && uType.equals("Admin") ;
@@ -142,7 +189,7 @@ public class ProfileServlet extends HttpServlet {
         } else if(isLoggedIn) {
             req.getRequestDispatcher("/editCustomer.jsp").include(req,resp);
         } else {
-            req.getRequestDispatcher("index.html.jsp").forward(req,resp);
+            req.getRequestDispatcher("index.jsp").forward(req,resp);
         }      
     }
 

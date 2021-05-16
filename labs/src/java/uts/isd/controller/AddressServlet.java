@@ -135,7 +135,6 @@ public class AddressServlet extends HttpServlet {
                 
             case "/UpdateAddress":
                 doAddAddressPost(request, response);
-                request.getRequestDispatcher("account.jsp").include(request,response);
             break;
             
             case "/DeleteAddress":
@@ -155,7 +154,8 @@ public class AddressServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void doAddAddressPost(HttpServletRequest request, HttpServletResponse response) {
+    private void doAddAddressPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
         HttpSession session = request.getSession();
         DBAddress addressManager = (DBAddress) session.getAttribute("addressManager");
         DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
@@ -179,11 +179,13 @@ public class AddressServlet extends HttpServlet {
             int newAddressID = addressManager.addAddress(street, unitNo, suburb, postcode, state, country);
             //customer.setAddress(newAddress);
             customerManager.updateCustomerAddress(customer.getCustomerID(),newAddressID);
-
+            //customer.setAddress(addressManager.findAddress(addressID)));
+            session.setAttribute("customer", customer);
         } catch(SQLException ex){
             Logger.getLogger(UserLogsServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-     
+        //request.getServletContext().getRequestDispatcher("/view/editCustomer.jsp").forward(request,response);
+        response.sendRedirect("/labs/account.jsp");
     }
 
     private void doFindAddressPost(HttpServletRequest request, HttpServletResponse response) {
@@ -207,7 +209,7 @@ public class AddressServlet extends HttpServlet {
         }catch (SQLException ex) {
             Logger.getLogger(UserLogsServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
-        request.getRequestDispatcher("account.jsp").include(request,response);
+        request.getRequestDispatcher("/index.jsp").include(request,response);
         
     }
 

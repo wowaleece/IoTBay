@@ -34,6 +34,7 @@ public class Address implements Serializable {
     }
     
     public Address(ResultSet rs) throws SQLException{
+        int temp = rs.getInt("addressID");
         this.addressID = rs.getInt("addressID");
         this.unitNumber = rs.getString("unitNumber");
         this.streetName = rs.getString("streetName");

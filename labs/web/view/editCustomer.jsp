@@ -5,12 +5,10 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:include page="header.jsp" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
         <title>edit profile Page</title>
     </head>
     <body>
@@ -41,8 +39,8 @@
             
             <table>
                <tr><td>Address</td></tr>
-               <tr><td><label type="number" for="unitNo">Unit number:</label></td>    <td><input type="text" id="unitNo" name="unitNo" value="${customer.address.unitNo}"></td></tr>
-               <tr><td><label type="number" for="street">Street Name:</label></td>    <td><input type="text" id="street" name="street" value="${customer.address.street}"></td></tr>
+               <tr><td><label type="number" for="unitNo">Unit number:</label></td>    <td><input type="text" id="unitNo" name="unitNo" value="${customer.address.unitNumber}"></td></tr>
+               <tr><td><label type="number" for="street">Street Name:</label></td>    <td><input type="text" id="street" name="street" value="${customer.address.streetName}"></td></tr>
                <tr><td><label type="number" for="suburb">Suburb:</label></td>         <td><input type="text" id="suburb" name="suburb" value="${customer.address.suburb}"></td></tr>
                <tr><td><label type="number" for="postcode">Postcode:</label></td>     <td><input type="number" id="postcode" name="postcode" maxlength="4" value="${customer.address.postcode}"></td></tr>
                <tr><td><label type="number" for="state">State:</label></td>           <td><input type="text" id="state" name="state" value="${customer.address.state}"></td></tr>

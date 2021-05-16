@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         //2- create an instance of the Validator class    
         Validator validator = new Validator();
         //3- capture the posted credentials     
-        String email = request.getParameter("email");
+        String email = request.getParameter("email").toLowerCase();
         String password = request.getParameter("password");
         //5- retrieve the manager instance from session    // now doing this step during LoginDAO after step 12   
         DBManager manager = (DBManager) session.getAttribute("manager");
@@ -68,9 +68,12 @@ public class LoginServlet extends HttpServlet {
                     
                     //set customer if uType = customer
                     if(user.getuType().equals("Customer")){
-                        customer = customerManager.findCustomerFromUser(user.getCustomerID());
-                        user.setCustomer(customer);
-                        session.setAttribute("customer",customer);
+                        customer = customerManager.findCustomerFromUser(user.getUserID());
+                        if(customer != null) {
+                            user.setCustomer(customer);
+                            session.setAttribute("customer",customer);
+                        }
+                        
                     }
                     
                     session.setAttribute("user", user);

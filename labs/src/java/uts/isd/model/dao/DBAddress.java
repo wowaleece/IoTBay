@@ -163,7 +163,7 @@ public class DBAddress {
                        + " FROM addresses WHERE active <> false "
                        + "AND (streetName = ? AND unitNumber = ? "
                             + "AND suburb = ? AND postcode = ? "
-                            + "AND state = ? , country = ?)";
+                            + "AND state = ? AND country = ?)";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, street);
         statement.setString(2, unitNo);
@@ -196,7 +196,7 @@ public class DBAddress {
                                 int postcode, String state, String country) throws SQLException{
         int adrExisting = findAddressID(street, unitNo, suburb, postcode, state, country);
         if (adrExisting == 0){
-            String sql = "INSERT INTO addresses (street, unitNo, suburb, postcode, state, country)"
+            String sql = "INSERT INTO addresses (streetName, UnitNumber, suburb, postcode, state, country)"
                    + " VALUES ( ? , ? , ? , ? , ? , ?)";
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, street); //need to add hash method later

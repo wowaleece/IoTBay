@@ -13,14 +13,7 @@
         <title>Confirm Logout</title>
     </head>
     <body>
-        <%
-            User user = (User)session.getAttribute("user");
-        %>
-        <div>
-            <h2>Are you sure you want to logout, ${user.fname} ${user.lname}?</h2>
-            <a class="button" href="index.jsp">Logout</a>
-            <a class="button" href="main.jsp">Return back</a>
-        </div>
+        <jsp:include flush="true" page="/LogoutServlet"/>
     </body>
 
 </html>

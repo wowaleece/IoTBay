@@ -84,23 +84,25 @@ public class DBCustomer {
                 + " c.addressID, unitNumber, streetName, suburb, postcode, state, country" //address fields
                 + " FROM users u "
                 + " INNER JOIN customers c on u.customerID = c.customerID "
-                + " INNER JOIN addresses a on a.addressID = c.addressID"
-                + " WHERE c.active <> false AND u.userID = ?"; //and isValid = true // validTo < sysdate
+                + " LEFT OUTER JOIN addresses a on a.addressID = c.addressID"
+                + " WHERE c.active <> false AND u.userID = ?";//and isValid = true // validTo < sysdate
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, userID);
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
         Customer customer = null;
         Address address = null;
         if (result.next()) {
-            address = new Address( 
+            address = new Address(result);
+            /*
                 result.getInt("addressID"),
                 result.getString("streetName"),
                 result.getString("unitNumber"),
                 result.getString("suburb"),
                 result.getInt("postcode"),
                 result.getString("state"),
-                result.getString("country")
-            );
+                result.getString("country") 
+             );*/
+           
             customer = new Customer(
                 result.getInt("customerID"),
                 result.getString("fName"),
