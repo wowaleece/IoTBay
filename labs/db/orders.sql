@@ -15,9 +15,9 @@ CREATE TABLE Orders (
     UserID varchar(20) NOT NULL, 
     OrderTime timestamp DEFAULT CURRENT_TIMESTAMP,
 --     OrderDate date, we do not need date because OrderTime accounts for date also. 
-    OrderStatus varchar(20),
-    ShippingStatus varchar(20), 
-    PaymentStatus varchar(20), 
+    OrderStatus varchar(20) DEFUALT, 
+    ShippingStatus varchar(20) DEFAULT 'Unsent', 
+    PaymentStatus varchar(20) DEFAULT 'Unpaid', 
     StreetName varchar(30), 
     UnitNumber varchar(10), 
     Suburb varchar(30), 

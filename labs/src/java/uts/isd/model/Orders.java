@@ -5,13 +5,18 @@
  */
 package uts.isd.model;
 import java.io.Serializable;
-import java.util.*; 
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.sql.*;
+
+
 
 /**
  *
  * @author alice_zly8mn7
  */
-public class Orders {
+public class Orders implements Serializable {
     
     private int OrderID;
     private String UserID;
@@ -43,6 +48,29 @@ public class Orders {
         this.NameonCard = NameonCard;
         this.CardType = CardType;
         this.TotalPrice = TotalPrice;
+    }
+    
+     public Orders(ResultSet rs)
+    {
+        try
+        {
+            this.OrderID = rs.getInt("ORDERID");
+            this.UserID = rs.getString("USERID");  
+            this.Status = rs.getString("PRODUCTNAME"); 
+            this.ShippingStatus = rs.getString("STOCKLEVEL");  
+            this.OrderTime= rs.getString("ORDERTIME"); 
+            this.StreetName= rs.getString("STREENAME"); 
+            this.UnitNumber = rs.getString("UNITNUMBER");
+            this.Suburb = rs.getString("SUBRUB");  
+            this.Postcode = rs.getInt("POSTCODE"); 
+            this.AddressState = rs.getString("ADDRESSSTATE");  
+            this.BillingAddress= rs.getBoolean("BILLINGADDRESS"); 
+            this.NameonCard= rs.getString("NAMEONCARD");            
+            this.CardType= rs.getString("CARDTYPE"); 
+            this.TotalPrice= rs.getFloat("TOTALRPICE");                    
+        } catch (SQLException ex) {
+            Logger.getLogger(Orders.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public int getOrderID() {

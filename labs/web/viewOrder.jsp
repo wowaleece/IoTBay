@@ -5,6 +5,16 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="uts.isd.model.dao.DBConnector"%>
+<%@page import="uts.isd.model.dao.DB"%>
+<%@page import="uts.isd.model.dao.DBManager"%>
+<jsp:include page="header.jsp" />
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,16 +32,35 @@
                     <th class="p">Payment</th>
                     <th class="p">Status</th>
                 </tr>
+                <tr>
+                    <%      try{
+                                connection = DriverManager.getConnection(connectionUrl+database, userid, password);
+                                statement=connection.createStatement();
+    //                            UserID = session data extract user information query - help James. 
+                                String sql = "SELECT * FROM APP.ORDERS WHERE USERID = '" + UserID +"'"; 
+                                resultSet = statement.executeQuery(sql);
+                                while(resultSet.next()){
+                                %>
+                                    <tr>
+                                    <td><%=int OrderID = resultSet.getInt("ORDERID");%></td>
+                                    <td><%=String OrderTime = (resultSet.getTimestamp("ORDERTIME")).toString; %></td>
+                                    <td><%String search_item_sql = "SELECT PRODUCTNAME FROM APP.ORDERLINEITEMS WHERE ORDERID = " + OrderID;
+                                          resultSet_items = statement.executeQuery(search_item_sql);
+                                          while(resultSet_items.next()){
+                                              resultSet_items.getString("PRODUCTNAME")
+                                          }%></td>
+                                    <td><%=resultSet.getFloat("PAYMENTSTATUS"); %></td>
+                                    <td><%=resultSet.getString("ORDERSTATUS"); %></td>
+                                    </tr>
+                                <%
+                                }
+                                connection.close();
+                            } catch (Exception e) {
+                                    e.printStackTrace();
+                            }
+                    %>
+                </tr>
             </thead>
-            <tbody>
-<!--               NEED TO ADD ORDER DETAILS HERE, BASED ON ORDER ID FROM DB. 
-                    <td>${user.email}</td>
-                    <td>${user.fname} ${user.lname}</td>
-                    <td>${user.password}</td>
-                    <td>${user.gender}</td>
-                    <td>${user.dob}</td>
-                </tr>-->
-            </tbody>
         </table>
                     <br  />
                     <br  />
