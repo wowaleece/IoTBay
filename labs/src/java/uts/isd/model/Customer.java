@@ -20,7 +20,10 @@ public class Customer implements Serializable {
     private Date dob;
     
     public Customer(int customerID, String fName, String lName, String sex, Date dob) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.customerID = customerID;
+        this.fName = fName;
+        this.lName = lName;
+        this.sex = sex;
+        this.dob = dob;
     }
-    
 }
