@@ -63,6 +63,7 @@ public class LoginServlet extends HttpServlet {
                 //log a login attempt
                 if (user != null) {
                     session.setAttribute("user", user);
+                    session.setAttribute("uType", user.getuType());
                     request.getRequestDispatcher("index.jsp").include(request, response);
                     manager.log(user.getUserID(), "login", "logged in");
                 } else {

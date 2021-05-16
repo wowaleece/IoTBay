@@ -18,7 +18,7 @@ CREATE TABLE "ADDRESSES" (
 CREATE TABLE "USERS" (
         "USERID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
        ,"EMAIL" VARCHAR(30) UNIQUE NOT NULL
-       ,"PASSWORD" VARCHAR(30) UNIQUE NOT NULL
+       ,"PASSWORD" VARCHAR(30) NOT NULL
        ,"UTYPE" VARCHAR(30) -- type of user
        ,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
        ,"ACTIVE" BOOLEAN DEFAULT TRUE
@@ -71,6 +71,8 @@ VALUES ('james', 'smith', 'Customer')
       ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer')
       ,('Bobby@hotmail.com.au', 'Bart', 'Customer')
       ,('Jack@gmail.com', 'Graham', 'Admin')
+      ,('trades@gmail.com', 'Graham', 'Customer')
+
 ;
 INSERT INTO CUSTOMERS (userID, fname, lname)
 VALUES (2,'james','smith')
