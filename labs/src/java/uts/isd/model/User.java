@@ -14,6 +14,7 @@ import java.sql.Date;
  */
 public class User implements Serializable {
     private int userID; // don't know that this is secure enough? 
+    private int customerID;
     private String email;
     private String uType; //user type customer/admin
     private String phoneNo; //can be null filled on order completion

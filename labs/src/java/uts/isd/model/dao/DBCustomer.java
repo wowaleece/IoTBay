@@ -5,6 +5,8 @@ import uts.isd.model.Address;
 import java.sql.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
 import uts.isd.model.Log;
@@ -30,24 +32,61 @@ public class DBCustomer {
     }
     */
     
-    public void addCustomer(int userID, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {                   //code for add-operation       
-        String sql = "INSERT INTO customers (userID, fName, lName, sex, dob, addressid)"
-                   + " VALUES ( ? , ? , ? , ? , ?, ?)";
-        PreparedStatement statement = conn.prepareStatement(sql);
+    
+    public int addCustomer(String email, String password, String phoneNo, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {
+        DBManager manager = new DBManager(conn);
+        int userID = 0;
+        int customerID;
+        
+        try{
+            userID = manager.addUser(email, password, "Customer", phoneNo);
+            customerID = addCustomer(userID, fName, lName, sex, dob);
+            return customerID;
+        } catch (SQLException ex){
+            try{
+                if(userID != 0) manager.deleteUser(userID);
+            }   catch (DataAccessException dex) {
+                Logger.getLogger(DBCustomer.class.getName()).log(Level.SEVERE, null, dex);
+            }
+            throw (SQLException) ex;
+        }
+    }
+    
+    
+    /**
+     * add registered customer
+     * @param userID
+     * @param fName
+     * @param lName
+     * @param sex
+     * @param dob
+     * @return customerID
+     * @throws SQLException 
+     */
+    public int addCustomer(int userID, String fName, String lName, String sex, Date dob) throws SQLException {                   //code for add-operation       
+        String sql = "INSERT INTO customers (userID, fName, lName, sex, dob)"
+                   + " VALUES ( ? , ? , ? , ? , ?)";
+        PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, userID);
         statement.setString(2, fName); //need to add hash method later
         statement.setString(3, lName);
         statement.setString(4, sex);
         statement.setDate(5, dob);
-        statement.setInt(6, addressID);
         statement.executeUpdate();
+        
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs != null && rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0;
+        }
         
         //log(userID, "Registered", "" + userID + " Registered as a customer");
     }//addCustomer()
     
-    //add anonymous customer
+   
     /**
-     * 
+     *  add anonymous customer
      * @param fName
      * @param lName
      * @param title
@@ -77,7 +116,7 @@ public class DBCustomer {
         }
     }//addCustomer()
     
-    
+   
     public void updateCustomer(Integer customerID, String fName, String lName, String title, String sex, Date dob, Integer addressID) throws SQLException {                   //code for add-operation       
         String sql = "UPDATE customers "
                     + "SET fName = ?, lName = ?, title = ?, sex = ?, dob = ?, addressID = ?"

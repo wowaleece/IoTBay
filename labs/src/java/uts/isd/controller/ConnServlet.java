@@ -28,7 +28,7 @@ public class ConnServlet extends HttpServlet {
     private DBConnector db;
     private DBManager manager;
     private DBProduct productManager; 
-    private DBCustomer customermanager;  
+    private DBCustomer customerManager;  
     private DBAddress addressManager;
     private Connection conn; 
 
@@ -62,7 +62,7 @@ public class ConnServlet extends HttpServlet {
 
         try {
             manager = new DBManager(conn);
-            customermanager = new DBCustomer(conn);
+            customerManager = new DBCustomer(conn);
             productManager = new DBProduct(conn);
             addressManager = new DBAddress(conn);
             
@@ -76,6 +76,7 @@ public class ConnServlet extends HttpServlet {
         session.setAttribute("manager", manager);     
         session.setAttribute("ProductManager", productManager);  //please use camel case           
         session.setAttribute("addressManager", addressManager);  //please use camel case           
+        session.setAttribute("customerManager", customerManager);  //please use camel case           
 
     }   
 

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.model.Customer;
 
 import uts.isd.model.User;
 import uts.isd.model.dao.DBCustomer;
@@ -26,9 +27,6 @@ import uts.isd.model.dao.DBManager;
 
 public class RegisterServlet extends HttpServlet {
 
-    private String email;
-    private String hash;
-
     @Override   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
             throws ServletException, IOException {
@@ -36,7 +34,7 @@ public class RegisterServlet extends HttpServlet {
         //init helper classes
         HttpSession session = request.getSession();
         DBManager manager = (DBManager) session.getAttribute("manager");
-        DBCustomer dbCust= (DBCustomer) session.getAttribute("dbCustomer");
+        DBCustomer dbCust= (DBCustomer) session.getAttribute("customerManager");
         //DBCustomer dbCust = new DBCustomer();
         Validator validator = new Validator();
         
@@ -48,7 +46,6 @@ public class RegisterServlet extends HttpServlet {
         String lName = request.getParameter("lName");
         String sex = request.getParameter("sex");
         String dobString = request.getParameter("dob");
-        String address = request.getParameter("address");
         String tos = request.getParameter("agree");
         
         //fill null strings, sanatise input
@@ -56,14 +53,14 @@ public class RegisterServlet extends HttpServlet {
         if (fName == null) fName = "";
         if (lName == null) lName = "";
         if (sex == null) sex = "";
-        if (address == null) address = "";
         Date dob = validator.sanitiseDate(dobString);
         
         
         
         
         //validate input
-        User user = null;  
+        User user = null;
+        int customerID = 0 ;
         validator.clear(session); // updated the %Err attributes to default "please enter"
         
         
@@ -90,21 +87,29 @@ public class RegisterServlet extends HttpServlet {
         } else {
             try {
 
-                manager.addUser(email, password, "Customer", phoneNo);
-                user = manager.checkLogin(email,password);   
+                //int userID = manager.addUser(email, password, "Customer", phoneNo);
+                //user = manager.checkLogin(email,password);   
                 //logg a login attempt
-                if (user != null) {
-                    session.setAttribute("user",user);
+                //if (userID != 0) {
+                    //manager.addCustomer(user.getUserID(), fName, lName, sex, dob, addressID);
+                    //dbCust.addCustomer(userID, fName, lName, sex, dob, 0);
                     
-                    //manager.addCustomer(user.getUserID(), fName, lName, title, sex, dob, addressID);
-                    dbCust.addCustomer(user.getUserID(), fName, lName, sex, dob, 2);
+                    customerID = dbCust.addCustomer(email,password,phoneNo, fName, lName, sex, dob, 0);
+                    session.setAttribute("uType","Customer");
+                    user = manager.checkLogin(email, password);
+                    if(user != null && customerID != 0){
+                        session.setAttribute("customerID", customerID);
+                        user.Update(dbCust.findCustomer(customerID));
+                        session.setAttribute("user", user);
+                        
+                    }
+                    
                     request.getRequestDispatcher("index.jsp").include(request, response);
-                } else {
-                    session.setAttribute("existErr", "Registry Failed");
-                    request.getRequestDispatcher("register.jsp").include(request, response);
-                }
+                //} else {
+                //    session.setAttribute("existErr", "Registry Failed");
+                //    request.getRequestDispatcher("register.jsp").include(request, response);
+                //}
                 //reload the page
-                
             } catch (SQLException ex) {           
                 Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);     
                 request.getRequestDispatcher("register.jsp").include(request, response);

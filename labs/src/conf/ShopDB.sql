@@ -22,6 +22,7 @@ CREATE TABLE "USERS" (
        ,"UTYPE" VARCHAR(30) -- type of user
        ,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
        ,"ACTIVE" BOOLEAN DEFAULT TRUE
+       CONSTRAINT ON DELETE CASCADE
 );
 
 CREATE TABLE "CUSTOMERS" (

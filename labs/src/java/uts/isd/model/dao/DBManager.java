@@ -6,8 +6,11 @@ import java.sql.*;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.apache.derby.client.am.DateTime;
+import uts.isd.controller.RegisterServlet;
 import uts.isd.model.Log;
 import uts.isd.model.Product;
 
@@ -61,15 +64,22 @@ public class DBManager {
     }
     
     //Add a user-data into the database   
-    public void addUser(String email, String password, String uType, String phoneNo) throws SQLException{
+    public int addUser(String email, String password, String uType, String phoneNo) throws SQLException{
         String sql = "INSERT INTO users (email, password, uType, phoneNo) "
                              + "  VALUES ( ?  , ?       , ?    , ?       )";
-        PreparedStatement statement = conn.prepareStatement(sql);
+        PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, email);
         statement.setString(2, password); //need to add hash method later
         statement.setString(3, uType);
         statement.setString(4, phoneNo);
         statement.executeUpdate();
+        
+        ResultSet rs = statement.getGeneratedKeys();
+        if (rs != null && rs.next()) {
+            return rs.getInt(1);
+        } else {
+            return 0;
+        }
     }
     
     
@@ -97,10 +107,23 @@ public class DBManager {
         statement.executeUpdate();
     }
 
-    //delete a user from the database   
-    public void deleteUser(String email) throws SQLException{       
-        //code for delete-operation   
-        // can we invalidate instead? 
+    /**
+     * Delete user in emergency situations
+     * @param userID
+     * @throws DataAccessException 
+     */  
+    protected void deleteUser(int userID) throws DataAccessException{
+        if(userID == 0) return; //0 indicates no userID to delete
+        try{
+            String sql = "DELETE FROM users WHERE userID = ?"; //and isValid = true // validTo < sysdate
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, userID);
+            statement.executeUpdate();  //search database for matching email hash pair
+
+        } catch (SQLException ex){
+            Logger.getLogger(RegisterServlet.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DataAccessException("Error deleting " + userID, ex);
+        }
     }
 
     

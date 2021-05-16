@@ -93,7 +93,7 @@ public class AddressServlet extends HttpServlet {
         
         //get any relevant session attributes
         
-        
+        session.getAttribute("customer");
         List<Address> addresses;
         try{
             addresses = addressManager.allAddresses();

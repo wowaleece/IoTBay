@@ -73,8 +73,41 @@ public class DBAddress {
         return addresses;  
     }//allAddress
     
-    public List<Address> findAddresses(String search) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Address> allAddresses(int customerID) throws SQLException{
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        //try {
+            String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                       + " FROM customers c addresses a on c.addressID = a.addressID WHERE active <> false ";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();  //search database for all active addresses 
+            
+            while(rs.next()){
+                addresses.add(new Address(rs));
+            }
+                
+        //} catch (SQLException e) { 
+        //    JOptionPane.showMessageDialog(null,e); 
+        //}
+        
+    
+        return addresses;  
+    }//allAddress
+    
+    public List<Address> findAddresses(String streetName,String unitNumber) throws SQLException {
+        ArrayList<Address> addresses = new ArrayList<Address>();
+        //try {
+            String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                       + " FROM addresses WHERE active <> false AND (streetName LIKE ? OR unitNumber LIKE ?)";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, streetName + "%");
+            statement.setString(1, unitNumber + "%");
+            ResultSet rs = statement.executeQuery();  //search database for all active addresses 
+            
+            while(rs.next()){
+                addresses.add(new Address(rs));
+            }
+    
+        return addresses; 
     }
     
 
