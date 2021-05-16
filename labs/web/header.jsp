@@ -43,7 +43,6 @@
             <a href="index.jsp">Home</a>
             <a href="logout.jsp">Logout</a>
             <a href="account.jsp">View Profile</a>
-            <a href="ViewProducts.jsp">Browse Products</a>
             <a href="ProductsServletList">Browse Products</a>
           </div>
          

@@ -38,6 +38,7 @@ public class RegisterServlet extends HttpServlet {
         //DBCustomer dbCust = new DBCustomer();
         Validator validator = new Validator();
         
+        
         //capture the posted credentials   
         String email = request.getParameter("email").toLowerCase();
         String password = request.getParameter("password");
@@ -99,9 +100,9 @@ public class RegisterServlet extends HttpServlet {
                     
                     int userID = manager.addUser(email, password, "Customer", phoneNo, customerID);
                     user = manager.findUser(userID);
-                    manager.log(user.getUserID(), "register", "Registered as a user");
                     
                     if(user != null && customer != null){
+                        manager.log(user.getUserID(), "register", "Registered as a user");
                         session.setAttribute("uType",user.getuType());
                         session.setAttribute("customer", customer );
                         session.setAttribute("user", user);
