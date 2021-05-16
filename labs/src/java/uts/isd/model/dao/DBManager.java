@@ -48,7 +48,7 @@ public class DBManager {
     
     //Find user by email and password in the database   
     public User checkLogin(String email, String password) throws SQLException{
-        String sql = "SELECT u.userID, u.email, u.utype, u.PHONENO"
+        String sql = "SELECT u.userID, u.email, u.utype, u.PHONENO , u.customerID"
                 + " FROM app.users u"
                 + " WHERE u.active = TRUE and u.email = ? and u.password = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
@@ -58,7 +58,10 @@ public class DBManager {
         ResultSet result = statement.executeQuery();  //search database for matching email hash pair
         User user = null;
         // if the result is not null, get userID
-        if (result.next()) {user =  new User(result.getInt("userID"), result.getString("email"),result.getString("utype"),result.getString("phoneno"));} 
+        if (result.next()) {
+            
+            user =  new User(result.getInt("userID"), result.getString("email"),result.getString("utype"),result.getString("phoneno"));
+        } 
        
         return user;
     }

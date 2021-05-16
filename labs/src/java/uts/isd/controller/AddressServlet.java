@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.model.Customer;
+import uts.isd.model.dao.DBCustomer;
+import uts.isd.model.dao.DBManager;
 
 
 /**
@@ -131,7 +134,8 @@ public class AddressServlet extends HttpServlet {
                 break;
                 
             case "/UpdateAddress":
-                doUpdateAddressPost(request, response);
+                doAddAddressPost(request, response);
+                request.getRequestDispatcher("account.jsp").include(request,response);
             break;
             
             case "/DeleteAddress":
@@ -152,19 +156,59 @@ public class AddressServlet extends HttpServlet {
     }// </editor-fold>
 
     private void doAddAddressPost(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HttpSession session = request.getSession();
+        DBAddress addressManager = (DBAddress) session.getAttribute("addressManager");
+        DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
+        Customer customer = (Customer) session.getAttribute("customer");
+        Validator validator = new Validator();
+        
+        //get and sanitise
+        String unitNo = validator.sanitiseString(request.getParameter("unitNo"));
+        String street = validator.sanitiseString(request.getParameter("street"));
+        String suburb = validator.sanitiseString(request.getParameter("suburb"));
+        String state = validator.sanitiseString(request.getParameter("state"));
+        String country = validator.sanitiseString(request.getParameter("country"));
+        int postcode;
+        String tempPC = validator.sanitiseString(request.getParameter("postcode"));
+        //validate input
+        postcode = tempPC != null ? Integer.parseInt(tempPC) : 0;
+        
+        
+        //Add address if it doesn't already exist
+        try{
+            int newAddressID = addressManager.addAddress(street, unitNo, suburb, postcode, state, country);
+            //customer.setAddress(newAddress);
+            customerManager.updateCustomerAddress(customer.getCustomerID(),newAddressID);
+
+        } catch(SQLException ex){
+            Logger.getLogger(UserLogsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
     }
 
     private void doFindAddressPost(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
     private void doUpdateAddressPost(HttpServletRequest request, HttpServletResponse response) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    private void doDeleteAddressPost(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void doDeleteAddressPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
+        Customer customer = (Customer) session.getAttribute("customer");
+        Validator validator = new Validator();
+        
+        try{
+            customerManager.deleteCustomerAddress(customer.getCustomerID());
+        }catch (SQLException ex) {
+            Logger.getLogger(UserLogsServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        request.getRequestDispatcher("account.jsp").include(request,response);
+        
     }
 
 }

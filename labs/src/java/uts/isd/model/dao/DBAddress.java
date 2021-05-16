@@ -95,22 +95,130 @@ public class DBAddress {
     
     public List<Address> findAddresses(String streetName,String unitNumber) throws SQLException {
         ArrayList<Address> addresses = new ArrayList<Address>();
-        //try {
-            String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
-                       + " FROM addresses WHERE active <> false AND (streetName LIKE ? OR unitNumber LIKE ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, streetName + "%");
-            statement.setString(1, unitNumber + "%");
-            ResultSet rs = statement.executeQuery();  //search database for all active addresses 
-            
-            while(rs.next()){
-                addresses.add(new Address(rs));
-            }
+        String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                   + " FROM addresses WHERE active <> false AND (streetName LIKE ? OR unitNumber LIKE ?)";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, streetName + "%");
+        statement.setString(2, unitNumber + "%");
+        ResultSet rs = statement.executeQuery();  //search database for all active addresses 
+
+        while(rs.next()){
+            addresses.add(new Address(rs));
+        }
     
         return addresses; 
     }
-    
 
+    /**
+     * 
+     * @param street
+     * @param unitNo
+     * @param suburb
+     * @param postcode
+     * @param state
+     * @param country
+     * @return Address or Null
+     * @throws SQLException 
+     */
+    public Address findAddress(String street, String unitNo, String suburb, 
+                                int postcode, String state, String country) 
+            throws SQLException{
+        String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                       + " FROM addresses WHERE active <> false "
+                       + "AND (streetName = ? AND unitNumber = ? "
+                            + "AND suburb = ? AND postcode = ? "
+                            + "AND state = ? , country = ?)";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, street);
+        statement.setString(2, unitNo);
+        statement.setString(3, suburb);
+        statement.setInt(4, postcode);
+        statement.setString(5, state);
+        statement.setString(6, country);
+        ResultSet rs = statement.executeQuery();  //search database for all active addresses 
+
+        Address address  = null;
+        if(rs.next()){
+            return new Address(rs);
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * 
+     * @param street
+     * @param unitNo
+     * @param suburb
+     * @param postcode
+     * @param state
+     * @param country
+     * @return addressID or 0
+     * @throws SQLException 
+     */
+    public int findAddressID(String street, String unitNo, String suburb, 
+                                int postcode, String state, String country) 
+            throws SQLException{
+        String sql = "SELECT addressID, unitNumber, streetName, suburb, postcode, state, country " 
+                       + " FROM addresses WHERE active <> false "
+                       + "AND (streetName = ? AND unitNumber = ? "
+                            + "AND suburb = ? AND postcode = ? "
+                            + "AND state = ? , country = ?)";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setString(1, street);
+        statement.setString(2, unitNo);
+        statement.setString(3, suburb);
+        statement.setInt(4, postcode);
+        statement.setString(5, state);
+        statement.setString(6, country);
+        ResultSet rs = statement.executeQuery();  //search database for all active addresses 
+
+        Address address  = null;
+        if(rs.next()){
+            return rs.getInt("addressID");
+        } else {
+            return 0;
+        }
+    }
+    
+    /**
+     * Adds address if it doesn't already exits
+     * @param street
+     * @param unitNo
+     * @param suburb
+     * @param postcode
+     * @param state
+     * @param country
+     * @return new Adreess ID or exiting AddressID
+     * @throws SQLException 
+     */
+    public int addAddress(String street, String unitNo, String suburb, 
+                                int postcode, String state, String country) throws SQLException{
+        int adrExisting = findAddressID(street, unitNo, suburb, postcode, state, country);
+        if (adrExisting == 0){
+            String sql = "INSERT INTO addresses (street, unitNo, suburb, postcode, state, country)"
+                   + " VALUES ( ? , ? , ? , ? , ? , ?)";
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, street); //need to add hash method later
+            statement.setString(2, unitNo);
+            statement.setString(3, suburb);
+            statement.setInt(4, postcode);
+            statement.setString(5, state);
+            statement.setString(6, country);
+            statement.executeUpdate();
+
+            ResultSet rs = statement.getGeneratedKeys();
+            if (rs != null && rs.next()) {
+                return rs.getInt(1);
+            } else {
+                return 0;
+            }
+        }else {
+            return adrExisting; 
+        }
+    }
+    
+}
     
     
     
@@ -118,4 +226,3 @@ public class DBAddress {
     
    
 
-}

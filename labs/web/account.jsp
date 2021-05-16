@@ -15,12 +15,13 @@
     </head>
     <body>
     <body>
+        <%--
         <%
             User user = (User)session.getAttribute("user");
-        %>       
+        %>  --%>     
         <div>
             <p>You are viewing your account</p>
-            <div>${user.email}</div>
+            <%--<jsp:include flush="true" page="ProfileServlet"/> --%>
             <div class="errors">${sessionScope.existErr}</div>
             <a class="button" href="index.jsp">Go back</a>
             <a class="button" href="UserLogs">logs</a>

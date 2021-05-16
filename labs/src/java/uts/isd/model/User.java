@@ -33,9 +33,21 @@ public class User implements Serializable {
         this.uType = uType;
         this.phoneNo = phoneNo; 
     }
+    
+    public User(int userID, String email , String uType, String phoneNo, Customer customer) { //String password,
+        this.userID = userID;
+        this.email = email;
+        this.uType = uType;
+        this.phoneNo = phoneNo; 
+        this.customer = customer;
+    }
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+    
+    public int getCustomerID(){
+        return customer.getCustomerID();
     }
     
     public int getUserID() {

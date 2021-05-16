@@ -16,16 +16,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import uts.isd.model.Customer;
 
 import uts.isd.model.User;
-import uts.isd.model.dao.DBManager;
+import uts.isd.model.dao.*;
+
 
  
 
 public class LoginServlet extends HttpServlet {
-
-    private String email;
-    private String hash;
 
     @Override   
     protected void doPost(HttpServletRequest request, HttpServletResponse response)   
@@ -40,15 +39,17 @@ public class LoginServlet extends HttpServlet {
         String password = request.getParameter("password");
         //5- retrieve the manager instance from session    // now doing this step during LoginDAO after step 12   
         DBManager manager = (DBManager) session.getAttribute("manager");
+        DBCustomer customerManager = (DBCustomer) session.getAttribute("customerManager");
+        DBAddress addressManager = (DBAddress) session.getAttribute("addressManager");
         
-        User user = null;  
+        User user = null; 
+        Customer customer = null;
         validator.clear(session); // updated the %Err attributes to default "please enter"
         
-        if (!validator.validateEmail(email)) {           
-            //8-set incorrect email error to the session           
+        if (!validator.validateEmail(email)) {                     
             session.setAttribute("emailErr", "Error: Email format incorrect"); //why do we use a different err for pass and email ext
             request.getRequestDispatcher("login.jsp").include(request,response);
-            //9- redirect user back to the login.jsp     
+    
 
         } else if (!validator.validatePassword(password)) {                  
 
@@ -62,8 +63,17 @@ public class LoginServlet extends HttpServlet {
                 user = manager.checkLogin(email, password);
                 //log a login attempt
                 if (user != null) {
-                    session.setAttribute("user", user);
+                    
                     session.setAttribute("uType", user.getuType());
+                    
+                    //set customer if uType = customer
+                    if(user.getuType().equals("Customer")){
+                        customer = customerManager.findCustomerFromUser(user.getCustomerID());
+                        user.setCustomer(customer);
+                        session.setAttribute("customer",customer);
+                    }
+                    
+                    session.setAttribute("user", user);
                     request.getRequestDispatcher("index.jsp").include(request, response);
                     manager.log(user.getUserID(), "login", "logged in");
                 } else {

@@ -17,15 +17,16 @@
         <h1>Sign Up</h1>
 
         
-
+        <form action="ProfileServlet" method="post">
             <table>
                 <tr><td>Email Address:</td><td>${user.email}</td><td>${sessionScope.emailErr}${sessionScope.existErr}</td></tr>
-                <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" placeholder="${user.fName}" ></td><td></td></tr>
-                <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" placeholder="${user.lName}" ></td><td></td></tr>
+                <tr><td>PassWord:</td><td><input type="password" id="password" name="password" placeholder="*******"></td><td></td></tr>
+                <tr><td>First Name:</td><td><input type="text" id="fname" name="fName" placeholder="${customer.fName}" value="${customer.fName}"></td><td></td></tr>
+                <tr><td>Last Name:</td><td><input type="text" id="lname" name="lName" placeholder="${customer.lName}"  value="${customer.lName}"></td><td></td></tr>
                 <tr>
                     <td>Sex:</td>
                     <td>
-                       <select id="sex" name="sex" placeholder="${user.sex}">
+                       <select id="sex" name="sex" placeholder="${customer.sex}" value="${customer.sex}">
                            <option value="Other">Other</option>
                            <option value="Male">Male</option>
                            <option value="Female">Female</option>
@@ -33,39 +34,29 @@
                     </td>
                     <td></td>
                 </tr>
-                <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" placeholder="${user.dob}"></td><td></td></tr>
-                <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" placeholder="${user.phoneNo}"></td><td></td></tr>
+                <tr><td>Date of Birth:</td><td><input type="date" id="dob" name="dob" placeholder="${customer.dob}" value="${customer.dob}"></td><td></td></tr>
+                <tr><td>Phone Number:</td><td><input type="text" id="phoneNo" name="phoneNo" placeholder="${user.phoneNo}" value="${user.phoneNo}"></td><td></td></tr>
             </table>
 
             
             <table>
                <tr><td>Address</td></tr>
-               <tr><td><label type="number" for="unitNo">Unit number:</label></td>    <td><input type="text" id="unitNo" name="unitNo"></td></tr>
-               <tr><td><label type="number" for="street">Street Name:</label></td>    <td><input type="text" id="street" name="street"></td></tr>
-               <tr><td><label type="number" for="suburb">Suburb:</label></td>         <td><input type="text" id="suburb" name="suburb"></td></tr>
-               <tr><td><label type="number" for="postcode">Postcode:</label></td>     <td><input type="number" id="postcode" name="postcode" maxlength="4"></td></tr>
-               <tr><td><label type="number" for="state">State:</label></td>           <td><input type="text" id="state" name="state"></td></tr>
-               <tr><td><label type="number" for="country">Country:</label></td>       <td><input type="text" id="country" name="country"></td></tr>
+               <tr><td><label type="number" for="unitNo">Unit number:</label></td>    <td><input type="text" id="unitNo" name="unitNo" value="${customer.address.unitNo}"></td></tr>
+               <tr><td><label type="number" for="street">Street Name:</label></td>    <td><input type="text" id="street" name="street" value="${customer.address.street}"></td></tr>
+               <tr><td><label type="number" for="suburb">Suburb:</label></td>         <td><input type="text" id="suburb" name="suburb" value="${customer.address.suburb}"></td></tr>
+               <tr><td><label type="number" for="postcode">Postcode:</label></td>     <td><input type="number" id="postcode" name="postcode" maxlength="4" value="${customer.address.postcode}"></td></tr>
+               <tr><td><label type="number" for="state">State:</label></td>           <td><input type="text" id="state" name="state" value="${customer.address.state}"></td></tr>
+               <tr><td><label type="number" for="country">Country:</label></td>       <td><input type="text" id="country" name="country" value="${customer.address.country}"></td></tr>
            </table>
+        
+            
             <br>
 
             <div>
-                <a class="button" href="editCustomer.jsp">Cancel</a>
-                <input class="button" type="submit" value="Sign up">
+                <a class="button" href="account.jsp">Cancel</a>
+                <input class="button" type="submit" value="Save">
             </div>
-       <table border="1">
-            
-               <c:forEach items="${addresses}" var="address">
-                    <tr>
-                    <td>${address.addressID}</td>
-                    <td>${address.streetName}</td>
-                    </tr>
-               </c:forEach>
-                
-            
-        </table>
-            
-        <jsp:include page="AddressServlet" flush="true"/>
+        </form>
             <%--<jsp:param name="addresses" value="${addresses}"/> --%>
        <%-- </jsp:include> --%>
 

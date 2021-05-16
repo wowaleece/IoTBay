@@ -112,7 +112,7 @@ public class Validator implements Serializable{
      */
     public String sanitiseString(String s) {
         if (s == null) s = "";
-        return s.toLowerCase();
+        return s.toLowerCase().trim();
     }
     
     

@@ -46,6 +46,74 @@ public class DBCustomer {
         
         return customer;   
     }
+    
+    public Customer findCustomerFull(int customerID) throws SQLException {  
+        String sql = "SELECT  fName, lName, sex, dob, c.addressID, unitNumber, streetName, suburb, postcode, state, country "
+                + " FROM customers c INNER JOIN addresses a on a.addressID = c.addressID "
+                + " WHERE customerID = ?"; //and isValid = true // validTo < sysdate
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, customerID);
+        ResultSet result = statement.executeQuery();  //search database for matching email hash pair
+        Customer customer = null;
+        Address address = null;
+        if (result.next()) {
+            address = new Address( 
+                result.getInt("addressID"),
+                result.getString("streetName"),
+                result.getString("unitNumber"),
+                result.getString("suburb"),
+                result.getInt("postcode"),
+                result.getString("state"),
+                result.getString("country")
+            );
+            customer = new Customer(
+                customerID,
+                result.getString("fName"),
+                result.getString("lName"),
+                result.getString("sex"),
+                result.getDate("dob"),
+                address
+            );
+        } // if the result is not null, get userID
+        
+        return customer;   
+    }
+    
+    public Customer findCustomerFromUser(int userID) throws SQLException {  
+        String sql = "SELECT c.customerID, fName, lName, sex, dob, " //customer fields
+                + " c.addressID, unitNumber, streetName, suburb, postcode, state, country" //address fields
+                + " FROM users u "
+                + " INNER JOIN customers c on u.customerID = c.customerID "
+                + " INNER JOIN addresses a on a.addressID = c.addressID"
+                + " WHERE c.active <> false AND u.userID = ?"; //and isValid = true // validTo < sysdate
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, userID);
+        ResultSet result = statement.executeQuery();  //search database for matching email hash pair
+        Customer customer = null;
+        Address address = null;
+        if (result.next()) {
+            address = new Address( 
+                result.getInt("addressID"),
+                result.getString("streetName"),
+                result.getString("unitNumber"),
+                result.getString("suburb"),
+                result.getInt("postcode"),
+                result.getString("state"),
+                result.getString("country")
+            );
+            customer = new Customer(
+                result.getInt("customerID"),
+                result.getString("fName"),
+                result.getString("lName"),
+                result.getString("sex"),
+                result.getDate("dob"),
+                address
+            );
+        } // if the result is not null, get userID
+        
+        return customer;   
+    }
+
 
     /* depricated
     public int addCustomer(String email, String password, String phoneNo, String fName, String lName, String sex, Date dob, int addressID) throws SQLException {
@@ -131,18 +199,26 @@ public class DBCustomer {
     }//addCustomer()
     
    
-    public void updateCustomer(Integer customerID, String fName, String lName, String title, String sex, Date dob, Integer addressID) throws SQLException {                   //code for add-operation       
+    public void updateCustomer(Integer customerID, String fName, String lName, String sex, Date dob) throws SQLException {                   //code for add-operation       
         String sql = "UPDATE customers "
-                    + "SET fName = ?, lName = ?, title = ?, sex = ?, dob = ?, addressID = ?"
+                    + "SET fName = ?, lName = ?, sex = ?, dob = ?"
                     + "WHERE customerID = ?";
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setString(1, fName); //need to add hash method later
         statement.setString(2, lName);
-        statement.setString(3, title);
-        statement.setString(4, sex);
-        statement.setDate(5, dob);
-        statement.setInt(6, addressID);
-        statement.setInt(7, customerID);
+        statement.setString(3, sex);
+        statement.setDate(4, dob);
+        statement.setInt(5, customerID);
+        statement.executeUpdate();
+    }//updateCustomer()
+    
+    public void updateCustomer(Integer customerID,  Integer addressID) throws SQLException {                   //code for add-operation       
+        String sql = "UPDATE customers "
+                    + "SET addressID = ?"
+                    + "WHERE customerID = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, addressID);
+        statement.setInt(2, customerID);
         statement.executeUpdate();
     }//updateCustomer()
     
@@ -153,6 +229,15 @@ public class DBCustomer {
         PreparedStatement statement = conn.prepareStatement(sql);
         statement.setInt(1, addressID);
         statement.setInt(2, customerID);
+        statement.executeUpdate();
+    }//updateCustomer()
+    
+    public void deleteCustomerAddress(int customerID) throws SQLException {                   //code for add-operation       
+        String sql = "UPDATE customers "
+                    + "SET addressID = null"
+                    + "WHERE customerID = ?";
+        PreparedStatement statement = conn.prepareStatement(sql);
+        statement.setInt(1, customerID);
         statement.executeUpdate();
     }//updateCustomer()
     
