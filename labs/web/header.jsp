@@ -4,6 +4,7 @@
     Author     : 61432
 --%>
 
+<%@page import="uts.isd.model.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,7 +26,6 @@
         
         <% if (user != null && user.isAdmin()) { %>
          <div id="mySidenav" class="sidenav">
-<<<<<<< Updated upstream
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="index.jsp">Home</a>
             <a href="register.jsp">Register</a>
@@ -33,7 +33,6 @@
             <a href="ViewProducts.jsp">Browse Products</a>
             <a href="AddNewProduct.jsp">Add New Product</a>
           </div>
-=======
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
             <p> Admin View </p>
             <a href="account.jsp">View Profile</a>
@@ -59,7 +58,6 @@
             </div>
            <% } %>
         
->>>>>>> Stashed changes
         
         <div class="topnav"> 
             <div class="container-header">
