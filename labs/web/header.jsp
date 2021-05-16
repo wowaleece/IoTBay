@@ -19,7 +19,11 @@
     <body>
         
         
+        <%
+            User user = (User)session.getAttribute("user");
+        %>   
         
+        <% if (user != null && user.isAdmin()) { %>
          <div id="mySidenav" class="sidenav">
 <<<<<<< Updated upstream
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
