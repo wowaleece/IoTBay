@@ -17,28 +17,7 @@ public class User implements Serializable {
     private String email;
     private String uType; //user type customer/admin
     private String phoneNo; //can be null filled on order completion
-    private String fName;
-    private String lName;
-    private String sex;
-    private Date dob;
-    private Date regDate;
-    private Address address;
     
-
-    public User(int userID, String email , String uType, String phoneNo) { //String password,
-        this.userID = userID;
-        this.email = email;
-        this.uType = uType;
-        this.phoneNo = phoneNo; 
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public String getEmail() {
-        return email;
-    }
 
     public String getuType() {
         return uType;
