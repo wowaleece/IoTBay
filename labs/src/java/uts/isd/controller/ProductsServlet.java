@@ -33,8 +33,8 @@ public class ProductsServlet extends HttpServlet {
     
     private DBConnector connector; 
     private Connection conn;  
-    private DBProduct product; 
-    
+    //private DBProduct product; 
+    /*
     public void init() { 
         try {
             product = new DBProduct(conn);
@@ -42,7 +42,7 @@ public class ProductsServlet extends HttpServlet {
             Logger.getLogger(ProductsServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -87,8 +87,8 @@ public class ProductsServlet extends HttpServlet {
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
         DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager"); 
-        List <Product> product = ProductManager.DisplayProducts();
-        request.setAttribute("product", product);
+        List <Product> products = ProductManager.DisplayProducts();
+        request.setAttribute("products", products);
         RequestDispatcher dispatcher = request.getRequestDispatcher("DeviceCatalogue.jsp");
         dispatcher.forward(request, response);
      }
@@ -96,13 +96,20 @@ public class ProductsServlet extends HttpServlet {
     private void DeleteProducts(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
         HttpSession session = request.getSession();
-        DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager"); 
-        int id = Integer.parseInt(request.getParameter("ProductID"));
+        DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager");  
+        
         try{ 
+            int id = Integer.parseInt(request.getParameter("productToDelete"));
+
+        
             ProductManager.DeleteProduct(id);
             request.getRequestDispatcher("ProductsServletList").include(request, response);
         }catch (SQLException ex) { 
             Logger.getLogger(ProductsServlet.class.getName()).log(Level.SEVERE, null, ex); 
+            request.getRequestDispatcher("ProductsServletList").include(request, response);
+        }catch (NumberFormatException ex) {
+            Logger.getLogger(ProductsServlet.class.getName()).log(Level.SEVERE, null, ex); 
+            request.setAttribute("productErr","unable to delete");
             request.getRequestDispatcher("ProductsServletList").include(request, response);
         }
      }
