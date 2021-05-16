@@ -31,6 +31,8 @@ public class ConnServlet extends HttpServlet {
     private DBCustomer customerManager;  
     private DBAddress addressManager;
     private Connection conn; 
+    private Connection conn;
+    private DBManager_Orders OrdersManager; 
 
 
                     
@@ -66,6 +68,7 @@ public class ConnServlet extends HttpServlet {
             productManager = new DBProduct(conn);
             addressManager = new DBAddress(conn);
             
+            OrdersManager = new DBManager_Orders(conn);
 
         } catch (SQLException ex) {
             Logger.getLogger(ConnServlet.class.getName()).log(Level.SEVERE, null, ex);
@@ -77,6 +80,8 @@ public class ConnServlet extends HttpServlet {
         session.setAttribute("ProductManager", productManager);  //please use camel case           
         session.setAttribute("addressManager", addressManager);  //please use camel case           
         session.setAttribute("customerManager", customerManager);  //please use camel case           
+        session.setAttribute("manager", manager);   
+        session.setAttribute("OrderManager", OrdersManager);
 
     }   
 

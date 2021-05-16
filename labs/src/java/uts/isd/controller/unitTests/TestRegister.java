@@ -10,14 +10,10 @@ import java.util.logging.*;
 import java.sql.*;
 import uts.isd.controller.Validator;
 
-
 import uts.isd.model.User;
 import uts.isd.model.dao.DBConnector;
 import uts.isd.model.dao.DBCustomer;
 import uts.isd.model.dao.DBManager;
-
-
-
 
 /**
  *

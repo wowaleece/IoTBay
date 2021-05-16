@@ -89,6 +89,18 @@
         <url-pattern>/UpdateAddress</url-pattern>
         <url-pattern>/DeleteAddress</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>OrdersServlet</servlet-name>
+        <servlet-class>uts.isd.controller.OrdersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrdersServlet</servlet-name>
+        <url-pattern>/OrdersServlet</url-pattern>
+        <url-pattern>/OrdersServletList</url-pattern>
+        <url-pattern>/OrdersServletFind</url-pattern>
+        <url-pattern>/OrdersServletDelete</url-pattern>
+    </servlet-mapping>
+    
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
