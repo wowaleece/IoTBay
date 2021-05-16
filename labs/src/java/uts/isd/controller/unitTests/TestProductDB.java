@@ -130,7 +130,11 @@ public class TestProductDB {
     }     
 
     /*TO DO*/
-    private void testDelete() throws SQLException {       
+    private void testDelete() throws SQLException {   
+         System.out.print("ProductID: "); 
+         int PRODUCTID = in.nextInt();  
+         db.DeleteProduct(PRODUCTID);
+         System.out.println("Product has been deleted");
     }     
     
     /*THIS WORKS*/ 

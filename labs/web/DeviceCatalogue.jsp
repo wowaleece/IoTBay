@@ -37,22 +37,33 @@
                 </thead> 
                 
 
-                    <% List<Product> product = (List<Product>)request.getAttribute("product");
+                    <%-- List<Product> products = (List<Product>)request.getAttribute("products");
                         String show = (String) session.getAttribute("show");
-                    for (Product p: product) { %>
-                    <tr>
-                        <td><%=p.getProductName() %></td>
-                        <td><%=p.getQuantity() %></td>
-                        <td><%=p.getStockLevel() %></td>
-                        <td><%=p.getUnitPrice() %></td>
-                        <td><%=p.getCategory() %></td>
-                        
-                        <td>
+                    for (Product prodcut: products) { --%>
+                    
+                        <c:forEach items="${products}" var="product">
+                        <tr>
+                            <td>${product.productName}</td>
+                            <td>${product.quantity}</td>
+                            <td>${product.stockLevel}</td>
+                            <td>${product.unitPrice}</td>
+                            <td>${product.category}</td>
+                            <td>
                             <a class="button" href="EditProduct.jsp"> Edit </a> 
-                            <a class="button" href="DeleteProduct.jsp"> Delete </a>
-                        </td>
-                    </tr>  
-                <% } %> 
+                                <%--<a class="button" href="DeleteProduct.jsp?ProductID=<%=p.getID()%>"> Delete </a> --%>
+                                <form action="ProductsServletDelete" method="POST">
+                                    <input type="hidden" name="productToDelete" value="${product.ID}">
+                                    <input class="button" type="submit" value="Delete">
+                                </form>
+                            </td>
+                        </tr>  
+                        </c:forEach>
+                        
+                    
+                        
+                        
+                        
+                <%-- } --%> 
            
             </table> 
     </body> 

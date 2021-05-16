@@ -76,6 +76,7 @@
         <servlet-name>ProductsServlet</servlet-name>
         <url-pattern>/ProductsServlet</url-pattern>
         <url-pattern>/ProductsServletList</url-pattern>
+        <url-pattern>/ProductsServletDelete</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddProductsServlet</servlet-name>

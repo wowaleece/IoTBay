@@ -100,8 +100,10 @@ public class DBProduct {
     }       
     
     //Deletes product from the database
-    public void DeleteProduct(String PRODUCTNAME)throws SQLException{
-      st.executeUpdate("DELETE FROM PRODUCTS WHERE PRODUCTNAME = '" + PRODUCTNAME + "'"); 
+    public void DeleteProduct(int PRODUCTID)throws SQLException{
+      String sql = ("DELETE FROM PRODUCTS WHERE PRODUCTID = ?"); 
+      PreparedStatement statement = conn.prepareStatement(sql); 
+      statement.executeUpdate(); 
     }
     
     //Checks for a product  
