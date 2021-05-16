@@ -21,6 +21,7 @@
         
         
          <div id="mySidenav" class="sidenav">
+<<<<<<< Updated upstream
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
             <a href="index.jsp">Home</a>
             <a href="register.jsp">Register</a>
@@ -28,6 +29,33 @@
             <a href="ViewProducts.jsp">Browse Products</a>
             <a href="AddNewProduct.jsp">Add New Product</a>
           </div>
+=======
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> 
+            <p> Admin View </p>
+            <a href="account.jsp">View Profile</a>
+            <a href="AddNewProduct.jsp">Add New Product</a>
+            <a href="ProductsServletAdminList">Device Management</a>
+          </div>
+         <% } else if(user != null) {  %>
+            <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="index.jsp">Home</a>
+            <a href="logout.jsp">Logout</a>
+            <a href="account.jsp">View Profile</a>
+            <a href="ViewProducts.jsp">Browse Products</a>
+            <a href="ProductsServletList">Browse Products</a>
+          </div>
+         
+           <% } else { %>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <a href="index.jsp">Home</a>
+                <a href="register.jsp">Register</a>
+                <a href="login.jsp">Login</a>
+            </div>
+           <% } %>
+        
+>>>>>>> Stashed changes
         
         <div class="topnav"> 
             <div class="container-header">
