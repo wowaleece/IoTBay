@@ -55,10 +55,10 @@ public class ProductsServlet extends HttpServlet {
             switch (action) {
                 /*case "/new":
                     showNewForm(request, response);
-                    break;
-                case "/insert":
-                    insertTodo(request, response);
                     break;*/
+                case "/ProductsServletSearchProducts":
+                    SearchProducts(request, response);
+                    break;
                 case "/ProductsServletEditProduct":
                     EditProduct(request, response);
                     break;
@@ -81,6 +81,18 @@ public class ProductsServlet extends HttpServlet {
             throw new ServletException(ex);
         }
     }
+    
+    private void SearchProducts(HttpServletRequest request, HttpServletResponse response)
+    throws SQLException, IOException, ServletException {
+        HttpSession session = request.getSession();
+        DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager");
+        String PRODUCTNAME = (request.getParameter("PRODUCTID"));
+        Product product = ProductManager.findProduct(PRODUCTNAME); 
+        List <Product> products = ProductManager.DisplayProducts();
+        request.setAttribute("products", products);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("SearchProducts.jsp");
+        dispatcher.forward(request, response);
+     }
 
     private void DisplayProducts(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {
