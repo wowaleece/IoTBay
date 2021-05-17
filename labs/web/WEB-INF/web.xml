@@ -45,6 +45,18 @@
         <servlet-name>AddressServlet</servlet-name>
         <servlet-class>uts.isd.controller.AddressServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>NewPaymentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.NewPaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PaymentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.PaymentServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdatePaymentServlet</servlet-name>
+        <servlet-class>uts.isd.controller.UpdatePaymentServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ConnServlet</servlet-name>
         <url-pattern>/ConnServlet</url-pattern>
@@ -80,7 +92,6 @@
         <url-pattern>/ProductsServletEditProduct</url-pattern>
         <url-pattern>/ProductsServletAdminList</url-pattern>
         <url-pattern>/ProductsServletSearchProductst</url-pattern>
-        
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddProductsServlet</servlet-name>
@@ -105,7 +116,18 @@
         <url-pattern>/OrdersServletFind</url-pattern>
         <url-pattern>/OrdersServletDelete</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>NewPaymentServlet</servlet-name>
+        <url-pattern>/NewPaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PaymentServlet</servlet-name>
+        <url-pattern>/PaymentServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdatePaymentServlet</servlet-name>
+        <url-pattern>/UpdatePaymentServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
