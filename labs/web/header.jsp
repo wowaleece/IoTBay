@@ -35,6 +35,7 @@
             <p> Admin View </p> 
             <a href="AddNewProduct.jsp">Add New Product</a>
             <a href="ProductsServletAdminList">Device Management</a>
+            <a href="logout.jsp">Logout</a>
           </div>
 
          <% } else if(user != null) {  %>
@@ -79,7 +80,7 @@
                     <div class="wrap">
                         <div class="search">
                             <input type="text" class="searchTerm" placeholder="Search...">
-                            <button type="submit" class="searchButton">
+                            <button type="submit" class="searchButton" onclick="location.href='ProductsServletSearchProducts'">
                               <i class="fa fa-search"></i>
                            </button>
                         </div>

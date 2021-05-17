@@ -47,6 +47,7 @@ public class LogoutServlet extends HttpServlet {
         // log the logout activity   
             try {
                 manager.log(user.getUserID(), "logout",user.getEmail() + " has logged out", user.getLog().geLogID());
+                request.getRequestDispatcher("index.jsp").include(request, response);
                 //how to disconnect from the DB? 
 
             } catch (SQLException ex) {
