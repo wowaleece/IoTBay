@@ -1,11 +1,15 @@
 DROP TABLE LOGS;
 DROP TABLE USERS;
+DROP TABLE PRODUCTS;
 DROP TABLE CUSTOMERS;
 DROP TABLE ADDRESSES;
+DROP TABLE ORDERLINEITEMS;
 DROP TABLE ORDERS;
 
 
+
 CREATE TABLE "ADDRESSES" (
+        "ADDRESSID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY 
 	,"STREETNAME" VARCHAR(30)
 	,"UNITNUMBER" VARCHAR(30)
 	,"SUBURB" VARCHAR(30)
@@ -23,8 +27,8 @@ CREATE TABLE "CUSTOMERS" (
     ,"SEX" VARCHAR(30)
     ,"DOB" DATE
     ,"ADDRESSID" INT 
-    ,"REGDATE" DATE
-	,"ACTIVE" BOOLEAN DEFAULT TRUE
+    ,"REGDATE" DATE 
+    ,"ACTIVE" BOOLEAN DEFAULT TRUE
     ,FOREIGN KEY (ADDRESSID) REFERENCES ADDRESSES(ADDRESSID)
 );
 
@@ -35,7 +39,7 @@ CREATE TABLE "USERS" (
        ,"UTYPE" VARCHAR(30) -- type of user
        ,"PHONENO" VARCHAR(22) -- allowing for 15 for international support + 7 for "ext" + actual extention() (
        ,"ACTIVE" BOOLEAN DEFAULT TRUE
-       ,"CUSTOMERID" INT 
+       ,"CUSTOMERID" INT UNIQUE --unique should still allow for null values
        ,FOREIGN KEY (customerID) REFERENCES CUSTOMERS(customerID) 
        ON DELETE CASCADE
 );
@@ -53,21 +57,18 @@ CREATE TABLE "LOGS" (
 
 CREATE TABLE "PRODUCTS"( 
     "PRODUCTID" INT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY, 
-    "PRODUCTNAME" VARCHAR(30) NOT NULL, 
+    "PRODUCTNAME" VARCHAR(30) NOT NULL UNIQUE, --needed since orderlineitems takes name instead of ID
     "QUANTITY" INT NOT NULL, 
     "STOCKLEVEL" VARCHAR(10) NOT NULL, 
     "UNITPRICE" FLOAT NOT NULL, 
-    "CATEGORY" VARCHAR(30) NOT NULL
-);                                                                      
+    "CATEGORY" VARCHAR(30) NOT NULL,
+    CHECK (QUANTITY > 0)
+);                                 
 
-INSERT INTO "PRODUCTS" (PRODUCTNAME,QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY)
-VALUES ( 'Arduino', 1,'Low', 30, 'Micro-Controller')
-, ( 'BME180', 1,'Low', 15, 'Sensor')
-, ( 'Motion Sensor', 2, 'Low', 5, 'Sensor'); 
 CREATE TABLE ORDERS (
     ORDERID BIGINT NOT NULL PRIMARY KEY
-        GENERATED ALWAYS AS IDENTITY 
-        (START WITH 1, INCREMENT BY 1),
+        GENERATED ALWAYS AS IDENTITY ,
+        --(START WITH 1, INCREMENT BY 1),
     USERID varchar(20) NOT NULL, 
     ORDERTIME timestamp DEFAULT CURRENT_TIMESTAMP,
     ORDERSTATUS varchar(20),
@@ -86,28 +87,89 @@ CREATE TABLE ORDERS (
 );
 
 CREATE TABLE ORDERLINEITEMS (
+    ORDERLINEITEMID BIGINT NOT NULL PRIMARY KEY
+        GENERATED ALWAYS AS IDENTITY, 
+        --(START WITH 1, INCREMENT BY 1),
     USERID varchar(20) NOT NULL, 
-    ORDERID int,
-    STATUS varchar(20),
+    ORDERID BIGINT,
+    STATUS varchar(20), 
     PRODUCTNAME varchar(20), 
-    UNITPRICE float
-);
+    UNITPRICE float,
+    FOREIGN KEY (ORDERID) REFERENCES ORDERS(ORDERID)
+    --constraint removed because we did not have time to 
+    --FOREIGN KEY (PRODUCTNAME) REFERENCES PRODUCTS(PRODUCTNAME)
 
+);
+                                     
+
+INSERT INTO "PRODUCTS" (PRODUCTNAME,QUANTITY, STOCKLEVEL, UNITPRICE, CATEGORY) 
+VALUES ( 'Arduino', 1,'Low', 30, 'Micro-Controller')
+, ( 'BME180', 1,'Low', 15, 'Sensor')
+, ( 'Motion Sensor', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 1', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 2', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 3', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 4', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 5', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 6', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 7', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 8', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 9', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 10', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 11', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 12', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 13', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 14', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 15', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 16', 2, 'Low', 5, 'Sensor')
+, ( 'Test Sensor 17', 2, 'Low', 5, 'Sensor'); 
 
 INSERT INTO CUSTOMERS (fname, lname)
 VALUES ('james','smith')
       ,('smith','smith')
       ,('bobby','smith')
-      ,('Bobby','smith')
+      ,('Kayla','Gel')
+      ,('Leah','Gel')
+      ,('Tia','smith')
+      ,('Irena','smith')
+      ,('Alex','smith')
+      ,('Simba','smith')
+      ,('Marina','smith')
+      ,('Alice','smith')
+      ,('Atif','smith')
+      ,('Sarah','smith')
+      ,('marshall','smith')
+      ,('Lilly','smith')
+      ,('Bob','smith')
+      ,('Ross','smith')
+      ,('Ruby','smith')
+      ,('Ishan','smith')
+      ,('jared','smith')
 ;
 
 INSERT INTO USERS (email, password, uType,customerID)
 VALUES ('james', 'smith', 'Customer',1)
       ,('smith', 'Jackson', 'Customer',2)
-      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',3)
-      ,('Bobby@hotmail.com.au', 'Bart', 'Customer',4)
-      ,('Jack@gmail.com', 'Graham', 'Admin',null)
-      ,('trades@gmail.com', 'Graham', 'Customer',null)
+      ,('bob12by-2@student.uts.edu.au', 'Jerry', 'Customer',3)
+      ,('Bob326by@hotmail.com.au', 'Bart', 'Customer',4)
+      ,('admin@gmail.com', 'Admin', 'Admin',null)
+      ,('Jasdfck@gmail.com', 'Graham', 'Admin',null)
+      ,('trade335s@gmail.com', 'Graham', 'Customer',null)
+      ,('jojem', 'Jackson', 'Customer',5)
+      ,('bobby-2@student.uts.edu.au', 'Jerry', 'Customer',6)
+      ,('Bobwby@hotmail.com.au', 'Bart', 'Customer',7)
+      ,('Jassck@gmail.com', 'Graham', 'Admin',null)
+      ,('abc', 'Graham', 'Customer',null)
+      ,('efg', 'Jackson', 'Customer',8)
+      ,('hij@student.uts.edu.au', 'Jerry', 'Customer',9)
+      ,('klm@hotmail.com.au', 'Bart', 'Customer',10)
+      ,('tuv@gmail.com', 'Graham', 'Admin',null)
+      ,('wxy@gmail.com', 'Graham', 'Customer',null)
+      ,('qrz', 'Jackson', 'Customer',11)
+      ,('tuv@student.uts.edu.au', 'Jerry', 'Customer',12)
+      ,('wxy@hotmail.com.au', 'Bart', 'Customer',13)
+      ,('andz@gmail.com', 'Graham', 'Admin',null)
+      ,('never@gmail.com', 'Graham', 'Customer',null)
 
 ;
 
