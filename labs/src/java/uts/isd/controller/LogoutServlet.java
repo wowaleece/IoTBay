@@ -18,14 +18,23 @@ import uts.isd.model.dao.*;
  *
  * @author super
  */
-public class LogoutServlet {
+public class LogoutServlet extends HttpServlet {
     /*
         public LogoutServlet() {
             super();
         }
     */
     
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        action(request,response);
+    }
+    
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        action(request,response);
+    }
+    private void action(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
         // retrieve the current session,user and DBconnection
         HttpSession session = request.getSession(false);
@@ -45,7 +54,7 @@ public class LogoutServlet {
             }
             
             //send user back to the main page
-            request.getRequestDispatcher("index.jsp").include(request, response);
+            request.getRequestDispatcher("/index.jsp").include(request, response);
         }
     }
 }

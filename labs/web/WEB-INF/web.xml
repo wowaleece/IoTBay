@@ -19,7 +19,7 @@
     </servlet>
     <servlet>
         <servlet-name>LogoutServlet</servlet-name>
-        <servlet-class>uts.isd.controller.LoginServlet</servlet-class>
+        <servlet-class>uts.isd.controller.LogoutServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ProfileServlet</servlet-name>
@@ -54,8 +54,9 @@
         <url-pattern>/LoginServlet</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginServlet</servlet-name>
+        <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
+        <url-pattern>/labs/logout.jsp</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ProfileServlet</servlet-name>
