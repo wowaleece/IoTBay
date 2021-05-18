@@ -32,16 +32,7 @@ public class ProductsServlet extends HttpServlet {
     
     private DBConnector connector; 
     private Connection conn;  
-    //private DBProduct product; 
-    /*
-    public void init() { 
-        try {
-            product = new DBProduct(conn);
-        } catch (SQLException ex) {
-            Logger.getLogger(ProductsServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
@@ -53,9 +44,6 @@ public class ProductsServlet extends HttpServlet {
 
         try {
             switch (action) {
-                /*case "/new":
-                    showNewForm(request, response);
-                    break;*/
                 case "/ProductsServletSearchProducts":
                     SearchProducts(request, response);
                     break;
@@ -74,7 +62,6 @@ public class ProductsServlet extends HttpServlet {
                     break;
                 default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
-                    //dispatcher.forward(request, response);
                     break;
             }
         } catch (SQLException ex) {
@@ -114,30 +101,6 @@ public class ProductsServlet extends HttpServlet {
         dispatcher.forward(request, response);
      }
     
-     /*  private void DeleteProducts(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException {
-        
-        int ID = Integer.parseInt(request.getParameter("PRODUCTID"));
-        ProductManager.DeleteProduct(ID); 
-        response.sendRedirect("DeleteProductConfirmation.jsp");
-        
-        /*DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager"); 
-        int PRODUCTID = Integer.parseInt(request.getParameter("PRODUCTID"));
-        ProductManager.DeleteProduct(PRODUCTID);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("DeleteProduct.jsp");
-        dispatcher.forward(request, response);
-     }*/
-    
-   /* private void DeleteProducts(HttpServletRequest request, HttpServletResponse response)
-    throws SQLException, IOException, ServletException {
-        HttpSession session = request.getSession();
-        DBProduct ProductManager = (DBProduct) session.getAttribute("ProductManager");
-        int ProductID = Integer.parseInt(request.getParameter("PRODUCTID"));
-       // DBProduct db = new DBProduct(); 
-        //product.DeleteProduct(ProductID);
-        ProductManager.DeleteProduct(ProductID);
-        response.sendRedirect("DeleteProductConfirmation.jsp");
-     }*/
     
     private void DeleteProducts(HttpServletRequest request, HttpServletResponse response)
     throws SQLException, IOException, ServletException {

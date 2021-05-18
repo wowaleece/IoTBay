@@ -8,6 +8,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<jsp:include page="header.jsp" />
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/CSS.css">
@@ -31,7 +32,7 @@
                 <div class="form-container">
                 <div class="personal-information">
                 <h1>Please enter your payment details</h1></div> 
-            
+           
              <input type="number" id="input-field" name="cardNumber" placeholder="Card Number" required/> 
              <input type="text" id="input-field" name="cardExpiry" placeholder="MM/YY" required/> 
              <input type="number" id="input-field" name="cvv" placeholder="CVV" required/> 
